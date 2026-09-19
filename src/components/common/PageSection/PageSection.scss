@@ -5,6 +5,10 @@
   min-width: 20rem;
   width: 100vw;
 
+  &--fixed {
+    position: fixed;
+    z-index: 5;
+  }
   &__child {
     width: 100%;
     max-width: 120rem;

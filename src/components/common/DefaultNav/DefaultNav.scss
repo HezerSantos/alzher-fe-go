@@ -29,6 +29,9 @@
 }
 
 .default-nav--mobile {
+  position: fixed;
+  width: 100vw;
+  z-index: 5;
   font-family: fonts.$secondary;
   background-color: colors.$ivory;
   a {
@@ -56,6 +59,7 @@
     display: grid;
     grid-template-rows: 0fr;
     transition: grid-template-rows 0.3s ease;
+    padding-bottom: 0.5rem;
     &--open {
       grid-template-rows: 1fr;
     }

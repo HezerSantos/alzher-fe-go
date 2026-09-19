@@ -3,11 +3,12 @@ import "./PageSection.scss";
 
 interface PageSectionProps {
   children: React.ReactNode;
+  fixed?: boolean;
 }
-const PageSection = ({ children }: PageSectionProps) => {
+const PageSection = ({ children, fixed }: PageSectionProps) => {
   return (
     <>
-      <section className="page-section">
+      <section className={`page-section ${fixed ? "page-section--fixed" : ""}`}>
         <div className="page-section__child">{children}</div>
       </section>
     </>

@@ -35,7 +35,7 @@ const NavLink = ({ name, link, hidden = false, icon }: NavLinkProps) => {
 const navLinks = [
   {
     name: defaultContent.links.home,
-    link: "/home",
+    link: "/",
   },
   {
     name: defaultContent.links.myDashboard,
@@ -49,7 +49,7 @@ const navLinks = [
 
 const Desktop = () => {
   return (
-    <PageSection>
+    <PageSection fixed={true}>
       <nav className="default-nav">
         <div className="default-nav__links">
           <IconLogo width={50} height={50} />

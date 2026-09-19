@@ -1,5 +1,6 @@
 import App from "./App";
 import Home from "./pages/Home";
+import TermsAndPrivacy from "./pages/TermsAndPrivacy/TermsAndPrivacy";
 
 const routes = [
   {
@@ -10,6 +11,10 @@ const routes = [
       {
         index: true,
         element: <Home />,
+      },
+      {
+        path: "/terms-and-privacy",
+        element: <TermsAndPrivacy />,
       },
     ],
   },
