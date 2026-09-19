@@ -1,3 +1,4 @@
+import DefaultFooter from "../components/common/DefaultFooter/DefaultFooter";
 import DefaultNav from "../components/common/DefaultNav/DefaultNav";
 import HomeFeatures from "../components/Home/HomeFeatures";
 import HomeHeader from "../components/Home/HomeHeader";
@@ -12,6 +13,7 @@ const Home = () => {
       <HomeFeatures />
       <HomeOverview />
       <HomeInformation />
+      <DefaultFooter />
     </>
   );
 };
