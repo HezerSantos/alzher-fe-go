@@ -3,7 +3,7 @@ import PageSection from "../PageSection/PageSection";
 import "./DefaultNav.scss";
 import defaultContent from "../../../content/defaultNav";
 import IconLogo from "../Icons/IconLogo/IconLogo";
-import { useEffect, useState, type ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import IconPerson from "../Icons/IconPerson/IconPerson";
 import useWidth from "../../../common/hooks/useWidth";
 import IconMenu from "../Icons/IconMenu/IconMenu";
