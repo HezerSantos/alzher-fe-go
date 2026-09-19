@@ -1,0 +1,18 @@
+@use "./assets/styles/colors";
+@use "./assets/styles/fonts";
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+
+  color: colors.$black;
+}
+
+#root {
+  overflow: hidden;
+  position: relative;
+}
+
+body {
+  background-color: colors.$ivory;
+}

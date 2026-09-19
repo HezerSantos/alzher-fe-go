@@ -1,0 +1,13 @@
+.page-section {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  min-width: 20rem;
+  width: 100vw;
+
+  &__child {
+    width: 100%;
+    max-width: 120rem;
+    min-width: 20rem;
+  }
+}
