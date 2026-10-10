@@ -5,6 +5,7 @@ import Dashboard from "./Pages/Dashboard/Dashboard";
 import Overview from "./Pages/Dashboard/Overview";
 import Scan from "./Pages/Dashboard/Scan";
 import Home from "./Pages/Home/Home";
+import Login from "./Pages/Login/Login";
 import TermsAndPrivacy from "./Pages/TermsAndPrivacy/TermsAndPrivacy";
 
 const routes = [
@@ -20,6 +21,10 @@ const routes = [
       {
         path: "/terms-and-privacy",
         element: <TermsAndPrivacy />,
+      },
+      {
+        path: "/login",
+        element: <Login />,
       },
       {
         path: "/dashboard",

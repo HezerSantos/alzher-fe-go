@@ -1,0 +1,84 @@
+@use "../../../common/styles/colors";
+
+.signup-content {
+  margin-inline: auto;
+  width: 28rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding-block: 5rem;
+  gap: 2rem;
+}
+
+.signup-form {
+  &__header {
+    font-weight: 700;
+    width: 26rem;
+    text-align: center;
+  }
+
+  &__form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    &__input {
+      width: 22rem;
+      height: 4rem;
+      border: 1px solid colors.$gray;
+      border-radius: 1rem;
+      padding-inline: 0.5rem;
+    }
+
+    &__opts {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.95rem;
+      color: colors.$gray;
+
+      & > div {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        cursor: pointer;
+        & > input {
+          display: block;
+          cursor: pointer;
+          width: 1.25rem;
+          height: 1.25rem;
+        }
+        & > label {
+          cursor: pointer;
+        }
+      }
+
+      & > a {
+        text-decoration: none;
+        color: colors.$gray;
+      }
+    }
+    &__button {
+      background-color: colors.$green;
+      height: 2.5rem;
+      border-radius: 4rem;
+      color: colors.$white;
+    }
+  }
+
+  &__footer {
+    width: 22rem;
+    display: flex;
+    justify-content: space-between;
+    & a,
+    p {
+      display: block;
+      color: colors.$gray;
+      font-size: 0.95rem;
+      text-decoration: none;
+    }
+    & > a:last-of-type {
+      font-weight: 800;
+    }
+  }
+}

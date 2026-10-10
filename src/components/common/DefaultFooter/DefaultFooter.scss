@@ -1,5 +1,5 @@
-@use "../../../assets/styles/colors";
-@use "../../../assets/styles/fonts";
+@use "../../../common/styles/colors";
+@use "../../../common/styles/fonts";
 
 .footer-wrapper {
   background: linear-gradient(to right, colors.$jade 0%, colors.$forest 100%);

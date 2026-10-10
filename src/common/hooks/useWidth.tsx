@@ -15,7 +15,7 @@ const useWidth = () => {
     };
   }, []);
 
-  return { width };
+  return width;
 };
 
 export default useWidth;

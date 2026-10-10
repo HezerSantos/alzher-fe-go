@@ -4,6 +4,7 @@ const defaultNav = {
     myDashboard: "My Dashboard",
     termsAndPrivacy: "Terms and Privacy",
     logout: "Logout",
+    login: "Login",
   },
 };
 

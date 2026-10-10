@@ -12,6 +12,7 @@ interface ToastMessageProps {
   width?: string;
   dispatchFn: () => UnknownAction;
 }
+
 const ToasMessage = ({
   message,
   color,
@@ -19,29 +20,33 @@ const ToasMessage = ({
   dispatchFn,
 }: ToastMessageProps) => {
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    const timeout = setTimeout(() => {
+      dispatch(dispatchFn());
+    }, 5000);
+
+    return () => clearTimeout(timeout);
+  }, [dispatch, message, color]);
   return (
     <div
       className={`toast-message toast-message--${color}`}
       style={{ width: width ?? "100%" }}
     >
       <p>{message}</p>
+
       <button onClick={() => dispatch(dispatchFn())}>
         <IconClear size={"1rem"} />
       </button>
+
+      <div className="toast-message__timer" />
     </div>
   );
 };
 
 export const ToastWrapper = () => {
   const toast = useAppSelector((s) => s.toast);
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      dispatch(clearToast());
-    }, 5000);
 
-    return () => clearTimeout(timeout);
-  }, []);
   return (
     <div className="toast-wrapper">
       <ToasMessage

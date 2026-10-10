@@ -1,0 +1,17 @@
+@use "../../../common/styles/colors";
+
+.loading-bar {
+  width: 85%;
+  height: 5rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  background: colors.$light-gray;
+
+  &__progress {
+    height: 100%;
+    width: 0;
+    background: colors.$blue;
+    border-radius: inherit;
+    transition: width 300ms ease-out;
+  }
+}

@@ -3,6 +3,9 @@ import { api } from "./apiService";
 interface LoginResponse {
   userId: string;
   email: string;
+  token: string;
+  expiresAt: number;
+  issuedAt: number;
   callResults: unknown;
 }
 
@@ -27,7 +30,7 @@ export const auth = api.injectEndpoints({
   endpoints: (builder) => ({
     login: builder.mutation<LoginResponse, LoginRequest>({
       query: (args) => ({
-        url: `/login`,
+        url: `/auth/login`,
         method: "POST",
         body: {
           email: args.email,
@@ -37,7 +40,7 @@ export const auth = api.injectEndpoints({
     }),
     signUp: builder.mutation<CreateUserResponse, CreateUserRequest>({
       query: ({ email, password, confirmPassword }) => ({
-        url: `/signup`,
+        url: `/auth/signup`,
         method: "POST",
         body: {
           email,
@@ -46,5 +49,24 @@ export const auth = api.injectEndpoints({
         },
       }),
     }),
+    logout: builder.mutation<void, void>({
+      query: () => ({
+        url: "/auth/logout",
+        method: "POST",
+      }),
+    }),
+    refresh: builder.mutation<LoginResponse, void>({
+      query: () => ({
+        url: "/auth/refresh",
+        method: "POST",
+      }),
+    }),
   }),
 });
+
+export const {
+  useLoginMutation,
+  useSignUpMutation,
+  useLogoutMutation,
+  useRefreshMutation,
+} = auth;

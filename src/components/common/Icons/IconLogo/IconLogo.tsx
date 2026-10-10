@@ -1,43 +1,17 @@
+import logo from "./logo.png";
+
 interface IconLogoProps {
   width?: number | string;
   height?: number | string;
+  borderRadius?: number | string;
 }
 
-const IconLogo = ({ width = 124, height = 162 }: IconLogoProps) => {
-  return (
-    <svg
-      width={width}
-      height={height}
-      viewBox="0 0 124 162"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <circle cx="38" cy="97" r="38" fill="#2F7956" />
-      <circle cx="63.5" cy="37.5" r="37.5" fill="#2E473B" />
-      <circle cx="68" cy="128.5" r="33" fill="#163828" />
-      <line
-        x1="11.7643"
-        y1="121.15"
-        x2="86.7643"
-        y2="12.1497"
-        stroke="white"
-        strokeWidth="3"
-      />
-      <path
-        d="M87.7204 68.1581C134.511 124.803 153.545 -14.4601 10 119"
-        stroke="white"
-        strokeWidth="3"
-      />
-      <line
-        x1="86.5"
-        y1="128"
-        x2="86.5"
-        y2="9"
-        stroke="white"
-        strokeWidth="3"
-      />
-    </svg>
-  );
+const IconLogo = ({
+  width = 124,
+  height = 124,
+  borderRadius,
+}: IconLogoProps) => {
+  return <img src={logo} alt="Logo" style={{ borderRadius, width, height }} />;
 };
 
 export default IconLogo;

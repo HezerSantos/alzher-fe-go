@@ -1,0 +1,14 @@
+@use "../../../common//styles/colors";
+
+.logo-base {
+  background-color: colors.$emerald;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15% 5%;
+  height: 100vh;
+
+  @media (max-width: 1500px) {
+    display: none;
+  }
+}
