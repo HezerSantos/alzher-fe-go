@@ -58,9 +58,120 @@ type UpdateActivityReqest = METHODActivityURI & UpdateActivityBody;
 
 interface UpdateActivityResponse {
   transaction: Transaction;
-  updatedTransaction?: Transaction;
+  updatedTransaction?: Transaction | null;
   updatedMap: Record<string, any>;
 }
+
+interface DashboardAnalyticsInfo {
+  header: string;
+  amountSpent: number | null;
+  primarySubHeader: string | null;
+  primarySubValue: string | null;
+  secondarySubHeader: string | null;
+  secondarySubValue: string | null;
+}
+
+interface YearlyData {
+  year: number;
+  total: number;
+}
+
+interface CategoryData {
+  category: string;
+  "Yearly Average": number;
+  "Monthly Average": number;
+  "Daily Average": number;
+  total: number;
+}
+
+interface OverviewData {
+  month: string;
+  [year: string]: string | number;
+}
+
+interface ScatterData {
+  dateOfMonth: number;
+  dailyAverage: number;
+}
+
+interface GetAnalyticsResponse {
+  dashboardAnalyticsInfo: DashboardAnalyticsInfo[] | null;
+  yearlyData: YearlyData[] | null;
+  categoryData: CategoryData[] | null;
+  overviewData: OverviewData[] | null;
+  scatterData: ScatterData[] | null;
+}
+
+interface GetOverviewRequest {
+  year: number;
+  semester: 1 | 2;
+}
+
+interface OverviewDetailsItem {
+  header: string;
+  price: string | number;
+  details?: {
+    heading: string;
+    value: string;
+  }[];
+}
+
+interface OverviewChartData {
+  month: string;
+  [year: string]: string | number;
+}
+
+interface MonthItem {
+  month: string;
+  year: string;
+  highestCategory: string;
+  lowestCategory: string;
+  totalSpent: string;
+}
+
+interface CategoryOverview {
+  name: string;
+  amount: number;
+  totalTransactions: number;
+  percent: number;
+}
+
+interface GetOverviewResponse {
+  year: string;
+  semester: number;
+  overviewDetailsItems: OverviewDetailsItem[];
+  chartData: OverviewChartData[] | null;
+  monthItems: MonthItem[] | null;
+  yearList: number[];
+  categoryOverview: CategoryOverview[];
+  callResults?: Record<string, unknown>;
+}
+
+interface AITransaction {
+  postDate: string;
+  description: string;
+  amount: number;
+}
+
+interface AlzherMLTransaction {
+  month: string;
+  day: number;
+  year: number;
+  description: string;
+  price: number;
+  category: string;
+}
+
+interface AITransactionsRequest {
+  files: File[];
+}
+
+interface AITransactionsResponse {
+  transactions: Record<string, AITransaction[]>;
+  predictedTransactions: Record<string, AlzherMLTransaction[]>;
+  callResults?: Record<string, unknown>;
+}
+
 const dashboard = api.injectEndpoints({
   endpoints: (builder) => ({
     getActivity: builder.query<GetActivityResponse, GetActivityRequestParams>({
@@ -98,7 +209,43 @@ const dashboard = api.injectEndpoints({
         };
       },
     }),
+    getAnalytics: builder.query<GetAnalyticsResponse, void>({
+      query: () => ({
+        url: "/dashboard/analytics",
+      }),
+    }),
+    getOverview: builder.query<GetOverviewResponse, GetOverviewRequest>({
+      query: (params) => ({
+        url: "/dashboard/overview",
+        params,
+      }),
+    }),
+    scanDocuments: builder.mutation<
+      AITransactionsResponse,
+      AITransactionsRequest
+    >({
+      query: ({ files }) => {
+        const formData = new FormData();
+
+        files.forEach((file) => {
+          formData.append("files", file);
+        });
+
+        return {
+          url: "/dashboard/scan",
+          method: "POST",
+          body: formData,
+        };
+      },
+    }),
   }),
 });
 
-export const { useGetActivityQuery } = dashboard;
+export const {
+  useGetActivityQuery,
+  useDeleteTransactiopnMutation,
+  useUpdateTransactionMutation,
+  useGetAnalyticsQuery,
+  useGetOverviewQuery,
+  useScanDocumentsMutation,
+} = dashboard;
