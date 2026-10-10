@@ -62,14 +62,14 @@ const useLogout = () => {
       dispatch(logout());
       dispatch(
         setToast({
-          msg: "Successfully Logged Out",
+          msg: defaultContent.toast.logoutSuccess,
           error: false,
         }),
       );
     } catch (e) {
       dispatch(
         setToast({
-          msg: "Error Logging Out",
+          msg: defaultContent.toast.logoutError,
           error: true,
         }),
       );
