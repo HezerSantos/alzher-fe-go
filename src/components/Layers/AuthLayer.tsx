@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 import { useAppSelector } from "../../reducers/hooks";
-import Unauthorized from "../../pages/Errors/Unauthorized";
+import Unauthorized from "../../Pages/Errors/Unauthorized";
 
 interface AuthLayerProps {
   children: ReactNode;

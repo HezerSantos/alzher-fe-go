@@ -2,11 +2,15 @@ import { configureStore } from "@reduxjs/toolkit";
 import bootReducer from "./bootSlice";
 import authReducer from "./authSlice";
 import { api } from "../services/apiService";
+import toastReducer from "./toastSlice";
+import errorReducer from "./errorSlice";
 
 const store = configureStore({
   reducer: {
     boot: bootReducer,
     auth: authReducer,
+    toast: toastReducer,
+    error: errorReducer,
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>

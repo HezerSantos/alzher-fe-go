@@ -1,16 +1,16 @@
-import App from "./App";
-import Activity from "./pages/Dashboard/Activity";
-import Analytics from "./pages/Dashboard/Analytics";
-import Dashboard from "./pages/Dashboard/Dashboard";
-import Overview from "./pages/Dashboard/Overview";
-import Scan from "./pages/Dashboard/Scan";
-import Home from "./pages/Home";
-import TermsAndPrivacy from "./pages/TermsAndPrivacy/TermsAndPrivacy";
+import AlzherClient from "./AlzherClient";
+import Activity from "./Pages/Dashboard/Activity";
+import Analytics from "./Pages/Dashboard/Analytics";
+import Dashboard from "./Pages/Dashboard/Dashboard";
+import Overview from "./Pages/Dashboard/Overview";
+import Scan from "./Pages/Dashboard/Scan";
+import Home from "./Pages/Home/Home";
+import TermsAndPrivacy from "./Pages/TermsAndPrivacy/TermsAndPrivacy";
 
 const routes = [
   {
     path: "/",
-    element: <App />,
+    element: <AlzherClient />,
     errorElement: null,
     children: [
       {

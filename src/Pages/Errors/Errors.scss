@@ -1,0 +1,24 @@
+@use "../../common/styles/colors";
+
+.error {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 1rem;
+
+  & > p {
+    font-size: 2rem;
+    font-weight: 500;
+  }
+}
+
+.back-to-home {
+  padding: 1rem 1rem;
+  border-radius: 0.5rem;
+  color: colors.$white;
+  background-color: colors.$blue;
+}

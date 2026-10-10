@@ -1,0 +1,18 @@
+@use "../../../common/styles/colors";
+
+.input-container {
+  position: relative;
+}
+
+.text-input {
+  display: block;
+  outline: none;
+}
+
+.label-comp {
+  position: absolute;
+  transition: 0.2s ease;
+  pointer-events: none;
+  color: colors.$gray;
+  font-size: 0.75rem;
+}

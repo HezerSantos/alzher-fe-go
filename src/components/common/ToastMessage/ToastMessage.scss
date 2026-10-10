@@ -1,0 +1,116 @@
+@use "../../../common/styles/colors";
+
+.toast-message {
+  width: 100%;
+  min-height: 3.25rem;
+
+  box-sizing: border-box;
+  padding: 0.75rem 3rem 0.75rem 1.1rem;
+
+  display: flex;
+  align-items: center;
+
+  position: relative;
+
+  border-radius: 0.6rem;
+
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.35;
+
+  box-shadow:
+    0 8px 24px rgba(0, 0, 0, 0.12),
+    0 2px 6px rgba(0, 0, 0, 0.06);
+
+  animation: toast-message-enter 0.2s ease-out;
+
+  &::before {
+    content: "";
+
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+
+    width: 0.25rem;
+
+    border-radius: 0.6rem 0 0 0.6rem;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  &--red {
+    background-color: colors.$white;
+    color: colors.$dark-gray;
+
+    border: 1px solid rgba(230, 23, 23, 0.2);
+
+    &::before {
+      background-color: colors.$red;
+    }
+  }
+
+  &--green {
+    background-color: colors.$white;
+    color: colors.$dark-gray;
+
+    border: 1px solid rgba(23, 184, 71, 0.2);
+
+    &::before {
+      background-color: colors.$success-green;
+    }
+  }
+
+  & > button {
+    position: absolute;
+    right: 0.65rem;
+
+    width: 1.75rem;
+    height: 1.75rem;
+
+    padding: 0;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+    border-radius: 0.4rem;
+
+    background-color: transparent;
+    color: colors.$gray;
+
+    cursor: pointer;
+
+    transition:
+      background-color 0.15s ease,
+      color 0.15s ease;
+
+    &:hover {
+      background-color: colors.$light-gray;
+      color: colors.$dark-gray;
+    }
+  }
+}
+
+@keyframes toast-message-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-0.4rem);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.toast-wrapper {
+  position: fixed;
+  z-index: 10;
+  top: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+}
