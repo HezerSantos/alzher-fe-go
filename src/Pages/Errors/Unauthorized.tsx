@@ -7,7 +7,7 @@ const Unauthorized = () => {
   const navigate = useNavigate();
   return (
     <div className="error">
-      <IconLogo width={"15rem"} height={"15rem"} />
+      <IconLogo width={"15rem"} height={"15rem"} logoKey="401" />
       <p>{defaultContent.unauthorized}</p>
       <Button
         text={defaultContent.backToHome}

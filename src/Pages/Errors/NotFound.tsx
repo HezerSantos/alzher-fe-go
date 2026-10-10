@@ -10,13 +10,13 @@ const NotFound = () => {
   const dispatch = useAppDispatch();
   return (
     <div className="error">
-      <IconLogo width={"15rem"} height={"15rem"} />
+      <IconLogo width={"15rem"} height={"15rem"} logoKey="404_NF" />
       <p>{defaultContent.notFound}</p>
       <Button
         text={defaultContent.backToHome}
         className="back-to-home"
         onClick={() => {
-          navigate("/admin/request-portal");
+          navigate("/");
           dispatch(clearErrors());
         }}
       />

@@ -4,6 +4,7 @@ import Analytics from "./Pages/Dashboard/Analytics";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Overview from "./Pages/Dashboard/Overview";
 import Scan from "./Pages/Dashboard/Scan";
+import NotFound from "./Pages/Errors/NotFound";
 import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
 import TermsAndPrivacy from "./Pages/TermsAndPrivacy/TermsAndPrivacy";
@@ -12,7 +13,7 @@ const routes = [
   {
     path: "/",
     element: <AlzherClient />,
-    errorElement: null,
+    errorElement: <NotFound />,
     children: [
       {
         index: true,
