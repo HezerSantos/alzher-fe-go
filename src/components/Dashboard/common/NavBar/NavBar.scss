@@ -1,9 +1,75 @@
 @use "../../../../common/styles/colors";
 
+.dash-nav-container {
+  --nav-expanded-width: 15rem;
+  --nav-collapsed-width: 4.5rem;
+  --nav-transition: 250ms ease;
+
+  .dash-nav-expanded,
+  .dash-nav-collapsed {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100svh;
+    overflow: hidden;
+
+    transition:
+      width var(--nav-transition),
+      opacity var(--nav-transition);
+
+    will-change: width, opacity;
+  }
+
+  .dash-nav-expanded {
+    width: var(--nav-expanded-width);
+    opacity: 1;
+    z-index: 2;
+    pointer-events: auto;
+  }
+
+  .dash-nav-collapsed {
+    width: var(--nav-collapsed-width);
+    opacity: 0;
+    z-index: 1;
+    pointer-events: none;
+  }
+
+  &.is-collapsed {
+    .dash-nav-expanded {
+      width: var(--nav-collapsed-width);
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .dash-nav-collapsed {
+      width: var(--nav-collapsed-width);
+      opacity: 1;
+      pointer-events: auto;
+    }
+  }
+
+  &.is-open {
+    .dash-nav-expanded {
+      width: var(--nav-expanded-width);
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .dash-nav-collapsed {
+      width: var(--nav-collapsed-width);
+      opacity: 0;
+      pointer-events: none;
+    }
+  }
+}
+
+// Expanded navigation
 .dash-nav {
-  position: fixed;
-  width: 15rem;
-  height: 100svh;
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
   display: grid;
   grid-template-rows: 5rem 1fr 1fr 1fr;
 
@@ -21,28 +87,41 @@
     align-items: center;
     justify-content: space-between;
     padding-inline: 1rem !important;
+
     border-bottom: 1px solid colors.$warm-gray;
 
     & > p {
       flex: 1;
       margin-left: 0.75rem;
-      font-weight: 700;
-      font-size: 1.15rem;
-      letter-spacing: -0.035em;
+
       color: colors.$forest;
+      font-size: 1.15rem;
+      font-weight: 700;
+      letter-spacing: -0.035em;
     }
 
-    // Keep the existing arrow icon visually subtle.
-    & > :last-child {
-      color: colors.$gray;
-      transition:
-        color 180ms ease,
-        transform 180ms ease;
-    }
+    & > button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+      padding: 0;
 
-    &:hover > :last-child {
-      color: colors.$jade;
-      transform: translateX(2px);
+      border: none;
+      background-color: transparent;
+      cursor: pointer;
+
+      transition: opacity 180ms ease;
+
+      &:hover {
+        opacity: 0.7;
+      }
+
+      &:focus-visible {
+        outline: 2px solid colors.$jade;
+        outline-offset: 3px;
+        border-radius: 0.5rem;
+      }
     }
   }
 
@@ -53,10 +132,10 @@
     padding-top: 1.5rem;
     padding-bottom: 1rem;
 
-    // Section headings
     & > p {
       margin: 0 0 0.5rem;
       padding-inline: 0.75rem;
+
       color: colors.$gray;
       font-size: 0.7rem;
       font-weight: 700;
@@ -66,28 +145,27 @@
 
     &__item {
       position: relative;
+
       display: flex;
       align-items: center;
       gap: 0.85rem;
 
       min-height: 2.75rem;
       padding: 0.65rem 0.75rem 0.65rem 1rem;
+
       border-radius: 0.65rem;
 
       color: colors.$dark-gray;
-      text-decoration: none;
       font-size: 0.9rem;
       font-weight: 500;
+      text-decoration: none;
 
       transition:
         background-color 180ms ease,
-        color 180ms ease,
-        transform 180ms ease;
+        color 180ms ease;
 
-      // Keep icon dimensions consistent.
       & > svg {
         flex-shrink: 0;
-        transition: color 180ms ease;
       }
 
       & > p {
@@ -95,13 +173,11 @@
         line-height: 1.4;
       }
 
-      // Hover state
       &:hover {
         background-color: rgba(52, 133, 93, 0.08);
         color: colors.$forest;
       }
 
-      // Selected route indicator
       &--selected {
         background-color: rgba(52, 133, 93, 0.12);
         color: colors.$forest;
@@ -109,11 +185,13 @@
 
         &::after {
           position: absolute;
-          content: "";
+          top: 50%;
+          left: -0.75rem;
+
           width: 4px;
           height: 1.5rem;
-          left: -0.75rem;
-          top: 50%;
+
+          content: "";
           transform: translateY(-50%);
 
           background-color: colors.$jade;
@@ -121,7 +199,6 @@
         }
       }
 
-      // Smooth keyboard navigation
       &:focus-visible {
         outline: 2px solid colors.$jade;
         outline-offset: 2px;
@@ -130,9 +207,119 @@
   }
 }
 
+// Collapsed navigation
+.dash-nav-collapsed-inner {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+
+  display: grid;
+  grid-template-rows: 5rem 1fr 1fr 1fr;
+  justify-items: center;
+
+  background-color: colors.$ivory;
+  border-right: 1px solid colors.$warm-gray;
+  box-shadow: 4px 0 20px rgba(46, 71, 59, 0.04);
+  color: colors.$forest;
+
+  & > button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    padding: 0;
+
+    border: none;
+    background-color: transparent;
+    cursor: pointer;
+
+    transition: opacity 180ms ease;
+
+    &:hover {
+      opacity: 0.7;
+    }
+
+    &:focus-visible {
+      outline: 2px solid colors.$jade;
+      outline-offset: -4px;
+    }
+  }
+
+  & > .dash-nav__section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+
+    width: 100%;
+    padding: 1.25rem 0.5rem 0.75rem;
+
+    & > a {
+      position: relative;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      width: 3rem;
+      height: 3rem;
+      flex-shrink: 0;
+
+      border-radius: 0.75rem;
+
+      color: colors.$dark-gray;
+      text-decoration: none;
+
+      transition:
+        background-color 180ms ease,
+        color 180ms ease;
+
+      & > svg {
+        flex-shrink: 0;
+      }
+
+      &:hover {
+        background-color: rgba(52, 133, 93, 0.08);
+        color: colors.$forest;
+      }
+
+      &.dash-nav__section__item--selected {
+        background-color: rgba(52, 133, 93, 0.12);
+        color: colors.$forest;
+
+        &::after {
+          position: absolute;
+          top: 50%;
+          left: -0.5rem;
+
+          width: 4px;
+          height: 1.5rem;
+
+          content: "";
+          transform: translateY(-50%);
+
+          background-color: colors.$jade;
+          border-radius: 0 4px 4px 0;
+        }
+      }
+
+      &:focus-visible {
+        outline: 2px solid colors.$jade;
+        outline-offset: 2px;
+      }
+    }
+  }
+}
+
+// Reduced-motion accessibility
 @media (prefers-reduced-motion: reduce) {
+  .dash-nav-container,
+  .dash-nav-container *,
   .dash-nav,
-  .dash-nav * {
+  .dash-nav-collapsed-inner {
     transition: none !important;
+    will-change: auto;
   }
 }

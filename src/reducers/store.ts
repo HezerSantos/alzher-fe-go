@@ -5,6 +5,7 @@ import { api } from "../services/apiService";
 import toastReducer from "./toastSlice";
 import errorReducer from "./errorSlice";
 import accessReducer from "./accessSlice";
+import dashboardReducer from "./dashboardSlice";
 
 const store = configureStore({
   reducer: {
@@ -13,6 +14,7 @@ const store = configureStore({
     toast: toastReducer,
     error: errorReducer,
     access: accessReducer,
+    dashboard: dashboardReducer,
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>

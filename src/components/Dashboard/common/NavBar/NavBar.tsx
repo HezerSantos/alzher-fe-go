@@ -6,6 +6,9 @@ import IconDashLinks, {
 } from "../../../common/Icons/IconDashLinks/IconDashLinks";
 import IconLogo from "../../../common/Icons/IconLogo/IconLogo";
 import IconRightArrow from "../../../common/Icons/IconRightArrow/IconRightArrow";
+import React, { useState, type SetStateAction } from "react";
+import { useAppDispatch, useAppSelector } from "../../../../reducers/hooks";
+import { toggleNav } from "../../../../reducers/dashboardSlice";
 
 const SECTION_ONE = [
   {
@@ -62,7 +65,7 @@ interface NavItemProps {
   icon: IconDashLinkName;
 }
 
-const NavItem = ({ name, link, icon }: NavItemProps) => {
+const NavItemExpanded = ({ name, link, icon }: NavItemProps) => {
   const { pathname } = useLocation();
   return (
     <>
@@ -76,57 +79,136 @@ const NavItem = ({ name, link, icon }: NavItemProps) => {
     </>
   );
 };
-const NavBar = () => {
+
+const NavExpanded = () => {
+  const navOpen = useAppSelector((s) => s.dashboard.navOpen);
+  const dispatch = useAppDispatch();
   return (
-    <>
-      <nav className="dash-nav">
-        <div className="dash-nav__header">
-          <IconLogo width={"4rem"} height={"4rem"} borderRadius={"4rem"} />
-          <p>{defaultContent.dashboard.baseName}</p>
-          <IconRightArrow />
-        </div>
-        <div className="dash-nav__section">
-          <p>{defaultContent.dashboard.sOne}</p>
-          {SECTION_ONE.map((s) => {
-            return (
-              <NavItem
-                key={s.name}
-                name={s.name}
-                icon={s.icon as IconDashLinkName}
-                link={s.link}
-              />
-            );
-          })}
-        </div>
-        <div className="dash-nav__section">
-          <p>{defaultContent.dashboard.sTwo}</p>
-          {SECTION_TWO.map((s) => {
-            return (
-              <NavItem
-                key={s.name}
-                name={s.name}
-                icon={s.icon as IconDashLinkName}
-                link={s.link}
-              />
-            );
-          })}
-        </div>
-        <div className="dash-nav__section">
-          <p>{defaultContent.dashboard.sThree}</p>
-          {SECTION_THREE.map((s) => {
-            return (
-              <NavItem
-                key={s.name}
-                name={s.name}
-                icon={s.icon as IconDashLinkName}
-                link={s.link}
-              />
-            );
-          })}
-        </div>
-      </nav>
-    </>
+    <nav className="dash-nav">
+      <div className="dash-nav__header">
+        <IconLogo width={"4rem"} height={"4rem"} borderRadius={"4rem"} />
+        <p>{defaultContent.dashboard.baseName}</p>
+        <button onClick={() => dispatch(toggleNav())}>
+          <IconRightArrow flip={navOpen} />
+        </button>
+      </div>
+      <div className="dash-nav__section">
+        <p>{defaultContent.dashboard.sOne}</p>
+        {SECTION_ONE.map((s) => {
+          return (
+            <NavItemExpanded
+              key={s.name}
+              name={s.name}
+              icon={s.icon as IconDashLinkName}
+              link={s.link}
+            />
+          );
+        })}
+      </div>
+      <div className="dash-nav__section">
+        <p>{defaultContent.dashboard.sTwo}</p>
+        {SECTION_TWO.map((s) => {
+          return (
+            <NavItemExpanded
+              key={s.name}
+              name={s.name}
+              icon={s.icon as IconDashLinkName}
+              link={s.link}
+            />
+          );
+        })}
+      </div>
+      <div className="dash-nav__section">
+        <p>{defaultContent.dashboard.sThree}</p>
+        {SECTION_THREE.map((s) => {
+          return (
+            <NavItemExpanded
+              key={s.name}
+              name={s.name}
+              icon={s.icon as IconDashLinkName}
+              link={s.link}
+            />
+          );
+        })}
+      </div>
+    </nav>
   );
 };
 
+const NavItemCollapsed = ({ icon, link }: Omit<NavItemProps, "name">) => {
+  const { pathname } = useLocation();
+
+  return (
+    <Link
+      to={link}
+      className={pathname === link ? "dash-nav__section__item--selected" : ""}
+      aria-current={pathname === link ? "page" : undefined}
+    >
+      <IconDashLinks name={icon} />
+    </Link>
+  );
+};
+
+const NavCollapsed = () => {
+  const navOpen = useAppSelector((s) => s.dashboard.navOpen);
+  const dispatch = useAppDispatch();
+  return (
+    <nav className="dash-nav-collapsed-inner">
+      <button onClick={() => dispatch(toggleNav())}>
+        <IconRightArrow flip={navOpen} />
+      </button>
+      <div className="dash-nav__section">
+        {SECTION_ONE.map((s) => {
+          return (
+            <NavItemCollapsed
+              key={s.name}
+              icon={s.icon as IconDashLinkName}
+              link={s.link}
+            />
+          );
+        })}
+      </div>
+      <div className="dash-nav__section">
+        {SECTION_TWO.map((s) => {
+          return (
+            <NavItemCollapsed
+              key={s.name}
+              icon={s.icon as IconDashLinkName}
+              link={s.link}
+            />
+          );
+        })}
+      </div>
+      <div className="dash-nav__section">
+        {SECTION_THREE.map((s) => {
+          return (
+            <NavItemCollapsed
+              key={s.name}
+              icon={s.icon as IconDashLinkName}
+              link={s.link}
+            />
+          );
+        })}
+      </div>
+    </nav>
+  );
+};
+
+const NavBar = () => {
+  const navOpen = useAppSelector((s) => s.dashboard.navOpen);
+
+  return (
+    <div
+      className={`dash-nav-container ${navOpen ? "is-open" : "is-collapsed"}`}
+    >
+      <div className="dash-nav-expanded">
+        <NavExpanded />
+      </div>
+
+      <div className="dash-nav-collapsed">
+        <NavCollapsed />
+      </div>
+    </div>
+  );
+};
 export default NavBar;

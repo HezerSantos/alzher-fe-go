@@ -1,8 +1,9 @@
 interface IconRightArrowProps {
   size?: number;
+  flip?: boolean;
 }
 
-const IconRightArrow = ({ size = 28 }: IconRightArrowProps) => {
+const IconRightArrow = ({ size = 28, flip }: IconRightArrowProps) => {
   return (
     <svg
       width={size}
@@ -10,6 +11,7 @@ const IconRightArrow = ({ size = 28 }: IconRightArrowProps) => {
       viewBox="0 0 28 28"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
+      style={{ transform: flip ? "rotate(180deg)" : "none" }}
     >
       <circle cx="14" cy="14" r="12.25" stroke="#0F172A" strokeWidth="1.5" />
 
