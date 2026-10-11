@@ -1,5 +1,5 @@
 import AlzherClient from "./AlzherClient";
-import Activity from "./Pages/Dashboard/Activity";
+import Activity from "./Pages/Dashboard/Activity/Activity";
 import Analytics from "./Pages/Dashboard/Analytics/Analytics";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Overview from "./Pages/Dashboard/Overview/Overview";

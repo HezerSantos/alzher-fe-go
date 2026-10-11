@@ -2,22 +2,71 @@
 @use "../../common/styles/fonts";
 
 .tap-main {
-  margin-top: 5rem;
+  width: 100%;
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: clamp(3rem, 6vw, 5rem) clamp(1.25rem, 5vw, 2rem);
+
+  display: flex;
+  flex-direction: column;
 
   & > .tap-item {
-    padding: 1rem 25%;
     display: flex;
     flex-direction: column;
     gap: 1rem;
+    padding-block: 2rem;
+    border-bottom: 1px solid rgba(colors.$forest, 0.15);
+
+    &:first-child {
+      padding-top: 0;
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+      border-bottom: none;
+    }
   }
 }
 
 .tap-item {
   & > h1 {
+    margin: 0;
+    color: colors.$forest;
     font-family: fonts.$primary;
+    font-size: clamp(1.5rem, 2.5vw, 2rem);
+    font-weight: 700;
+    line-height: 1.25;
+    text-wrap: balance;
   }
 
   & > p {
+    margin: 0;
+    color: colors.$dark-gray;
     font-family: fonts.$secondary;
+    font-size: 1rem;
+    line-height: 1.85;
+    overflow-wrap: anywhere;
+  }
+}
+
+@media (max-width: 600px) {
+  .tap-main {
+    padding: 2.5rem 1.25rem;
+
+    & > .tap-item {
+      gap: 0.85rem;
+      padding-block: 1.5rem;
+    }
+  }
+
+  .tap-item {
+    & > h1 {
+      font-size: 1.4rem;
+    }
+
+    & > p {
+      font-size: 0.95rem;
+      line-height: 1.75;
+    }
   }
 }
