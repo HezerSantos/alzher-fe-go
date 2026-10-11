@@ -35,3 +35,14 @@
     background-color: colors.$forest;
   }
 }
+
+.overview-charts {
+  display: grid;
+  grid-template-columns: 20rem 1fr;
+
+  &__month-items {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+}

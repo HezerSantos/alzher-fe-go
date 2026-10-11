@@ -1,3 +1,4 @@
+import type { ReactNode } from "react";
 import "./Button.scss";
 import { Spinner } from "./Spinner";
 
@@ -8,6 +9,7 @@ interface ButtonProps {
   isLoading?: boolean;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
+  children?: ReactNode;
 }
 const Button = ({
   text,
@@ -16,6 +18,7 @@ const Button = ({
   isLoading,
   type = "button",
   disabled,
+  children,
 }: ButtonProps) => {
   return (
     <button
@@ -31,6 +34,7 @@ const Button = ({
       className={`button-component ${className ? className : ""}`}
     >
       {isLoading ? <Spinner /> : <>{text}</>}
+      {children && children}
     </button>
   );
 };

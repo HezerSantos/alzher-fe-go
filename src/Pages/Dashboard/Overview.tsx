@@ -9,6 +9,9 @@ import defaultContent from "../../content/dashboardOverview";
 import { useAppSelector } from "../../reducers/hooks";
 import { useGetOverviewQuery } from "../../services/dashboardService";
 import "./Overview.scss";
+import MonthItem, {
+  MonthItemLoader,
+} from "../../components/Dashboard/Overview/MonthItem/MonthItem";
 const Overview = () => {
   const { semester, year } = useAppSelector((s) => s.dashboard.overview);
   const { data, isFetching, refetch } = useGetOverviewQuery({ semester, year });
@@ -42,6 +45,32 @@ const Overview = () => {
               })}
             </>
           )}
+        </div>
+        <div className="overview-charts">
+          <div className="overview-charts__month-items">
+            {isFetching ? (
+              <>
+                {[...Array(6)].map((_, i) => (
+                  <MonthItemLoader key={i} />
+                ))}
+              </>
+            ) : (
+              <>
+                {data?.monthItems?.map((mi, i) => {
+                  return (
+                    <MonthItem
+                      key={i}
+                      month={mi.month}
+                      year={mi.year}
+                      lowestCategory={mi.lowestCategory}
+                      highestCategory={mi.highestCategory}
+                      totalSpent={mi.totalSpent}
+                    />
+                  );
+                })}
+              </>
+            )}
+          </div>
         </div>
       </DashboardContent>
     </>
