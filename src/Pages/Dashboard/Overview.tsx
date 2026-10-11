@@ -12,6 +12,10 @@ import "./Overview.scss";
 import MonthItem, {
   MonthItemLoader,
 } from "../../components/Dashboard/Overview/MonthItem/MonthItem";
+import OverviewChart, {
+  OverviewChartLoader,
+} from "../../components/Dashboard/common/Charts/OverviewChart/OverviewChart";
+
 const Overview = () => {
   const { semester, year } = useAppSelector((s) => s.dashboard.overview);
   const { data, isFetching, refetch } = useGetOverviewQuery({ semester, year });
@@ -71,6 +75,19 @@ const Overview = () => {
               </>
             )}
           </div>
+          {isFetching ? (
+            <>
+              <OverviewChartLoader />
+            </>
+          ) : (
+            <>
+              <OverviewChart
+                overviewData={data?.chartData}
+                yearOne={data?.year ?? "2026"}
+                yearTwo={false}
+              />
+            </>
+          )}
         </div>
       </DashboardContent>
     </>
