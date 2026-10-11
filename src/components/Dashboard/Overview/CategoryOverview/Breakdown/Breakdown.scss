@@ -1,0 +1,26 @@
+@use "../../../../../common/styles/colors";
+
+.breakdown {
+  width: 25rem;
+  padding: 1rem;
+  &__header {
+    display: flex;
+    justify-content: space-between;
+  }
+  &__item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    & > div:nth-of-type(1) {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      & > span {
+        display: block;
+        width: 1rem;
+        height: 1rem;
+        border-radius: 1rem;
+      }
+    }
+  }
+}

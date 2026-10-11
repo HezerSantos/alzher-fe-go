@@ -129,7 +129,7 @@ interface MonthItem {
   totalSpent: string;
 }
 
-interface CategoryOverview {
+export interface CategoryOverview {
   name: string;
   amount: number;
   totalTransactions: number;

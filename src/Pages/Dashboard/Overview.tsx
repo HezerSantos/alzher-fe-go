@@ -15,6 +15,9 @@ import MonthItem, {
 import OverviewChart, {
   OverviewChartLoader,
 } from "../../components/Dashboard/common/Charts/OverviewChart/OverviewChart";
+import CategoryOverview from "../../components/Dashboard/Overview/CategoryOverview/CategoryOverview";
+import Volume from "../../components/Dashboard/Overview/CategoryOverview/Volume/Volume";
+import BreakDown from "../../components/Dashboard/Overview/CategoryOverview/Breakdown/Breakdown";
 
 const Overview = () => {
   const { semester, year } = useAppSelector((s) => s.dashboard.overview);
@@ -89,6 +92,10 @@ const Overview = () => {
             </>
           )}
         </div>
+        <CategoryOverview>
+          <Volume categoryOverview={data?.categoryOverview} />
+          <BreakDown categoryOverview={data?.categoryOverview} />
+        </CategoryOverview>
       </DashboardContent>
     </>
   );
