@@ -1,0 +1,226 @@
+@use "../../../../common/styles/colors";
+
+.header-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+
+  min-width: 0;
+  padding: 1.5rem;
+
+  border: 1px solid rgba(colors.$forest, 0.12);
+  border-radius: 1rem;
+
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(colors.$jade, 0.13) 0%,
+      rgba(colors.$jade, 0.04) 35%,
+      transparent 65%
+    ),
+    linear-gradient(135deg, colors.$ivory 0%, #f8f6eb 100%);
+
+  box-shadow: 0 3px 10px rgba(colors.$forest, 0.06);
+
+  transition:
+    box-shadow 180ms ease,
+    transform 180ms ease,
+    border-color 180ms ease;
+
+  &::before {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+
+    background: linear-gradient(
+      90deg,
+      colors.$forest,
+      colors.$jade,
+      rgba(colors.$jade, 0.2)
+    );
+  }
+
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    width: 150px;
+    height: 150px;
+    top: -85px;
+    right: -55px;
+
+    border: 1px solid rgba(colors.$forest, 0.08);
+    border-radius: 50%;
+    box-shadow:
+      0 0 0 18px rgba(colors.$forest, 0.025),
+      0 0 0 36px rgba(colors.$forest, 0.02);
+
+    pointer-events: none;
+  }
+
+  & > p {
+    margin: 0;
+  }
+
+  & > p:nth-of-type(1) {
+    color: colors.$forest;
+    font-size: 0.9rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  & > p:nth-of-type(2) {
+    color: colors.$forest;
+    font-size: clamp(1.5rem, 2vw, 2rem);
+    font-weight: 700;
+    line-height: 1.25;
+    letter-spacing: -0.04em;
+    overflow-wrap: anywhere;
+    margin: 0.25rem 0 0.5rem;
+  }
+
+  & > p:nth-of-type(n + 3) {
+    color: colors.$gray;
+    font-size: 0.8rem;
+    font-weight: 500;
+    line-height: 1.5;
+  }
+
+  &:hover {
+    border-color: rgba(colors.$jade, 0.35);
+    box-shadow: 0 8px 22px rgba(colors.$forest, 0.1);
+    transform: translateY(-2px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-card {
+    transition: none;
+
+    &:hover {
+      transform: none;
+    }
+  }
+}
+
+.header-card-control {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+
+  min-width: 200px;
+  padding: 1.25rem;
+
+  border: 1px solid rgba(colors.$forest, 0.12);
+  border-radius: 1rem;
+
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(colors.$jade, 0.12) 0%,
+      transparent 55%
+    ),
+    linear-gradient(135deg, colors.$ivory 0%, #f8f6eb 100%);
+
+  box-shadow: 0 3px 10px rgba(colors.$forest, 0.06);
+
+  label {
+    margin-bottom: -0.5rem;
+    color: colors.$gray;
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  select {
+    width: 100%;
+    padding: 0.75rem 2.25rem 0.75rem 0.875rem;
+
+    border: 1px solid rgba(colors.$forest, 0.2);
+    border-radius: 0.65rem;
+
+    background-color: rgba(colors.$white, 0.7);
+    color: colors.$forest;
+
+    font: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+
+    cursor: pointer;
+    outline: none;
+
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease;
+
+    &:hover {
+      border-color: colors.$jade;
+    }
+
+    &:focus-visible {
+      border-color: colors.$jade;
+      box-shadow: 0 0 0 3px rgba(colors.$jade, 0.15);
+    }
+  }
+
+  &--periods {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  &--button {
+    width: 100%;
+    padding: 0.75rem 0.875rem;
+
+    border: 1px solid transparent;
+    border-radius: 0.65rem;
+
+    background-color: transparent;
+    color: colors.$forest;
+
+    font-size: 0.875rem;
+    font-weight: 600;
+    text-align: left;
+    text-decoration: none;
+
+    cursor: pointer;
+
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      color 180ms ease;
+
+    &:hover {
+      background-color: rgba(colors.$jade, 0.08);
+      border-color: rgba(colors.$jade, 0.2);
+    }
+
+    &:focus-visible {
+      outline: 2px solid colors.$jade;
+      outline-offset: 2px;
+    }
+
+    &.is-active {
+      background-color: colors.$forest;
+      border-color: colors.$forest;
+      color: colors.$ivory;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .header-card-control,
+  .header-card-control * {
+    transition: none;
+  }
+}

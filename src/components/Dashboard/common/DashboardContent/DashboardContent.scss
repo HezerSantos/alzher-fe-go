@@ -13,9 +13,11 @@
     line-height: 1.2;
   }
   &--open {
-    padding-inline: 18rem;
+    padding-left: 18rem;
+    padding-right: 3rem;
   }
   &--closed {
-    padding-inline: 6.5rem;
+    padding-left: 6.5rem;
+    padding-right: 2rem;
   }
 }
