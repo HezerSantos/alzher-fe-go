@@ -12,7 +12,6 @@ import ChartContainer from "../../../components/Dashboard/common/Charts/ChartCon
 import OverviewChart, {
   OverviewChartLoader,
 } from "../../../components/Dashboard/common/Charts/OverviewChart/OverviewChart";
-import { useEffect } from "react";
 import DailyScatterChart, {
   DailyScatterChartLoader,
 } from "../../../components/Dashboard/common/Charts/DailyChart/DailyChart";
