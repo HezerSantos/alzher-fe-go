@@ -1,0 +1,259 @@
+@use "../../../../common/styles/colors";
+@use "../../../../common/styles/fonts";
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  width: 100%;
+  padding-block: 1.25rem;
+  overflow: visible;
+
+  .input-container {
+    position: relative;
+    flex: 1;
+    min-width: 0;
+    max-width: 34rem;
+
+    &::before {
+      position: absolute;
+      top: 50%;
+      left: 1rem;
+      width: 0.8rem;
+      height: 0.8rem;
+      border: 1.8px solid rgba(colors.$forest, 0.55);
+      border-radius: 50%;
+      content: "";
+      transform: translateY(-60%);
+      pointer-events: none;
+    }
+
+    &::after {
+      position: absolute;
+      top: calc(50% + 0.2rem);
+      left: 1.75rem;
+      width: 0.35rem;
+      height: 1.5px;
+      background-color: rgba(colors.$forest, 0.55);
+      border-radius: 2px;
+      content: "";
+      transform: rotate(45deg);
+      transform-origin: left center;
+      pointer-events: none;
+    }
+  }
+
+  .text-input {
+    box-sizing: border-box;
+    width: 100%;
+    min-height: 2.9rem;
+    padding: 0.8rem 1rem 0.8rem 2.8rem;
+    color: colors.$forest;
+    background-color: colors.$white;
+    border: 1px solid rgba(colors.$forest, 0.14);
+    border-radius: 0.75rem;
+    font-family: fonts.$secondary;
+    font-size: 0.925rem;
+    transition:
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      background-color 180ms ease;
+
+    &::placeholder {
+      color: colors.$dark-gray;
+      opacity: 0.65;
+    }
+
+    &:hover {
+      border-color: rgba(colors.$forest, 0.3);
+    }
+
+    &:focus {
+      border-color: colors.$jade;
+      outline: none;
+      box-shadow: 0 0 0 3px rgba(colors.$jade, 0.12);
+    }
+  }
+}
+
+.toolbar__dropdown {
+  position: relative;
+  flex-shrink: 0;
+  overflow: visible;
+}
+
+.toolbar__dropdown-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.25rem;
+  min-width: 12rem;
+  min-height: 2.9rem;
+  padding: 0.7rem 1rem;
+  color: colors.$forest;
+  background-color: colors.$white;
+  border: 1px solid rgba(colors.$forest, 0.14);
+  border-radius: 0.75rem;
+  font-family: fonts.$secondary;
+  font-size: 0.925rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+
+  &:hover {
+    background-color: rgba(colors.$jade, 0.045);
+    border-color: rgba(colors.$jade, 0.65);
+  }
+
+  &:focus-visible {
+    outline: 2px solid colors.$jade;
+    outline-offset: 3px;
+  }
+
+  &[aria-expanded="true"] {
+    border-color: colors.$jade;
+    box-shadow: 0 0 0 3px rgba(colors.$jade, 0.1);
+  }
+}
+
+.toolbar__chevron {
+  display: inline-block;
+  font-size: 1rem;
+  transition:
+    transform 180ms ease,
+    color 180ms ease;
+
+  &--open {
+    color: colors.$forest;
+    transform: rotate(180deg);
+  }
+}
+
+.toolbar__dropdown-menu {
+  position: absolute;
+  z-index: 999; // Ensure it sits on top of all other elements
+  top: calc(100% + 0.55rem);
+  right: 0;
+  min-width: 13rem;
+  max-height: 18rem;
+  overflow-y: auto;
+  padding: 0.4rem;
+  background-color: colors.$white;
+  border: 1px solid rgba(colors.$forest, 0.1);
+  border-radius: 0.85rem;
+  box-shadow:
+    0 12px 30px rgba(colors.$black, 0.09),
+    0 2px 6px rgba(colors.$black, 0.035);
+  animation: toolbar-dropdown-enter 150ms ease-out;
+  overscroll-behavior: contain;
+
+  // Ensure it doesn't overflow off smaller viewports
+  @media (max-width: 600px) {
+    position: absolute;
+    left: 0;
+    right: auto;
+    width: 100vw; // Or adjust to fit screen padding
+    max-width: calc(100vw - 2rem);
+  }
+}
+
+.toolbar__dropdown-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 0.7rem 0.8rem;
+  color: colors.$dark-gray;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 0.55rem;
+  font-family: fonts.$secondary;
+  font-size: 0.9rem;
+  font-weight: 500;
+  text-align: left;
+  cursor: pointer;
+  transition:
+    color 150ms ease,
+    background-color 150ms ease,
+    border-color 150ms ease;
+
+  &:hover {
+    color: colors.$forest;
+    background-color: rgba(colors.$jade, 0.07);
+  }
+
+  &:focus-visible {
+    outline: 2px solid colors.$jade;
+    outline-offset: -2px;
+  }
+
+  &--active {
+    color: colors.$forest;
+    background-color: rgba(colors.$jade, 0.1);
+    border-color: rgba(colors.$jade, 0.12);
+    font-weight: 700;
+
+    span {
+      color: colors.$jade;
+      font-weight: 700;
+    }
+  }
+}
+
+@keyframes toolbar-dropdown-enter {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .toolbar {
+    align-items: stretch;
+    flex-direction: column;
+    gap: 0.85rem;
+
+    .input-container {
+      max-width: none;
+      width: 100%;
+    }
+  }
+
+  .toolbar__dropdown {
+    align-self: flex-start;
+    width: 100%;
+  }
+
+  .toolbar__dropdown-trigger {
+    width: 100%;
+  }
+
+  .toolbar__dropdown-menu {
+    right: 0;
+    left: 0;
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .toolbar__dropdown-menu {
+    animation: none;
+  }
+
+  .toolbar__dropdown-trigger,
+  .toolbar__chevron,
+  .toolbar__dropdown-option,
+  .text-input {
+    transition: none;
+  }
+}

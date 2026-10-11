@@ -1,6 +1,6 @@
 import { api } from "./apiService";
 
-interface TransactionItem {
+export interface TransactionItem {
   transactionId: string;
   category: string;
   description: string;
