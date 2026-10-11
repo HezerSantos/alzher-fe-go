@@ -13,6 +13,9 @@ import OverviewChart, {
   OverviewChartLoader,
 } from "../../../components/Dashboard/common/Charts/OverviewChart/OverviewChart";
 import { useEffect } from "react";
+import DailyScatterChart, {
+  DailyScatterChartLoader,
+} from "../../../components/Dashboard/common/Charts/DailyChart/DailyChart";
 const Analytics = () => {
   const { data, isFetching } = useGetAnalyticsQuery();
 
@@ -72,6 +75,13 @@ const Analytics = () => {
                 yearTwo={years?.[1] ?? false}
                 addBase={false}
               />
+            )}
+          </ChartContainer>
+          <ChartContainer header={defaultContent.daily} isLoading={isFetching}>
+            {isFetching ? (
+              <DailyScatterChartLoader />
+            ) : (
+              <DailyScatterChart scatterData={data?.scatterData} />
             )}
           </ChartContainer>
         </div>

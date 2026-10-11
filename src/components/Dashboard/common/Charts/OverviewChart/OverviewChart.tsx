@@ -159,7 +159,9 @@ export const OverviewChartLoader = ({
   addBase = true,
 }: OverviewChartLoaderProps) => {
   return (
-    <div className="overview-chart overview-chart--loader">
+    <div
+      className={`overview-chart overview-chart--loader ${addBase ? "overview-chart--add-base" : ""}`}
+    >
       {addBase && (
         <div className="overview-chart__heading">
           <div>
