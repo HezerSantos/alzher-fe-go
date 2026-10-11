@@ -23,4 +23,13 @@
     padding-left: 6.5rem;
     padding-right: 2rem;
   }
+
+  @media (max-width: 750px) {
+    &--open {
+      padding: 1rem;
+    }
+    &--closed {
+      padding: 1rem;
+    }
+  }
 }

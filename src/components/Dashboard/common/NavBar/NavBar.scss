@@ -323,3 +323,267 @@
     will-change: auto;
   }
 }
+
+.mobile-nav {
+  position: fixed;
+  z-index: 1001;
+  top: 0;
+  left: 0;
+  right: 0;
+  display: block;
+
+  &__header {
+    position: relative;
+    z-index: 1002;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 100%;
+    min-height: 4.25rem;
+    padding: 0.5rem 1rem;
+
+    border-bottom: 1px solid rgba(colors.$forest, 0.1);
+
+    background:
+      radial-gradient(
+        circle at 100% 0%,
+        rgba(colors.$jade, 0.1),
+        transparent 50%
+      ),
+      colors.$ivory;
+
+    box-shadow: 0 3px 14px rgba(colors.$forest, 0.05);
+  }
+
+  &__brand {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+
+    min-width: 0;
+
+    color: colors.$forest;
+    font-size: 1.2rem;
+    font-weight: 750;
+    letter-spacing: -0.035em;
+    text-decoration: none;
+
+    & > * {
+      flex-shrink: 0;
+    }
+  }
+
+  &__toggle {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+
+    width: 2.75rem;
+    height: 2.75rem;
+    padding: 0;
+
+    border: 1px solid rgba(colors.$forest, 0.12);
+    border-radius: 0.8rem;
+
+    background-color: rgba(colors.$white, 0.7);
+    cursor: pointer;
+
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease;
+
+    &:hover {
+      border-color: rgba(colors.$jade, 0.35);
+      background-color: rgba(colors.$jade, 0.08);
+    }
+
+    &:focus-visible {
+      outline: 2px solid colors.$jade;
+      outline-offset: 3px;
+    }
+
+    & > span {
+      display: block;
+
+      width: 1.2rem;
+      height: 2px;
+
+      border-radius: 2px;
+      background-color: colors.$forest;
+
+      transition:
+        transform 200ms ease,
+        opacity 200ms ease;
+    }
+
+    &--open {
+      & > span:first-child {
+        transform: translateY(7px) rotate(45deg);
+      }
+
+      & > span:nth-child(2) {
+        opacity: 0;
+      }
+
+      & > span:last-child {
+        transform: translateY(-7px) rotate(-45deg);
+      }
+    }
+  }
+
+  &__panel {
+    position: absolute;
+    z-index: 1001;
+    top: 100%;
+    left: 0;
+    right: 0;
+
+    max-height: calc(100dvh - 4.25rem);
+    padding: 0 1rem;
+
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+
+    border-bottom: 1px solid rgba(colors.$forest, 0.12);
+    border-radius: 0 0 1.25rem 1.25rem;
+
+    background: colors.$ivory;
+    box-shadow: 0 14px 30px rgba(colors.$forest, 0.12);
+
+    visibility: hidden;
+    opacity: 0;
+    transform: translateY(-0.5rem);
+    pointer-events: none;
+
+    transition:
+      opacity 180ms ease,
+      transform 180ms ease,
+      visibility 180ms ease;
+
+    &--open {
+      padding-top: 0.75rem;
+      padding-bottom: 1rem;
+
+      visibility: visible;
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+
+    padding: 0.65rem 0;
+
+    & + & {
+      border-top: 1px solid rgba(colors.$forest, 0.1);
+    }
+  }
+
+  &__section-title {
+    margin: 0 0 0.4rem;
+    padding: 0 0.75rem;
+
+    color: colors.$gray;
+    font-size: 0.7rem;
+    font-weight: 750;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  &__item {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    gap: 0.85rem;
+
+    min-height: 3rem;
+    padding: 0.7rem 0.85rem;
+
+    border-radius: 0.75rem;
+
+    color: colors.$dark-gray;
+    font-size: 0.9rem;
+    font-weight: 500;
+    text-decoration: none;
+
+    transition:
+      background-color 180ms ease,
+      color 180ms ease;
+
+    & > svg {
+      flex-shrink: 0;
+    }
+
+    &:hover {
+      background-color: rgba(colors.$jade, 0.08);
+      color: colors.$forest;
+    }
+
+    &--selected {
+      background-color: rgba(colors.$jade, 0.12);
+      color: colors.$forest;
+      font-weight: 700;
+    }
+
+    &:focus-visible {
+      outline: 2px solid colors.$jade;
+      outline-offset: 2px;
+    }
+  }
+
+  &__active-indicator {
+    flex-shrink: 0;
+
+    width: 0.45rem;
+    height: 0.45rem;
+    margin-left: auto;
+
+    border-radius: 50%;
+    background-color: colors.$jade;
+    box-shadow: 0 0 0 3px rgba(colors.$jade, 0.1);
+  }
+
+  &__backdrop {
+    position: fixed;
+    z-index: 1000;
+
+    inset: 4.25rem 0 0;
+
+    width: 100%;
+    height: calc(100dvh - 4.25rem);
+    padding: 0;
+
+    border: 0;
+    background: rgba(16, 24, 44, 0.3);
+
+    animation: mobile-nav-fade-in 180ms ease both;
+  }
+}
+
+@keyframes mobile-nav-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .mobile-nav *,
+  .mobile-nav__backdrop {
+    animation: none !important;
+    transition: none !important;
+  }
+}
