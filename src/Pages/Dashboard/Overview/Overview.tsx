@@ -1,28 +1,28 @@
 import { useEffect } from "react";
-import DashboardContent from "../../components/Dashboard/common/DashboardContent/DashboardContent";
+import DashboardContent from "../../../components/Dashboard/common/DashboardContent/DashboardContent";
 import HeaderCard, {
   HeaderCardControl,
   HeaderCardControlLoader,
   HeaderCardLoader,
-} from "../../components/Dashboard/Overview/HeaderCard/HeaderCard";
-import defaultContent from "../../content/dashboardOverview";
-import { useAppSelector } from "../../reducers/hooks";
-import { useGetOverviewQuery } from "../../services/dashboardService";
+} from "../../../components/Dashboard/Overview/HeaderCard/HeaderCard";
+import defaultContent from "../../../content/dashboardOverview";
+import { useAppSelector } from "../../../reducers/hooks";
+import { useGetOverviewQuery } from "../../../services/dashboardService";
 import "./Overview.scss";
 import MonthItem, {
   MonthItemLoader,
-} from "../../components/Dashboard/Overview/MonthItem/MonthItem";
+} from "../../../components/Dashboard/Overview/MonthItem/MonthItem";
 import OverviewChart, {
   OverviewChartLoader,
-} from "../../components/Dashboard/common/Charts/OverviewChart/OverviewChart";
-import CategoryOverview from "../../components/Dashboard/Overview/CategoryOverview/CategoryOverview";
+} from "../../../components/Dashboard/common/Charts/OverviewChart/OverviewChart";
+import CategoryOverview from "../../../components/Dashboard/Overview/CategoryOverview/CategoryOverview";
 import Volume, {
   VolumeLoader,
-} from "../../components/Dashboard/Overview/CategoryOverview/Volume/Volume";
+} from "../../../components/Dashboard/Overview/CategoryOverview/Volume/Volume";
 import BreakDown, {
   BreakdownLoader,
-} from "../../components/Dashboard/Overview/CategoryOverview/Breakdown/Breakdown";
-import RectangleLoader from "../../components/common/RectangleLoader/RectangleLoader";
+} from "../../../components/Dashboard/Overview/CategoryOverview/Breakdown/Breakdown";
+import RectangleLoader from "../../../components/common/RectangleLoader/RectangleLoader";
 
 const Overview = () => {
   const { semester, year } = useAppSelector((s) => s.dashboard.overview);
