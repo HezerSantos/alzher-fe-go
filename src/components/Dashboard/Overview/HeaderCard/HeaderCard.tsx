@@ -51,11 +51,12 @@ export const HeaderCardControl = ({ yearList }: HeadrCardControlProps) => {
         <select
           id="header-card-year"
           onChange={(e) => dispatch(changeOverviewYear(Number(e.target.value)))}
+          defaultValue={currentYear}
         >
           {yearList
             ?.toSorted((a, b) => a - b)
             .map((y) => (
-              <option key={y} value={y} selected={y === currentYear}>
+              <option key={y} value={y}>
                 {y}
               </option>
             ))}

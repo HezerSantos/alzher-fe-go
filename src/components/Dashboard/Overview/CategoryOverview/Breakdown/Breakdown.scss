@@ -1,26 +1,95 @@
 @use "../../../../../common/styles/colors";
 
 .breakdown {
-  width: 25rem;
-  padding: 1rem;
+  width: 100%;
+  min-width: 0;
+
   &__header {
     display: flex;
+    align-items: center;
     justify-content: space-between;
+    gap: 1rem;
+    padding: 0.75rem 0.65rem;
+    border-bottom: 1px solid rgba(colors.$forest, 0.14);
+
+    p {
+      margin: 0;
+      color: colors.$gray;
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
   }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+  }
+
   &__item {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    & > div:nth-of-type(1) {
-      display: flex;
-      align-items: center;
-      gap: 1rem;
-      & > span {
-        display: block;
-        width: 1rem;
-        height: 1rem;
-        border-radius: 1rem;
-      }
+    gap: 1rem;
+    padding: 0.9rem 0.65rem;
+    border-bottom: 1px solid rgba(colors.$forest, 0.07);
+    border-radius: 0.4rem;
+    transition: background-color 180ms ease;
+
+    &:last-child {
+      border-bottom-color: transparent;
     }
+
+    &:hover {
+      background-color: rgba(colors.$jade, 0.06);
+    }
+  }
+
+  &__category {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+
+    & > span {
+      display: block;
+      flex-shrink: 0;
+      width: 0.75rem;
+      height: 0.75rem;
+      border-radius: 50%;
+      box-shadow: 0 0 0 3px rgba(colors.$forest, 0.04);
+    }
+
+    p {
+      margin: 0;
+      color: colors.$forest;
+      font-size: 0.9rem;
+      font-weight: 500;
+    }
+  }
+
+  &__amount {
+    flex-shrink: 0;
+    margin: 0;
+    color: colors.$forest;
+    font-size: 0.9rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+  }
+}
+
+@media (max-width: 600px) {
+  .breakdown {
+    padding-inline: 0.25rem;
+  }
+}
+
+.breakdown--loader {
+  pointer-events: none;
+
+  .breakdown__item:hover {
+    background-color: transparent;
   }
 }

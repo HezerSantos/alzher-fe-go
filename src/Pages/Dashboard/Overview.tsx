@@ -16,8 +16,13 @@ import OverviewChart, {
   OverviewChartLoader,
 } from "../../components/Dashboard/common/Charts/OverviewChart/OverviewChart";
 import CategoryOverview from "../../components/Dashboard/Overview/CategoryOverview/CategoryOverview";
-import Volume from "../../components/Dashboard/Overview/CategoryOverview/Volume/Volume";
-import BreakDown from "../../components/Dashboard/Overview/CategoryOverview/Breakdown/Breakdown";
+import Volume, {
+  VolumeLoader,
+} from "../../components/Dashboard/Overview/CategoryOverview/Volume/Volume";
+import BreakDown, {
+  BreakdownLoader,
+} from "../../components/Dashboard/Overview/CategoryOverview/Breakdown/Breakdown";
+import RectangleLoader from "../../components/common/RectangleLoader/RectangleLoader";
 
 const Overview = () => {
   const { semester, year } = useAppSelector((s) => s.dashboard.overview);
@@ -93,8 +98,23 @@ const Overview = () => {
           )}
         </div>
         <CategoryOverview>
-          <Volume categoryOverview={data?.categoryOverview} />
-          <BreakDown categoryOverview={data?.categoryOverview} />
+          {isFetching ? (
+            <>
+              <RectangleLoader
+                width={"15rem"}
+                height={"2.5rem"}
+                borderRadius="0.5rem"
+              />
+              <VolumeLoader />
+              <BreakdownLoader />
+            </>
+          ) : (
+            <>
+              <h1>{data?.year} Overview</h1>
+              <Volume categoryOverview={data?.categoryOverview} />
+              <BreakDown categoryOverview={data?.categoryOverview} />
+            </>
+          )}
         </CategoryOverview>
       </DashboardContent>
     </>
