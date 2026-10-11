@@ -1,0 +1,138 @@
+@use "../../../../common/styles/colors";
+
+.dash-nav {
+  position: fixed;
+  width: 15rem;
+  height: 100svh;
+  display: grid;
+  grid-template-rows: 5rem 1fr 1fr 1fr;
+
+  background-color: colors.$ivory;
+  border-right: 1px solid colors.$warm-gray;
+  box-shadow: 4px 0 20px rgba(46, 71, 59, 0.04);
+  color: colors.$forest;
+
+  & > div {
+    padding-inline: 0.75rem;
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 1rem !important;
+    border-bottom: 1px solid colors.$warm-gray;
+
+    & > p {
+      flex: 1;
+      margin-left: 0.75rem;
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.035em;
+      color: colors.$forest;
+    }
+
+    // Keep the existing arrow icon visually subtle.
+    & > :last-child {
+      color: colors.$gray;
+      transition:
+        color 180ms ease,
+        transform 180ms ease;
+    }
+
+    &:hover > :last-child {
+      color: colors.$jade;
+      transform: translateX(2px);
+    }
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1rem;
+
+    // Section headings
+    & > p {
+      margin: 0 0 0.5rem;
+      padding-inline: 0.75rem;
+      color: colors.$gray;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    &__item {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+
+      min-height: 2.75rem;
+      padding: 0.65rem 0.75rem 0.65rem 1rem;
+      border-radius: 0.65rem;
+
+      color: colors.$dark-gray;
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+
+      transition:
+        background-color 180ms ease,
+        color 180ms ease,
+        transform 180ms ease;
+
+      // Keep icon dimensions consistent.
+      & > svg {
+        flex-shrink: 0;
+        transition: color 180ms ease;
+      }
+
+      & > p {
+        margin: 0;
+        line-height: 1.4;
+      }
+
+      // Hover state
+      &:hover {
+        background-color: rgba(52, 133, 93, 0.08);
+        color: colors.$forest;
+      }
+
+      // Selected route indicator
+      &--selected {
+        background-color: rgba(52, 133, 93, 0.12);
+        color: colors.$forest;
+        font-weight: 700;
+
+        &::after {
+          position: absolute;
+          content: "";
+          width: 4px;
+          height: 1.5rem;
+          left: -0.75rem;
+          top: 50%;
+          transform: translateY(-50%);
+
+          background-color: colors.$jade;
+          border-radius: 0 4px 4px 0;
+        }
+      }
+
+      // Smooth keyboard navigation
+      &:focus-visible {
+        outline: 2px solid colors.$jade;
+        outline-offset: 2px;
+      }
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dash-nav,
+  .dash-nav * {
+    transition: none !important;
+  }
+}

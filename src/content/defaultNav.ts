@@ -10,6 +10,20 @@ const defaultNav = {
     logoutSuccess: "Successfully Logged Out",
     logoutError: "Error Logging Out",
   },
+  dashboard: {
+    baseName: "Alzher",
+    sOne: "Dashboard",
+    sTwo: "General",
+    sThree: "System",
+    overview: "Overview",
+    analytics: "Analytics",
+    activity: "Activity",
+    scan: "Scan",
+    welcome: "Welcome",
+    tAP: "Terms and Privacy",
+    settings: "Settings",
+    logout: "Log Out",
+  },
 };
 
 export default defaultNav;
