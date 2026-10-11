@@ -74,3 +74,102 @@
     animation: none;
   }
 }
+
+.yearly-line-chart--loader {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 0.5rem 0;
+  pointer-events: none;
+}
+
+.yearly-line-chart__loader-legend {
+  display: flex;
+  justify-content: flex-end;
+  padding-bottom: 0.5rem;
+}
+
+.yearly-line-chart__loader-body {
+  display: grid;
+  grid-template-columns: 4rem minmax(0, 1fr);
+  grid-template-rows: minmax(180px, 1fr) auto;
+  column-gap: 0.75rem;
+  row-gap: 0.75rem;
+  min-width: 0;
+}
+
+.yearly-line-chart__loader-y-axis {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-end;
+  padding: 0.25rem 0;
+}
+
+.yearly-line-chart__loader-plot {
+  position: relative;
+  min-width: 0;
+  min-height: 180px;
+  border-bottom: 1px solid rgba(colors.$forest, 0.12);
+}
+
+.yearly-line-chart__loader-gridline {
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 1px;
+  border-top: 1px dashed rgba(colors.$forest, 0.1);
+
+  @for $i from 1 through 5 {
+    &:nth-child(#{$i}) {
+      top: #{($i - 1) * 25%};
+    }
+  }
+}
+
+.yearly-line-chart__loader-line {
+  animation: yearly-chart-shimmer 1.5s ease-in-out infinite;
+}
+
+@keyframes yearly-chart-shimmer {
+  0%,
+  100% {
+    opacity: 0.45;
+  }
+
+  50% {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yearly-line-chart__loader-line {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
+.yearly-line-chart__loader-x-axis {
+  grid-column: 2;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+@media (max-width: 500px) {
+  .yearly-line-chart__loader-body {
+    grid-template-columns: 3.25rem minmax(0, 1fr);
+    column-gap: 0.5rem;
+  }
+
+  .yearly-line-chart__loader-x-axis > * {
+    max-width: 2rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .yearly-line-chart--loader * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

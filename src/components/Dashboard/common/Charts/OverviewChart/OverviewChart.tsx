@@ -20,6 +20,7 @@ interface OverviewChartProps {
   overviewData: OverviewChartData[] | null | undefined;
   yearOne: string;
   yearTwo: string | boolean;
+  addBase?: boolean;
 }
 
 const currencyFormatter = new Intl.NumberFormat("en-US", {
@@ -39,6 +40,7 @@ const OverviewChart = ({
   overviewData,
   yearOne,
   yearTwo,
+  addBase = true,
 }: OverviewChartProps) => {
   if (!overviewData || overviewData.length === 0) {
     return (
@@ -49,13 +51,17 @@ const OverviewChart = ({
   }
 
   return (
-    <div className="overview-chart">
-      <div className="overview-chart__heading">
-        <div>
-          <h2>Spending Overview</h2>
-          <p>Monthly spending breakdown</p>
+    <div
+      className={`overview-chart ${addBase ? "overview-chart--add-base" : ""}`}
+    >
+      {addBase && (
+        <div className="overview-chart__heading">
+          <div>
+            <h2>Spending Overview</h2>
+            <p>Monthly spending breakdown</p>
+          </div>
         </div>
-      </div>
+      )}
 
       <ResponsiveContainer width="100%" height="100%">
         <BarChart
@@ -146,15 +152,30 @@ const OverviewChart = ({
   );
 };
 
-export const OverviewChartLoader = () => {
+interface OverviewChartLoaderProps {
+  addBase?: boolean;
+}
+export const OverviewChartLoader = ({
+  addBase = true,
+}: OverviewChartLoaderProps) => {
   return (
     <div className="overview-chart overview-chart--loader">
-      <div className="overview-chart__heading">
-        <div>
-          <RectangleLoader width="180px" height="22px" borderRadius="0.4rem" />
-          <RectangleLoader width="220px" height="14px" borderRadius="0.3rem" />
+      {addBase && (
+        <div className="overview-chart__heading">
+          <div>
+            <RectangleLoader
+              width="180px"
+              height="22px"
+              borderRadius="0.4rem"
+            />
+            <RectangleLoader
+              width="220px"
+              height="14px"
+              borderRadius="0.3rem"
+            />
+          </div>
         </div>
-      </div>
+      )}
 
       <div className="overview-chart-loader__body">
         <div className="overview-chart-loader__y-axis">

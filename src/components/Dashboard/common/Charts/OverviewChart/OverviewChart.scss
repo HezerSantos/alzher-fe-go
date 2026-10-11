@@ -9,23 +9,26 @@
   min-height: 320px;
   padding: 1.5rem;
   overflow: hidden;
-  border: 1px solid rgba(colors.$forest, 0.12);
-  border-radius: 1rem;
-  background:
-    radial-gradient(
-      circle at 100% 0%,
-      rgba(colors.$jade, 0.09) 0%,
-      transparent 45%
-    ),
-    linear-gradient(135deg, colors.$ivory 0%, #fffdf8 100%);
-  box-shadow: 0 3px 12px rgba(colors.$forest, 0.05);
+
   transition:
     border-color 180ms ease,
     box-shadow 180ms ease;
 
-  &:hover {
-    border-color: rgba(colors.$jade, 0.25);
-    box-shadow: 0 6px 18px rgba(colors.$forest, 0.08);
+  &--add-base {
+    border: 1px solid rgba(colors.$forest, 0.12);
+    border-radius: 1rem;
+    background:
+      radial-gradient(
+        circle at 100% 0%,
+        rgba(colors.$jade, 0.09) 0%,
+        transparent 45%
+      ),
+      linear-gradient(135deg, colors.$ivory 0%, #fffdf8 100%);
+    box-shadow: 0 3px 12px rgba(colors.$forest, 0.05);
+    &:hover {
+      border-color: rgba(colors.$jade, 0.25);
+      box-shadow: 0 6px 18px rgba(colors.$forest, 0.08);
+    }
   }
 
   &__heading {

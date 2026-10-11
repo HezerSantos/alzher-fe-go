@@ -5,10 +5,24 @@ import "./Analytics.scss";
 import AnalyticsItem, {
   AnalyticsItemLoader,
 } from "../../../components/Dashboard/Analytics/AnalyticsItem/AnalyticsItem";
-import YearlyLineChart from "../../../components/Dashboard/common/Charts/YearlyChart/YearlyChart";
+import YearlyLineChart, {
+  YearlyChartLoader,
+} from "../../../components/Dashboard/common/Charts/YearlyChart/YearlyChart";
 import ChartContainer from "../../../components/Dashboard/common/Charts/ChartContainer/ChartContainer";
+import OverviewChart, {
+  OverviewChartLoader,
+} from "../../../components/Dashboard/common/Charts/OverviewChart/OverviewChart";
+import { useEffect } from "react";
 const Analytics = () => {
   const { data, isFetching } = useGetAnalyticsQuery();
+
+  const years = Object.keys(data?.overviewData?.[0] ?? {}).filter((key) =>
+    /^(19\d{2}|20\d{2}|21\d{2})$/.test(key),
+  );
+
+  useEffect(() => {
+    console.log(years);
+  }, [years]);
   return (
     <>
       <DashboardContent header={defaultContent.title}>
@@ -38,8 +52,27 @@ const Analytics = () => {
           )}
         </div>
         <div className="analytics-charts">
-          <ChartContainer header={defaultContent.yearly}>
-            <YearlyLineChart yearlyData={data?.yearlyData} />
+          <ChartContainer header={defaultContent.yearly} isLoading={isFetching}>
+            {isFetching ? (
+              <YearlyChartLoader />
+            ) : (
+              <YearlyLineChart yearlyData={data?.yearlyData} />
+            )}
+          </ChartContainer>
+          <ChartContainer
+            header={defaultContent.monthly}
+            isLoading={isFetching}
+          >
+            {isFetching ? (
+              <OverviewChartLoader addBase={false} />
+            ) : (
+              <OverviewChart
+                overviewData={data?.overviewData}
+                yearOne={years?.[0] ?? "2026"}
+                yearTwo={years?.[1] ?? false}
+                addBase={false}
+              />
+            )}
           </ChartContainer>
         </div>
       </DashboardContent>

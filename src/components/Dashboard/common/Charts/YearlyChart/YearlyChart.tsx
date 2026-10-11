@@ -9,6 +9,7 @@ import {
   Line,
 } from "recharts";
 import "./YearlyChart.scss";
+import RectangleLoader from "../../../../common/RectangleLoader/RectangleLoader";
 
 interface YearlyLineChartDataType {
   year: number | undefined;
@@ -150,6 +151,106 @@ const YearlyLineChart = ({ yearlyData }: YearlyLineChartProps) => {
           />
         </LineChart>
       </ResponsiveContainer>
+    </div>
+  );
+};
+
+export const YearlyChartLoader = () => {
+  return (
+    <div
+      className="yearly-line-chart yearly-line-chart--loader"
+      aria-label="Loading yearly chart"
+      role="status"
+    >
+      <div className="yearly-line-chart__loader-legend">
+        <RectangleLoader width="4rem" height="0.75rem" />
+      </div>
+
+      <div className="yearly-line-chart__loader-body">
+        <div className="yearly-line-chart__loader-y-axis">
+          {[...Array(5)].map((_, i) => (
+            <RectangleLoader key={i} width="3.5rem" height="0.65rem" />
+          ))}
+        </div>
+
+        <div className="yearly-line-chart__loader-plot">
+          {[...Array(5)].map((_, i) => (
+            <div className="yearly-line-chart__loader-gridline" key={i} />
+          ))}
+
+          <svg
+            className="yearly-line-chart__loader-line"
+            viewBox="0 0 600 180"
+            preserveAspectRatio="none"
+            aria-hidden="true"
+          >
+            <defs>
+              <linearGradient id="yearly-loader-shimmer">
+                <stop offset="0%" stopColor="#e7e5dd" />
+                <stop offset="50%" stopColor="#f8f7f2" />
+                <stop offset="100%" stopColor="#e7e5dd" />
+                <animateTransform
+                  attributeName="gradientTransform"
+                  type="translate"
+                  from="-1 0"
+                  to="1 0"
+                  dur="1.5s"
+                  repeatCount="indefinite"
+                />
+              </linearGradient>
+
+              <linearGradient
+                id="yearly-loader-area"
+                x1="0"
+                y1="0"
+                x2="0"
+                y2="1"
+              >
+                <stop offset="0%" stopColor="#e7e5dd" stopOpacity="0.6" />
+                <stop offset="100%" stopColor="#e7e5dd" stopOpacity="0.05" />
+              </linearGradient>
+            </defs>
+
+            <path
+              d="M 0 175 C 70 165, 90 125, 145 130 S 235 155, 300 95 S 385 75, 450 82 S 540 35, 600 25 L 600 220 L 0 220 Z"
+              fill="url(#yearly-loader-area)"
+            />
+
+            <path
+              d="M 0 175 C 70 165, 90 125, 145 130 S 235 155, 300 95 S 385 75, 450 82 S 540 35, 600 25"
+              fill="none"
+              stroke="url(#yearly-loader-shimmer)"
+              strokeWidth="5"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+            />
+
+            {[
+              [0, 175],
+              [145, 130],
+              [300, 95],
+              [450, 82],
+              [600, 25],
+            ].map(([cx, cy], i) => (
+              <circle
+                key={i}
+                cx={cx}
+                cy={cy}
+                r="5"
+                fill="url(#yearly-loader-shimmer)"
+                stroke="#e7e5dd"
+                strokeWidth="2"
+              />
+            ))}
+          </svg>
+        </div>
+
+        <div className="yearly-line-chart__loader-x-axis">
+          {[...Array(5)].map((_, i) => (
+            <RectangleLoader key={i} width="2.5rem" height="0.65rem" />
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
