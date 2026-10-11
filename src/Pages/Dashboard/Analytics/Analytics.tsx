@@ -16,6 +16,9 @@ import { useEffect } from "react";
 import DailyScatterChart, {
   DailyScatterChartLoader,
 } from "../../../components/Dashboard/common/Charts/DailyChart/DailyChart";
+import CategoryDomainChart, {
+  CategoryDomainChartLoader,
+} from "../../../components/Dashboard/common/Charts/CategoryChart/CategoryChart";
 const Analytics = () => {
   const { data, isFetching } = useGetAnalyticsQuery();
 
@@ -23,9 +26,6 @@ const Analytics = () => {
     /^(19\d{2}|20\d{2}|21\d{2})$/.test(key),
   );
 
-  useEffect(() => {
-    console.log(years);
-  }, [years]);
   return (
     <>
       <DashboardContent header={defaultContent.title}>
@@ -82,6 +82,16 @@ const Analytics = () => {
               <DailyScatterChartLoader />
             ) : (
               <DailyScatterChart scatterData={data?.scatterData} />
+            )}
+          </ChartContainer>
+          <ChartContainer
+            header={defaultContent.category}
+            isLoading={isFetching}
+          >
+            {isFetching ? (
+              <CategoryDomainChartLoader />
+            ) : (
+              <CategoryDomainChart categoryData={data?.categoryData} />
             )}
           </ChartContainer>
         </div>

@@ -6,7 +6,7 @@ import IconDashLinks, {
 } from "../../../common/Icons/IconDashLinks/IconDashLinks";
 import IconLogo from "../../../common/Icons/IconLogo/IconLogo";
 import IconRightArrow from "../../../common/Icons/IconRightArrow/IconRightArrow";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../../../../reducers/hooks";
 import { toggleNav } from "../../../../reducers/dashboardSlice";
 import useWidth from "../../../../common/hooks/useWidth";
@@ -228,6 +228,14 @@ const MobileNav = () => {
     },
   ];
 
+  const menuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (menuRef.current) {
+      menuRef.current.inert = !navOpen;
+    }
+  }, [navOpen]);
+
   return (
     <header className="mobile-nav">
       <div className="mobile-nav__header">
@@ -265,7 +273,7 @@ const MobileNav = () => {
           navOpen ? " mobile-nav__panel--open" : ""
         }`}
         aria-hidden={!navOpen}
-        inert={!navOpen}
+        ref={menuRef}
       >
         <nav aria-label="Mobile navigation">
           {sections.map((section) => (
