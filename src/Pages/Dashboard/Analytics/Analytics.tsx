@@ -5,6 +5,8 @@ import "./Analytics.scss";
 import AnalyticsItem, {
   AnalyticsItemLoader,
 } from "../../../components/Dashboard/Analytics/AnalyticsItem/AnalyticsItem";
+import YearlyLineChart from "../../../components/Dashboard/common/Charts/YearlyChart/YearlyChart";
+import ChartContainer from "../../../components/Dashboard/common/Charts/ChartContainer/ChartContainer";
 const Analytics = () => {
   const { data, isFetching } = useGetAnalyticsQuery();
   return (
@@ -34,6 +36,11 @@ const Analytics = () => {
               })}
             </>
           )}
+        </div>
+        <div className="analytics-charts">
+          <ChartContainer header={defaultContent.yearly}>
+            <YearlyLineChart yearlyData={data?.yearlyData} />
+          </ChartContainer>
         </div>
       </DashboardContent>
     </>

@@ -34,3 +34,8 @@
     background-color: colors.$forest;
   }
 }
+
+.analytics-charts {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}

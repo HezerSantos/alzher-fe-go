@@ -1,0 +1,74 @@
+@use "../../../../../common/styles/colors";
+
+.chart-container {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+
+  width: 100%;
+  min-width: 0;
+  padding: 1.5rem;
+
+  border: 1px solid rgba(colors.$forest, 0.12);
+  border-radius: 1rem;
+
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(colors.$jade, 0.1) 0%,
+      rgba(colors.$jade, 0.025) 35%,
+      transparent 65%
+    ),
+    linear-gradient(135deg, colors.$ivory 0%, #f8f6eb 100%);
+
+  box-shadow: 0 3px 12px rgba(colors.$forest, 0.05);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid rgba(colors.$forest, 0.12);
+
+    h2 {
+      margin: 0;
+      color: colors.$forest;
+      font-size: 1.05rem;
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: -0.025em;
+    }
+  }
+
+  &__accent {
+    flex-shrink: 0;
+    width: 4px;
+    height: 1.35rem;
+    border-radius: 1rem;
+    background: linear-gradient(180deg, colors.$forest, colors.$jade);
+  }
+
+  &__content {
+    width: 100%;
+    min-width: 0;
+  }
+}
+
+@media (max-width: 500px) {
+  .chart-container {
+    gap: 1rem;
+    padding: 1rem;
+
+    &__header {
+      padding-bottom: 0.75rem;
+
+      h2 {
+        font-size: 0.95rem;
+      }
+    }
+  }
+}
