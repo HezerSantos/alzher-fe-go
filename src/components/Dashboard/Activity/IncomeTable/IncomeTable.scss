@@ -14,73 +14,11 @@
   box-shadow:
     0 8px 24px rgba(colors.$forest, 0.07),
     0 2px 5px rgba(colors.$forest, 0.035);
-
-  .income-item {
-    display: grid;
-    grid-template-columns:
-      minmax(9rem, 1.5fr)
-      minmax(10rem, 2fr)
-      minmax(8rem, 1fr)
-      minmax(7rem, 1fr);
-    align-items: center;
-    gap: 1rem;
-    min-width: 36rem;
-    padding: 1.05rem 1.25rem;
-    border-bottom: 1px solid rgba(colors.$forest, 0.09);
-    transition:
-      background-color 180ms ease,
-      box-shadow 180ms ease;
-
-    &:last-child {
-      border-bottom: none;
-    }
-
-    &:not(:first-child) {
-      &:nth-child(even) {
-        background-color: rgba(colors.$jade, 0.045);
-      }
-
-      &:hover {
-        background-color: rgba(colors.$jade, 0.13);
-        box-shadow: inset 3px 0 0 colors.$jade;
-      }
-    }
-
-    p {
-      min-width: 0;
-      margin: 0;
-      overflow: hidden;
-      color: colors.$dark-gray;
-      font-size: 0.9rem;
-      line-height: 1.6;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    &:first-child {
-      position: relative;
-      background: linear-gradient(110deg, colors.$forest, colors.$jade);
-      border-bottom: none;
-
-      p {
-        color: colors.$white;
-        font-size: 0.76rem;
-        font-weight: 700;
-        letter-spacing: 0.09em;
-        text-transform: uppercase;
-      }
-    }
-  }
 }
 
 @media (max-width: 600px) {
   .income-table {
     border-radius: 0.8rem;
-
-    .income-item {
-      gap: 0.75rem;
-      padding: 0.9rem 1rem;
-    }
   }
 }
 

@@ -1,3 +1,4 @@
+import useWidth from "../../../../common/hooks/useWidth";
 import type { TransactionItem } from "../../../../services/dashboardService";
 import RectangleLoader from "../../../common/RectangleLoader/RectangleLoader";
 import IncomeItem from "./IncomeItem/IncomeItem";
@@ -6,15 +7,18 @@ interface IncomeTableProps {
   transactionItems?: TransactionItem[];
 }
 const IncomeTable = ({ transactionItems }: IncomeTableProps) => {
+  const width = useWidth();
   return (
     <div className="income-table">
-      <IncomeItem
-        id="header"
-        category="Category"
-        description="Description"
-        date="Date"
-        amount="Amount"
-      />
+      {width > 750 && (
+        <IncomeItem
+          id="header"
+          category="Category"
+          description="Description"
+          date="Date"
+          amount="Amount"
+        />
+      )}
       {transactionItems?.map((t) => {
         return (
           <IncomeItem
