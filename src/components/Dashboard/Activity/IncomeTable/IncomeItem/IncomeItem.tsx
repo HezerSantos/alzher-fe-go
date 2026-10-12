@@ -1,5 +1,6 @@
 import useWidth from "../../../../../common/hooks/useWidth";
 import Button from "../../../../common/Button/Button";
+import RectangleLoader from "../../../../common/RectangleLoader/RectangleLoader";
 import "./IncomeItem.scss";
 
 interface IncomeItemProps {
@@ -36,7 +37,7 @@ const IncomeItem = ({
     );
   } else {
     return (
-      <Button className="income-item" text="">
+      <Button className="income-item income-item--mobile" text="">
         <div>
           <p>Category</p>
           <p>{category}</p>
@@ -56,6 +57,32 @@ const IncomeItem = ({
       </Button>
     );
   }
+};
+
+export const MobileIncomeItemLoader = () => {
+  return (
+    <div className="income-item income-item--mobile">
+      <div>
+        <RectangleLoader width="28%" height="0.75rem" />
+        <RectangleLoader width="42%" height="0.9rem" />
+      </div>
+
+      <div>
+        <RectangleLoader width="32%" height="0.75rem" />
+        <RectangleLoader width="25%" height="0.9rem" />
+      </div>
+
+      <div>
+        <RectangleLoader width="20%" height="0.75rem" />
+        <RectangleLoader width="35%" height="0.9rem" />
+      </div>
+
+      <div>
+        <RectangleLoader width="25%" height="0.75rem" />
+        <RectangleLoader width="30%" height="0.9rem" />
+      </div>
+    </div>
+  );
 };
 
 export default IncomeItem;

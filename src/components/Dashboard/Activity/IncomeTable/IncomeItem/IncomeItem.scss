@@ -60,35 +60,37 @@
     }
   }
 
-  & > div {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0.85rem 1rem;
-    border: 1px solid rgba(colors.$forest, 0.09);
-    border-radius: 0.75rem;
-    background: rgba(colors.$jade, 0.045);
-    transition:
-      background-color 180ms ease,
-      border-color 180ms ease,
-      transform 180ms ease;
+  &--mobile {
+    & > div {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.85rem 1rem;
+      border: 1px solid rgba(colors.$forest, 0.09);
+      border-radius: 0.75rem;
+      background: rgba(colors.$jade, 0.045);
+      transition:
+        background-color 180ms ease,
+        border-color 180ms ease,
+        transform 180ms ease;
 
-    p {
-      &:first-child {
-        color: colors.$dark-gray;
-        opacity: 0.7;
-        font-size: 0.72rem;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        text-transform: uppercase;
-      }
+      p {
+        &:first-child {
+          color: colors.$dark-gray;
+          opacity: 0.7;
+          font-size: 0.72rem;
+          font-weight: 700;
+          letter-spacing: 0.08em;
+          text-transform: uppercase;
+        }
 
-      &:last-child {
-        color: colors.$forest;
-        font-size: 0.9rem;
-        font-weight: 600;
-        text-align: end;
+        &:last-child {
+          color: colors.$forest;
+          font-size: 0.9rem;
+          font-weight: 600;
+          text-align: end;
+        }
       }
     }
   }
