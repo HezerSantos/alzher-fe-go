@@ -12,6 +12,8 @@ interface InitialStateType {
     categoryFilter: string;
     keyWord: string;
     keyWordLoading: boolean;
+    pageSize: number;
+    page: number;
   };
 }
 const initialState: InitialStateType = {
@@ -24,6 +26,8 @@ const initialState: InitialStateType = {
     categoryFilter: "",
     keyWord: "",
     keyWordLoading: false,
+    page: 1,
+    pageSize: 10,
   },
 };
 
@@ -49,6 +53,12 @@ const dashboard = createSlice({
     setCategoryFilter: (state, action: PayloadAction<string>) => {
       state.activity.categoryFilter = action.payload;
     },
+    incrementPage: (state, _: PayloadAction<void>) => {
+      state.activity.page = state.activity.page + 1;
+    },
+    decrementPage: (state, _: PayloadAction<void>) => {
+      state.activity.page = state.activity.page - 1;
+    },
   },
 });
 
@@ -60,6 +70,8 @@ export const {
   setKeyWord,
   setCategoryFilter,
   setKeyWordLoading,
+  incrementPage,
+  decrementPage,
 } = dashboard.actions;
 
 export default dashboardReducer;

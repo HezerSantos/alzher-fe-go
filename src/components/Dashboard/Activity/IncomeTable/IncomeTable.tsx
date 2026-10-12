@@ -42,18 +42,18 @@ export const IncomeTableLoader = () => {
       {width > 750 ? (
         <div className="income-table income-table--loading">
           <div className="income-item income-table-loader__header income-item--header">
-            <RectangleLoader width="55%" height="0.8rem" />
-            <RectangleLoader width="65%" height="0.8rem" />
-            <RectangleLoader width="45%" height="0.8rem" />
-            <RectangleLoader width="45%" height="0.8rem" />
+            <RectangleLoader width="55%" height="1.43rem" />
+            <RectangleLoader width="65%" height="1.43rem" />
+            <RectangleLoader width="45%" height="1.43rem" />
+            <RectangleLoader width="45%" height="1.43rem" />
           </div>
 
           {Array.from({ length: 10 }, (_, index) => (
             <div className="income-item income-table-loader__row" key={index}>
-              <RectangleLoader width="50%" height="0.85rem" />
-              <RectangleLoader width="70%" height="0.85rem" />
-              <RectangleLoader width="55%" height="0.85rem" />
-              <RectangleLoader width="45%" height="0.85rem" />
+              <RectangleLoader width="50%" height="1.43rem" />
+              <RectangleLoader width="70%" height="1.43rem" />
+              <RectangleLoader width="55%" height="1.43rem" />
+              <RectangleLoader width="45%" height="1.43rem" />
             </div>
           ))}
         </div>

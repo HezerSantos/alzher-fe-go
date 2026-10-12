@@ -275,6 +275,13 @@
     flex-direction: column;
     gap: 0.85rem;
 
+    &__filters {
+      flex-direction: column;
+
+      &__clear {
+        width: 100%;
+      }
+    }
     .input-container {
       max-width: none;
       width: 100%;

@@ -1,4 +1,3 @@
-import { useSearchParams } from "react-router-dom";
 import { useGetActivityQuery } from "../../../services/dashboardService";
 import DashboardContent from "../../../components/Dashboard/common/DashboardContent/DashboardContent";
 import defaultContent from "../../../content/dashboardActivity";
@@ -8,13 +7,19 @@ import IncomeTable, {
 } from "../../../components/Dashboard/Activity/IncomeTable/IncomeTable";
 import { useAppDispatch, useAppSelector } from "../../../reducers/hooks";
 import { useEffect } from "react";
-import { setKeyWordLoading } from "../../../reducers/dashboardSlice";
+import {
+  decrementPage,
+  incrementPage,
+  setKeyWordLoading,
+} from "../../../reducers/dashboardSlice";
+import Button from "../../../components/common/Button/Button";
+import "./Activity.scss";
+
 const Activity = () => {
-  const [searchParams] = useSearchParams();
-  const pageSize = Number(searchParams.get("pageSize")) ?? 10;
-  const page = Number(searchParams.get("page")) ?? 1;
   const dispatch = useAppDispatch();
-  const { keyWordLoading } = useAppSelector((s) => s.dashboard.activity);
+  const { keyWordLoading, pageSize, page } = useAppSelector(
+    (s) => s.dashboard.activity,
+  );
   const { keyWord, categoryFilter } = useAppSelector(
     (s) => s.dashboard.activity,
   );
@@ -41,6 +46,20 @@ const Activity = () => {
         ) : (
           <IncomeTable transactionItems={data?.transactionData} />
         )}
+        <div className="activity-actions">
+          <Button
+            className="activity-actions__button"
+            text="Prev"
+            disabled={!data?.previousPageFlag || isFetching || keyWordLoading}
+            onClick={() => dispatch(decrementPage())}
+          />
+          <Button
+            className="activity-actions__button"
+            text="Next"
+            disabled={!data?.nextPageFlag || isFetching || keyWordLoading}
+            onClick={() => dispatch(incrementPage())}
+          />
+        </div>
       </DashboardContent>
     </>
   );

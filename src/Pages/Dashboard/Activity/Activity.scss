@@ -1,0 +1,45 @@
+@use "../../../common/styles/colors";
+
+.activity-actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem 0;
+
+  &__button {
+    min-width: 6rem;
+    padding: 0.7rem 1.25rem;
+    border: 1px solid rgba(colors.$forest, 0.15);
+    border-radius: 0.75rem;
+    background: colors.$forest;
+    color: colors.$ivory;
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(colors.$forest, 0.12);
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      box-shadow 180ms ease,
+      transform 180ms ease;
+
+    &:hover {
+      background: colors.$jade;
+      border-color: colors.$jade;
+      box-shadow: 0 4px 10px rgba(colors.$forest, 0.16);
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 1px 3px rgba(colors.$forest, 0.12);
+    }
+
+    &:focus-visible {
+      outline: 2px solid colors.$emerald;
+      outline-offset: 3px;
+    }
+  }
+}
