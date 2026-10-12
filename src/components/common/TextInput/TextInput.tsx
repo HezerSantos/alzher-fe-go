@@ -13,6 +13,7 @@ interface TextInputProps {
   };
   onChange?: (value: string) => void;
   onChangeLoad?: () => void;
+  initialValue?: string;
 }
 
 const TextInput = ({
@@ -23,9 +24,10 @@ const TextInput = ({
   labelFormat,
   onChange,
   onChangeLoad,
+  initialValue = "",
 }: TextInputProps) => {
   const { top, left, fontSize } = labelFormat ?? {};
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState(initialValue);
 
   const timeoutRef = useRef<number | null>(null);
   useEffect(() => {
