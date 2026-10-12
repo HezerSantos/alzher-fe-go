@@ -175,10 +175,23 @@ interface AITransactionsResponse {
 const dashboard = api.injectEndpoints({
   endpoints: (builder) => ({
     getActivity: builder.query<GetActivityResponse, GetActivityRequestParams>({
-      query: (params) => ({
-        url: "/dashboard/activity",
-        params,
-      }),
+      query: ({ page, pageSize, keyWord, categoryFilter }) => {
+        const params: GetActivityRequestParams = {
+          page,
+          pageSize,
+        };
+
+        if (keyWord !== "" || keyWord !== undefined) {
+          params["keyWord"] = keyWord;
+        }
+        if (categoryFilter !== "" || categoryFilter !== undefined) {
+          params["categoryFilter"] = categoryFilter;
+        }
+        return {
+          url: "/dashboard/activity",
+          params,
+        };
+      },
     }),
     deleteTransactiopn: builder.mutation<
       DeleteActivityResponse,

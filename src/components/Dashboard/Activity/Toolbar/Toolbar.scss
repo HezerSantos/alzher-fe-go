@@ -10,6 +10,58 @@
   padding-block: 1.25rem;
   overflow: visible;
 
+  &__filters {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    &__clear {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 2.9rem;
+      padding: 0.7rem 1.1rem;
+      color: colors.$forest;
+      background-color: rgba(colors.$jade, 0.08);
+      border: 1px solid rgba(colors.$jade, 0.22);
+      border-radius: 0.75rem;
+      font-family: fonts.$secondary;
+      font-size: 0.9rem;
+      font-weight: 600;
+      white-space: nowrap;
+      cursor: pointer;
+      transition:
+        color 180ms ease,
+        background-color 180ms ease,
+        border-color 180ms ease,
+        box-shadow 180ms ease;
+
+      &:hover {
+        color: colors.$white;
+        background-color: colors.$forest;
+        border-color: colors.$forest;
+        box-shadow: 0 3px 10px rgba(colors.$forest, 0.15);
+      }
+
+      &:focus-visible {
+        outline: 2px solid colors.$jade;
+        outline-offset: 3px;
+      }
+
+      &:active {
+        transform: translateY(1px);
+        box-shadow: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      &__clear {
+        transition: none;
+      }
+    }
+  }
+
   .input-container {
     position: relative;
     flex: 1;
