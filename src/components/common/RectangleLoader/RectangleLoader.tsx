@@ -5,6 +5,7 @@ interface RectangleLoaderProps {
   height?: string;
   borderRadius?: string;
   className?: string;
+  margin?: string;
 }
 
 export default function RectangleLoader({
@@ -12,11 +13,12 @@ export default function RectangleLoader({
   height = "16px",
   borderRadius = "4px",
   className = "",
+  margin = "0",
 }: RectangleLoaderProps) {
   return (
     <div
       className={`rectangle-loader ${className}`}
-      style={{ width, height, borderRadius }}
+      style={{ width, height, borderRadius, margin }}
     />
   );
 }

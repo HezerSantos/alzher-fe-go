@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import IconLogo from "../../../common/Icons/IconLogo/IconLogo";
 import IconDashLinks from "../../../common/Icons/IconDashLinks/IconDashLinks";
 import IconClear from "../../../common/Icons/IconClear/IconClear";
@@ -7,6 +7,7 @@ import "./FileUpload.scss";
 import { useAppDispatch } from "../../../../reducers/hooks";
 import { setToast } from "../../../../reducers/toastSlice";
 import { useScanDocumentsMutation } from "../../../../services/dashboardService";
+import RectangleLoader from "../../../common/RectangleLoader/RectangleLoader";
 
 const MAX_FILE_SIZE_MB = 5;
 const MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024;
@@ -22,7 +23,8 @@ const FileUpload = () => {
   const totalSizeMB = totalSize / (1024 * 1024);
   const fileCount = files.length;
 
-  const [uploadFiles] = useScanDocumentsMutation();
+  const [uploadFiles, { isLoading, isError, error }] =
+    useScanDocumentsMutation();
   const addFiles = useCallback(
     (incomingFiles: FileList | File[]) => {
       const selectedFiles = Array.from(incomingFiles);
@@ -135,13 +137,67 @@ const FileUpload = () => {
 
   const submitFiles = useCallback(async () => {
     try {
-      const res = await uploadFiles({ files: files }).unwrap();
-      console.log(res);
+      await uploadFiles({ files: files }).unwrap();
+
+      dispatch(
+        setToast({ msg: "Success Processing Statements", error: false }),
+      );
     } catch {
       return;
     }
   }, [files]);
 
+  const FileItem = useCallback(
+    ({ file, index }: { file: File; index: number }) => {
+      return (
+        <div className="file-container__item">
+          <div className="file-container__icon">
+            <IconDashLinks name="scan" />
+          </div>
+
+          <div className="file-container__details">
+            <p className="file-container__name">{file.name}</p>
+            <p className="file-container__metadata">
+              PDF document · {(file.size / (1024 * 1024)).toFixed(2)} MB
+            </p>
+          </div>
+
+          <button
+            type="button"
+            className="file-container__remove"
+            aria-label={`Remove ${file.name}`}
+            onClick={() => removeFile(index)}
+          >
+            <IconClear size={16} />
+          </button>
+        </div>
+      );
+    },
+    [removeFile],
+  );
+
+  const FileItemLoader = useCallback(() => {
+    return (
+      <div className="file-container__item">
+        <div className="file-container__icon">
+          <RectangleLoader width="3rem" height="3rem" />
+        </div>
+
+        <div className="file-contaienr__details">
+          <RectangleLoader width="8rem" height="1rem" margin="0 0 1rem 0" />
+          <RectangleLoader width="8rem" height="1rem" />
+        </div>
+
+        <RectangleLoader width="1.5rem" height="1.5rem" margin="0 0 0 auto" />
+      </div>
+    );
+  }, []);
+
+  useEffect(() => {
+    if (isError) {
+      dispatch(setToast({ msg: "Error Processing Statements", error: true }));
+    }
+  }, [isError]);
   return (
     <div className="file-upload">
       <form
@@ -248,30 +304,19 @@ const FileUpload = () => {
 
           <div className="file-container__list">
             {files.map((file, index) => (
-              <div
-                className="file-container__item"
-                key={`${file.name}-${file.lastModified}-${index}`}
-              >
-                <div className="file-container__icon">
-                  <IconDashLinks name="scan" />
-                </div>
-
-                <div className="file-container__details">
-                  <p className="file-container__name">{file.name}</p>
-                  <p className="file-container__metadata">
-                    PDF document · {(file.size / (1024 * 1024)).toFixed(2)} MB
-                  </p>
-                </div>
-
-                <button
-                  type="button"
-                  className="file-container__remove"
-                  aria-label={`Remove ${file.name}`}
-                  onClick={() => removeFile(index)}
-                >
-                  <IconClear size={16} />
-                </button>
-              </div>
+              <>
+                {true ? (
+                  <FileItemLoader
+                    key={`${file.name}-${file.lastModified}-${index}-loader`}
+                  />
+                ) : (
+                  <FileItem
+                    file={file}
+                    index={index}
+                    key={`${file.name}-${file.lastModified}-${index}`}
+                  />
+                )}
+              </>
             ))}
           </div>
 
@@ -285,6 +330,7 @@ const FileUpload = () => {
               className="file-container__upload-button"
               disabled={files.length === 0}
               onClick={() => submitFiles()}
+              isLoading={isLoading}
             />
           </div>
         </section>
