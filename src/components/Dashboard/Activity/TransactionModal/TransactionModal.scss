@@ -42,6 +42,34 @@
     }
   }
 
+  &__close {
+    width: 8rem;
+    min-height: 2.9rem;
+    padding: 0.8rem 1rem;
+    border: 1px solid colors.$forest;
+    border-radius: 0.7rem;
+    background: colors.$forest;
+    color: colors.$ivory;
+    font-size: 0.9rem;
+    font-weight: 600;
+    transition:
+      background-color 180ms ease,
+      border-color 180ms ease,
+      transform 180ms ease,
+      box-shadow 180ms ease;
+
+    &:hover {
+      background: colors.$jade;
+      border-color: colors.$jade;
+      box-shadow: 0 4px 10px rgba(colors.$forest, 0.14);
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+    }
+  }
+
   &__item {
     display: flex;
     flex-direction: column;
@@ -172,5 +200,10 @@
         }
       }
     }
+  }
+
+  @media (max-width: 750px) {
+    top: 68px;
+    width: 100%;
   }
 }

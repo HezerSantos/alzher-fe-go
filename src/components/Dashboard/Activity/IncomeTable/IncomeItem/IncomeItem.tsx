@@ -59,7 +59,11 @@ const IncomeItem = ({
     );
   } else {
     return (
-      <Button className="income-item income-item--mobile" text="">
+      <Button
+        className="income-item income-item--mobile"
+        text=""
+        onClick={() => toggleTransactionModal()}
+      >
         <div>
           <p>Category</p>
           <p>{category}</p>

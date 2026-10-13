@@ -182,6 +182,11 @@ const TransactionModal = () => {
 
   return (
     <div className="transaction-modal" ref={modalRef}>
+      <Button
+        text="Close"
+        className="transaction-modal__close"
+        onClick={() => dispatch(clearTransactionModal())}
+      />
       <div className="transaction-modal__header">
         <p>TID:</p>
         <p>{id}</p>

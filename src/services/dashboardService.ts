@@ -235,12 +235,14 @@ const dashboard = api.injectEndpoints({
       query: () => ({
         url: "/dashboard/analytics",
       }),
+      providesTags: ["MutateTransaction"],
     }),
     getOverview: builder.query<GetOverviewResponse, GetOverviewRequest>({
       query: (params) => ({
         url: "/dashboard/overview",
         params,
       }),
+      providesTags: ["MutateTransaction"],
     }),
     scanDocuments: builder.mutation<
       AITransactionsResponse,
@@ -259,6 +261,7 @@ const dashboard = api.injectEndpoints({
           body: formData,
         };
       },
+      invalidatesTags: ["MutateTransaction"],
     }),
   }),
 });
