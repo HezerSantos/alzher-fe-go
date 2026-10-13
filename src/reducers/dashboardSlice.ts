@@ -1,4 +1,5 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
+import type { Categories } from "../services/dashboardService";
 
 const currentYear: number = new Date().getFullYear();
 
@@ -15,6 +16,14 @@ interface InitialStateType {
     pageSize: number;
     page: number;
   };
+  selectedTransaction: {
+    showTransaction: boolean;
+    tId: string;
+    category: Categories;
+    description: string;
+    date: string;
+    amount: number;
+  };
 }
 const initialState: InitialStateType = {
   navOpen: true,
@@ -28,6 +37,14 @@ const initialState: InitialStateType = {
     keyWordLoading: false,
     page: 1,
     pageSize: 10,
+  },
+  selectedTransaction: {
+    showTransaction: false,
+    tId: "",
+    category: "",
+    description: "",
+    date: "",
+    amount: NaN,
   },
 };
 
@@ -59,6 +76,17 @@ const dashboard = createSlice({
     decrementPage: (state, _: PayloadAction<void>) => {
       state.activity.page = state.activity.page - 1;
     },
+    openTransactionModal: (
+      state,
+      action: PayloadAction<
+        Omit<InitialStateType["selectedTransaction"], "showTransaction">
+      >,
+    ) => {
+      state.selectedTransaction = { ...action.payload, showTransaction: true };
+    },
+    clearTransactionModal: (state, _: PayloadAction<void>) => {
+      state.selectedTransaction = initialState.selectedTransaction;
+    },
   },
 });
 
@@ -72,6 +100,8 @@ export const {
   setKeyWordLoading,
   incrementPage,
   decrementPage,
+  openTransactionModal,
+  clearTransactionModal,
 } = dashboard.actions;
 
 export default dashboardReducer;

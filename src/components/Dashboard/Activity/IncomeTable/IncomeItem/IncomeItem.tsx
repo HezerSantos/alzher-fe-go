@@ -1,11 +1,15 @@
+import { useCallback } from "react";
 import useWidth from "../../../../../common/hooks/useWidth";
+import { useAppDispatch } from "../../../../../reducers/hooks";
 import Button from "../../../../common/Button/Button";
 import RectangleLoader from "../../../../common/RectangleLoader/RectangleLoader";
 import "./IncomeItem.scss";
+import type { Categories } from "../../../../../services/dashboardService";
+import { openTransactionModal } from "../../../../../reducers/dashboardSlice";
 
 interface IncomeItemProps {
   id: string;
-  category: string;
+  category: Categories;
   description: string;
   date: string;
   amount: string;
@@ -18,10 +22,28 @@ const IncomeItem = ({
   amount,
 }: IncomeItemProps) => {
   const width = useWidth();
+  const dispatch = useAppDispatch();
+
+  const toggleTransactionModal = useCallback(() => {
+    const numberAmount = Number(amount);
+    dispatch(
+      openTransactionModal({
+        tId: id,
+        category,
+        description,
+        date,
+        amount: numberAmount,
+      }),
+    );
+  }, [id, category, description, date, amount]);
 
   if (width > 750) {
     return id !== "header" ? (
-      <Button className="income-item" text="">
+      <Button
+        className="income-item"
+        text=""
+        onClick={() => toggleTransactionModal()}
+      >
         <p>{category}</p>
         <p>{description}</p>
         <p>{date}</p>

@@ -2,7 +2,7 @@ import { api } from "./apiService";
 
 export interface TransactionItem {
   transactionId: string;
-  category: string;
+  category: Categories;
   description: string;
   transactionDate: string;
   transactionAmount: string;
@@ -40,15 +40,18 @@ interface DeleteActivityResponse {
   transaction: Transaction;
 }
 
+export type Categories =
+  | ""
+  | "Dining"
+  | "Merchandise"
+  | "Entertainment"
+  | "Grocery"
+  | "Transportation"
+  | "Subscriptions"
+  | "Bills";
+
 interface UpdateActivityBody {
-  category?:
-    | "Dining"
-    | "Merchandise"
-    | "Entertainment"
-    | "Grocery"
-    | "Transportation"
-    | "Subscriptions"
-    | "Bills";
+  category?: Categories;
   description?: string;
   amount?: number;
   transactionDate?: string;
@@ -192,6 +195,7 @@ const dashboard = api.injectEndpoints({
           params,
         };
       },
+      providesTags: ["UpdateTransaction"],
     }),
     deleteTransactiopn: builder.mutation<
       DeleteActivityResponse,
@@ -209,11 +213,14 @@ const dashboard = api.injectEndpoints({
       query: ({ id, category, description, amount, transactionDate }) => {
         const body: UpdateActivityBody = {};
 
-        if (category !== undefined) body.category = category;
-        if (description !== undefined) body.description = description;
-        if (amount !== undefined) body.amount = amount;
-        if (transactionDate !== undefined)
-          body.transactionDate = transactionDate;
+        body.category = category;
+        body.description = description;
+        if (!amount) {
+          body.amount = 0;
+        } else {
+          body.amount = amount;
+        }
+        body.transactionDate = transactionDate;
 
         return {
           url: `/dashboard/activity/${id}`,
@@ -221,6 +228,7 @@ const dashboard = api.injectEndpoints({
           body: body,
         };
       },
+      invalidatesTags: ["UpdateTransaction"],
     }),
     getAnalytics: builder.query<GetAnalyticsResponse, void>({
       query: () => ({

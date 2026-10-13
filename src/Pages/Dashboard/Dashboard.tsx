@@ -9,13 +9,7 @@ const Dashboard = () => {
       <AuthLayer>
         <NavBar />
         <Outlet />
-        <TransactionModal
-          id="6918af3f-b2c6-4373-b190-a145f0fb1c8c"
-          category="Merchandise"
-          description="AMZN MKTP US*RW7Y73X51"
-          date="2/27/2024"
-          amount="184.54"
-        />
+        <TransactionModal />
       </AuthLayer>
     </>
   );

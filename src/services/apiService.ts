@@ -56,4 +56,5 @@ export const api = createApi({
   reducerPath: "api",
   baseQuery: baseQueryHandler,
   endpoints: () => ({}),
+  tagTypes: ["UpdateTransaction"],
 });

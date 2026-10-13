@@ -7,6 +7,14 @@
 .text-input {
   display: block;
   outline: none;
+
+  &--error {
+    border: 1px solid colors.$red !important;
+  }
+  &__error-message {
+    color: colors.$red !important;
+    font-size: 0.8rem !important;
+  }
 }
 
 .label-comp {

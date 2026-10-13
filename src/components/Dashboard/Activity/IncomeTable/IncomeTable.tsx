@@ -13,6 +13,7 @@ const IncomeTable = ({ transactionItems }: IncomeTableProps) => {
       {width > 750 && (
         <IncomeItem
           id="header"
+          // @ts-ignore
           category="Category"
           description="Description"
           date="Date"

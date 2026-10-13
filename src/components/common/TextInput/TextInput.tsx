@@ -14,6 +14,7 @@ interface TextInputProps {
   onChange?: (value: string) => void;
   onChangeLoad?: () => void;
   initialValue?: string;
+  errorMessage?: string;
 }
 
 const TextInput = ({
@@ -25,9 +26,16 @@ const TextInput = ({
   onChange,
   onChangeLoad,
   initialValue = "",
+  errorMessage,
 }: TextInputProps) => {
   const { top, left, fontSize } = labelFormat ?? {};
   const [value, setValue] = useState(initialValue);
+
+  useEffect(() => {
+    if (initialValue !== "") {
+      setValue(initialValue);
+    }
+  }, [initialValue]);
 
   const timeoutRef = useRef<number | null>(null);
   useEffect(() => {
@@ -73,8 +81,11 @@ const TextInput = ({
         }
         type="text"
         required={required}
-        className={`text-input ${className ? className : ""}`}
+        className={`text-input ${className ? className : ""} ${errorMessage !== undefined ? "text-input--error" : ""}`}
       />
+      {errorMessage && (
+        <p className="text-input__error-message">{errorMessage}*</p>
+      )}
     </div>
   );
 };
