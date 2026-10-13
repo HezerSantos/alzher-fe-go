@@ -5,6 +5,7 @@ import Button from "../../../common/Button/Button";
 import TextInput from "../../../common/TextInput/TextInput";
 import "./TransactionModal.scss";
 import {
+  useDeleteTransactiopnMutation,
   useUpdateTransactionMutation,
   type Categories,
 } from "../../../../services/dashboardService";
@@ -31,6 +32,10 @@ const TransactionModal = () => {
 
   const [updateTransactionRTK, { isLoading, isError, error }] =
     useUpdateTransactionMutation();
+  const [
+    deleteTransactionRTK,
+    { isLoading: delRTKLoading, isError: delRTKIsError },
+  ] = useDeleteTransactiopnMutation();
 
   const validateParamaters = (
     category: string,
@@ -58,6 +63,34 @@ const TransactionModal = () => {
     }
     return true;
   };
+
+  const checkDifference = (
+    ncategory: string,
+    ndescription: string,
+    ndate: string,
+    namount: string,
+  ): boolean => {
+    const duplicates = [];
+    if (ncategory === category) {
+      duplicates.push(null);
+    }
+    if (ndescription === description) {
+      duplicates.push(null);
+    }
+    if (ndate === date) {
+      duplicates.push(null);
+    }
+    if (Number(namount) === Number(amount)) {
+      duplicates.push(null);
+    }
+
+    if (duplicates.length) {
+      dispatch(setToast({ msg: "No fields updated", error: false }));
+      return false;
+    }
+    return true;
+  };
+
   const updateTransaction = useCallback(async () => {
     const formData = new FormData(formRef.current ?? undefined);
 
@@ -68,6 +101,10 @@ const TransactionModal = () => {
     const amount = (data["amount"] as string) ?? "";
 
     if (!validateParamaters(category, description, date, amount)) {
+      return;
+    }
+
+    if (!checkDifference(category, description, date, amount)) {
       return;
     }
 
@@ -92,6 +129,24 @@ const TransactionModal = () => {
       return;
     }
   }, [formRef, id]);
+
+  const deleteTransaction = useCallback(async () => {
+    try {
+      await deleteTransactionRTK({ id: id }).unwrap();
+      dispatch(
+        setToast({ msg: "Successfully Deleted Transaction", error: false }),
+      );
+      dispatch(clearTransactionModal());
+    } catch {
+      return;
+    }
+  }, [id]);
+
+  useEffect(() => {
+    if (delRTKIsError) {
+      dispatch(setToast({ msg: "Error Deleting Transaction", error: true }));
+    }
+  }, [delRTKIsError]);
 
   useEffect(() => {
     if (isError) {
@@ -192,6 +247,8 @@ const TransactionModal = () => {
           <Button
             text="Delete Transaction"
             className="transaction-modal__actions__button"
+            onClick={() => deleteTransaction()}
+            isLoading={delRTKLoading}
           />
         </div>
       </form>

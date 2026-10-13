@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import DashboardContent from "../../../components/Dashboard/common/DashboardContent/DashboardContent";
 import HeaderCard, {
   HeaderCardControl,
@@ -26,11 +26,15 @@ import RectangleLoader from "../../../components/common/RectangleLoader/Rectangl
 
 const Overview = () => {
   const { semester, year } = useAppSelector((s) => s.dashboard.overview);
+  const [previous, setPrevious] = useState({ semester: semester, year: year });
   const { data, isFetching, refetch } = useGetOverviewQuery({ semester, year });
 
   useEffect(() => {
-    refetch();
-  }, [semester, year]);
+    if (semester !== previous.semester && year !== previous.year) {
+      refetch();
+      setPrevious({ semester: semester, year: year });
+    }
+  }, [semester, year, previous.year, previous.semester]);
   return (
     <>
       <DashboardContent header={defaultContent.title}>

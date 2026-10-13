@@ -195,7 +195,7 @@ const dashboard = api.injectEndpoints({
           params,
         };
       },
-      providesTags: ["UpdateTransaction"],
+      providesTags: ["MutateTransaction"],
     }),
     deleteTransactiopn: builder.mutation<
       DeleteActivityResponse,
@@ -203,8 +203,9 @@ const dashboard = api.injectEndpoints({
     >({
       query: ({ id }) => ({
         url: `/dashboard/activity/${id}`,
-        method: "DELTE",
+        method: "DELETE",
       }),
+      invalidatesTags: ["MutateTransaction"],
     }),
     updateTransaction: builder.mutation<
       UpdateActivityResponse,
@@ -228,7 +229,7 @@ const dashboard = api.injectEndpoints({
           body: body,
         };
       },
-      invalidatesTags: ["UpdateTransaction"],
+      invalidatesTags: ["MutateTransaction"],
     }),
     getAnalytics: builder.query<GetAnalyticsResponse, void>({
       query: () => ({
