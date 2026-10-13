@@ -9,8 +9,8 @@ import {
   useUpdateTransactionMutation,
   type Categories,
 } from "../../../../services/dashboardService";
-import { setToast } from "../../../../reducers/toastSlice";
 import { clearTransactionModal } from "../../../../reducers/dashboardSlice";
+import useToastAdapter from "../../../../common/hooks/useToastAdapter";
 
 const dateRegex = /^(?:[1-9]|1[0-2])\/(?:[1-9]|[12][0-9]|3[01])\/[0-9]{4}$/;
 
@@ -26,6 +26,7 @@ const TransactionModal = () => {
   const formRef = useRef<HTMLFormElement>(null);
   const modalRef = useRef<HTMLDivElement>(null);
   const dispatch = useAppDispatch();
+  const toastAdapter = useToastAdapter();
   const [validationErrors, setValidationErrors] = useState<
     Record<string, string>
   >({});
@@ -85,7 +86,7 @@ const TransactionModal = () => {
     }
 
     if (duplicates.length) {
-      dispatch(setToast({ msg: "No fields updated", error: false }));
+      toastAdapter({ msg: "No fields updated", error: false });
       return false;
     }
     return true;
@@ -118,11 +119,9 @@ const TransactionModal = () => {
       }).unwrap();
 
       if ("updatedTransaction" in res && res.updatedTransaction === null) {
-        dispatch(setToast({ msg: "No fields updated", error: false }));
+        toastAdapter({ msg: "No fields updated", error: false });
       } else {
-        dispatch(
-          setToast({ msg: "Successfully Updated Transaction", error: false }),
-        );
+        toastAdapter({ msg: "Successfully Updated Transaction", error: false });
       }
       setValidationErrors({});
     } catch {
@@ -133,9 +132,7 @@ const TransactionModal = () => {
   const deleteTransaction = useCallback(async () => {
     try {
       await deleteTransactionRTK({ id: id }).unwrap();
-      dispatch(
-        setToast({ msg: "Successfully Deleted Transaction", error: false }),
-      );
+      toastAdapter({ msg: "Successfully Deleted Transaction", error: false });
       dispatch(clearTransactionModal());
     } catch {
       return;
@@ -144,14 +141,13 @@ const TransactionModal = () => {
 
   useEffect(() => {
     if (delRTKIsError) {
-      dispatch(setToast({ msg: "Error Deleting Transaction", error: true }));
+      toastAdapter({ msg: "Error Deleting Transaction", error: true });
     }
   }, [delRTKIsError]);
 
   useEffect(() => {
     if (isError) {
-      dispatch(setToast({ msg: "Error Updating Transaction", error: true }));
-
+      toastAdapter({ msg: "Error Updating Transaction", error: true });
       if (error) {
         if ("data" in error) {
           const dataError = error as {
