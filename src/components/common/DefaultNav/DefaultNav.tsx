@@ -30,7 +30,7 @@ const navLinks = [
   },
 ];
 
-const useLogout = () => {
+export const useLogout = () => {
   const dispatch = useAppDispatch();
   const [logoutUser] = useLogoutMutation();
 

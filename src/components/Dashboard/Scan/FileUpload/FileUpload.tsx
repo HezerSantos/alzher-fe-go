@@ -6,6 +6,7 @@ import Button from "../../../common/Button/Button";
 import "./FileUpload.scss";
 import { useAppDispatch } from "../../../../reducers/hooks";
 import { setToast } from "../../../../reducers/toastSlice";
+import { useScanDocumentsMutation } from "../../../../services/dashboardService";
 
 const MAX_FILE_SIZE_MB = 5;
 const MAX_FILE_SIZE = MAX_FILE_SIZE_MB * 1024 * 1024;
@@ -21,6 +22,7 @@ const FileUpload = () => {
   const totalSizeMB = totalSize / (1024 * 1024);
   const fileCount = files.length;
 
+  const [uploadFiles] = useScanDocumentsMutation();
   const addFiles = useCallback(
     (incomingFiles: FileList | File[]) => {
       const selectedFiles = Array.from(incomingFiles);
@@ -130,6 +132,15 @@ const FileUpload = () => {
       current.filter((_, index) => index !== indexToRemove),
     );
   };
+
+  const submitFiles = useCallback(async () => {
+    try {
+      const res = await uploadFiles({ files: files }).unwrap();
+      console.log(res);
+    } catch {
+      return;
+    }
+  }, [files]);
 
   return (
     <div className="file-upload">
@@ -273,6 +284,7 @@ const FileUpload = () => {
               text="Upload Statements"
               className="file-container__upload-button"
               disabled={files.length === 0}
+              onClick={() => submitFiles()}
             />
           </div>
         </section>

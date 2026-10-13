@@ -259,6 +259,9 @@ const dashboard = api.injectEndpoints({
           url: "/dashboard/scan",
           method: "POST",
           body: formData,
+          headers: {
+            ["Content-Type"]: "multipart/form-data",
+          },
         };
       },
       invalidatesTags: ["MutateTransaction"],

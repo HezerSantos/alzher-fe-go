@@ -30,9 +30,7 @@ const authSlice = createSlice({
       state.expiresAt = action.payload.expiresAt;
       state.issuedAt = action.payload.issuedAt;
     },
-    logout: (state, _: PayloadAction<undefined>) => {
-      ((state.isAuthorized = false), (state.email = ""), (state.id = ""));
-    },
+    logout: (state, _: PayloadAction<undefined>) => initialState,
   },
 });
 

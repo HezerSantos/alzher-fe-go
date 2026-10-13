@@ -10,13 +10,11 @@ import ErrorLayer from "./components/Layers/ErrorLayer.tsx";
 
 const router = createBrowserRouter(routes);
 createRoot(document.getElementById("root")!).render(
-  <StrictMode>
-    <Provider store={store}>
-      <BootLayer>
-        <ErrorLayer>
-          <RouterProvider router={router} />
-        </ErrorLayer>
-      </BootLayer>
-    </Provider>
-  </StrictMode>,
+  <Provider store={store}>
+    <BootLayer>
+      <ErrorLayer>
+        <RouterProvider router={router} />
+      </ErrorLayer>
+    </BootLayer>
+  </Provider>,
 );

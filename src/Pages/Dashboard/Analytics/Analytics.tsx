@@ -69,7 +69,7 @@ const Analytics = () => {
               <OverviewChartLoader addBase={false} />
             ) : (
               <OverviewChart
-                overviewData={data?.overviewData}
+                overviewData={data?.overviewData?.filter((d) => d)}
                 yearOne={years?.[0] ?? "2026"}
                 yearTwo={years?.[1] ?? false}
                 addBase={false}
