@@ -3,7 +3,8 @@ import Activity from "./Pages/Dashboard/Activity/Activity";
 import Analytics from "./Pages/Dashboard/Analytics/Analytics";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Overview from "./Pages/Dashboard/Overview/Overview";
-import Scan from "./Pages/Dashboard/Scan";
+import Scan from "./Pages/Dashboard/Scan/Scan";
+
 import NotFound from "./Pages/Errors/NotFound";
 import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
