@@ -12,13 +12,14 @@ import { setNotFound } from "../reducers/errorSlice";
 
 interface Boot {
   baseUrl: string;
+  prodUrl: string;
   throttleRequests: boolean;
   throttleTime: number;
 }
 const typedConfig = config as Boot;
 
 const baseQuery = fetchBaseQuery({
-  baseUrl: typedConfig.baseUrl,
+  baseUrl: import.meta.env.PROD ? typedConfig.prodUrl : typedConfig.baseUrl,
   credentials: "include",
   prepareHeaders: (headers, { getState }) => {
     const token = (getState() as RootState).auth.token;

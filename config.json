@@ -1,5 +1,6 @@
 {
   "baseUrl": "http://localhost:8080/api",
+  "prodUrl": "https://alzher-api-v2.hallowedvisions.com",
   "throttleRequests": false,
   "throttleTime": 5000
 }
