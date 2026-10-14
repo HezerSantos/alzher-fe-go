@@ -142,6 +142,7 @@ const FileUpload = () => {
       dispatch(
         setToast({ msg: "Success Processing Statements", error: false }),
       );
+      setFiles([]);
     } catch {
       return;
     }
@@ -195,6 +196,20 @@ const FileUpload = () => {
 
   useEffect(() => {
     if (isError) {
+      if ("status" in error) {
+        const statusCode = (error as { status: number }).status;
+        if (statusCode === 409) {
+          dispatch(
+            setToast({ msg: "Duplicate statement detected", error: true }),
+          );
+          return;
+        } else if (statusCode === 400) {
+          dispatch(
+            setToast({ msg: "Invalid statement detected", error: true }),
+          );
+          return;
+        }
+      }
       dispatch(setToast({ msg: "Error Processing Statements", error: true }));
     }
   }, [isError]);
@@ -305,7 +320,7 @@ const FileUpload = () => {
           <div className="file-container__list">
             {files.map((file, index) => (
               <>
-                {true ? (
+                {isLoading ? (
                   <FileItemLoader
                     key={`${file.name}-${file.lastModified}-${index}-loader`}
                   />
