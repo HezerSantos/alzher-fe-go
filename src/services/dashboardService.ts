@@ -175,6 +175,30 @@ interface AITransactionsResponse {
   callResults?: Record<string, unknown>;
 }
 
+interface GetSettingsResponse {
+  email: string;
+  callResults?: Record<string, unknown>;
+}
+
+interface PatchUserEmailRequest {
+  newEmail: string;
+  password: string;
+}
+
+interface PatchUserEmailResponse {
+  callResults?: Record<string, unknown>;
+}
+
+interface PatchUserPasswordRequest {
+  currentPassword: string;
+  password: string;
+  confirmPassword: string;
+}
+
+interface PatchUserPasswordResponse {
+  callResults?: Record<string, unknown>;
+}
+
 const dashboard = api.injectEndpoints({
   endpoints: (builder) => ({
     getActivity: builder.query<GetActivityResponse, GetActivityRequestParams>({
@@ -266,6 +290,34 @@ const dashboard = api.injectEndpoints({
       },
       invalidatesTags: ["MutateTransaction"],
     }),
+    getSettings: builder.query<GetSettingsResponse, void>({
+      query: () => ({
+        url: "/dashboard/settings",
+        method: "GET",
+      }),
+    }),
+
+    patchUserEmail: builder.mutation<
+      PatchUserEmailResponse,
+      PatchUserEmailRequest
+    >({
+      query: (body) => ({
+        url: "/dashboard/settings/email",
+        method: "PATCH",
+        body,
+      }),
+    }),
+
+    patchUserPassword: builder.mutation<
+      PatchUserPasswordResponse,
+      PatchUserPasswordRequest
+    >({
+      query: (body) => ({
+        url: "/dashboard/settings/password",
+        method: "PATCH",
+        body,
+      }),
+    }),
   }),
 });
 
@@ -276,4 +328,7 @@ export const {
   useGetAnalyticsQuery,
   useGetOverviewQuery,
   useScanDocumentsMutation,
+  useGetSettingsQuery,
+  usePatchUserEmailMutation,
+  usePatchUserPasswordMutation,
 } = dashboard;
