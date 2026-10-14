@@ -3,16 +3,17 @@ import defaultContent from "../../../content/signup";
 import TextInput from "../../common/TextInput/TextInput";
 import Button from "../../common/Button/Button";
 import { Link, useNavigate } from "react-router-dom";
-import useWindowSize from "../../../common/hooks/useWindowSize";
-import IconLogo from "../../Icons/IconLogo/IconLogo";
+
 import { useCallback, useEffect } from "react";
 import { useSignUpMutation } from "../../../services/authService";
 import { useAppDispatch, useAppSelector } from "../../../reducers/hooks";
 import ToasMessage from "../../common/ToastMessage/ToastMessage";
 import { clearToast, setToast } from "../../../reducers/accessSlice";
+import useWidth from "../../../common/hooks/useWidth";
+import IconLogo from "../../common/Icons/IconLogo/IconLogo";
 
 const Signup = () => {
-  const width = useWindowSize();
+  const width = useWidth();
   const accessToast = useAppSelector((s) => s.access);
   const dispatch = useAppDispatch();
   const [signUpUser, { isLoading, isError }] = useSignUpMutation();
@@ -26,20 +27,15 @@ const Signup = () => {
 
       const data = Object.fromEntries(formData);
 
-      const username = (data["username"] as string) ?? "";
       const password = (data["password"] as string) ?? "";
+      const confirmPassword = (data["confirmPassword"] as string) ?? "";
       const email = (data["email"] as string) ?? "";
-      const firstName = (data["firstName"] as string) ?? "";
-      const lastName = (data["lastName"] as string) ?? "";
-      const universityId = (data["universityId"] as string) ?? "";
+
       try {
         await signUpUser({
           email,
-          username,
-          firstName,
-          lastName,
-          universityId,
           password,
+          confirmPassword,
         }).unwrap();
 
         navigate("/");
@@ -91,41 +87,8 @@ const Signup = () => {
         }}
       >
         <TextInput
-          name="firstName"
-          placeHolder="First name"
-          className="signup-form__form__input"
-          required
-          labelFormat={{
-            top: "0.5rem",
-            left: "0.5rem",
-            fontSize: "0.75rem",
-          }}
-        />
-        <TextInput
-          name="lastName"
-          placeHolder="Last name"
-          className="signup-form__form__input"
-          required
-          labelFormat={{
-            top: "0.5rem",
-            left: "0.5rem",
-            fontSize: "0.75rem",
-          }}
-        />
-        <TextInput
           name="email"
           placeHolder="Email"
-          className="signup-form__form__input"
-          required
-          labelFormat={{
-            top: "0.5rem",
-            left: "0.5rem",
-            fontSize: "0.75rem",
-          }}
-        />
-        <TextInput
-          name="username"
-          placeHolder="Username"
           className="signup-form__form__input"
           required
           labelFormat={{
@@ -146,8 +109,8 @@ const Signup = () => {
           }}
         />
         <TextInput
-          name="universityId"
-          placeHolder="University of Memphis UUID"
+          name="confirmPassword"
+          placeHolder="Confirm Password"
           className="signup-form__form__input"
           required
           labelFormat={{
@@ -165,7 +128,7 @@ const Signup = () => {
       </form>
       <div className="signup-form__footer">
         <p>{defaultContent.haveAccount}</p>
-        <Link to={"/"}>{defaultContent.login}</Link>
+        <Link to={"/login"}>{defaultContent.login}</Link>
       </div>
     </div>
   );

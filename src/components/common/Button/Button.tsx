@@ -33,8 +33,14 @@ const Button = ({
       disabled={disabled}
       className={`button-component ${className ? className : ""}`}
     >
-      {isLoading ? <Spinner /> : <>{text}</>}
-      {children && children}
+      {isLoading ? (
+        <Spinner />
+      ) : (
+        <>
+          {children && children}
+          {text}
+        </>
+      )}
     </button>
   );
 };

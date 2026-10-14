@@ -8,6 +8,7 @@ interface IconLogoProps {
   width?: number | string;
   height?: number | string;
   borderRadius?: number | string;
+  aspectRatio?: string;
 }
 
 type LogoKeys = "401" | "404_NF" | "404_ND" | "BASE";
@@ -21,14 +22,20 @@ const LOGOS = new Map<LogoKeys, string>([
 const IconLogo = ({
   logoKey = "BASE",
   width = 124,
-  height = 124,
+  height,
   borderRadius,
+  aspectRatio = "auto",
 }: IconLogoProps) => {
   return (
     <img
       src={LOGOS.get(logoKey)}
       alt="Logo"
-      style={{ borderRadius, width, height }}
+      style={{
+        borderRadius,
+        width,
+        height: height ?? (aspectRatio !== "auto" ? "auto" : undefined),
+        aspectRatio,
+      }}
     />
   );
 };

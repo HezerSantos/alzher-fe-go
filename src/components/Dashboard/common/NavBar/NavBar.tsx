@@ -11,6 +11,7 @@ import { useAppDispatch, useAppSelector } from "../../../../reducers/hooks";
 import { toggleNav } from "../../../../reducers/dashboardSlice";
 import useWidth from "../../../../common/hooks/useWidth";
 import Button from "../../../common/Button/Button";
+import useLogout from "../../../../common/hooks/useLogout";
 
 const SECTION_ONE = [
   {
@@ -69,15 +70,26 @@ interface NavItemProps {
 
 const NavItemExpanded = ({ name, link, icon }: NavItemProps) => {
   const { pathname } = useLocation();
+  const { userLogout } = useLogout();
   return (
     <>
-      <Link
-        to={link}
-        className={`dash-nav__section__item ${pathname === link ? "dash-nav__section__item--selected" : ""}`}
-      >
-        <IconDashLinks name={icon} />
-        <p>{name}</p>
-      </Link>
+      {link === "/logout" ? (
+        <Button
+          text={defaultContent.dashboard.logout}
+          className={`dash-nav__section__item ${pathname === link ? "dash-nav__section__item--selected" : ""}`}
+          onClick={userLogout}
+        >
+          <IconDashLinks name={icon} />
+        </Button>
+      ) : (
+        <Link
+          to={link}
+          className={`dash-nav__section__item ${pathname === link ? "dash-nav__section__item--selected" : ""}`}
+        >
+          <IconDashLinks name={icon} />
+          <p>{name}</p>
+        </Link>
+      )}
     </>
   );
 };
@@ -139,15 +151,29 @@ const NavExpanded = () => {
 
 const NavItemCollapsed = ({ icon, link }: Omit<NavItemProps, "name">) => {
   const { pathname } = useLocation();
-
+  const { userLogout } = useLogout();
   return (
-    <Link
-      to={link}
-      className={pathname === link ? "dash-nav__section__item--selected" : ""}
-      aria-current={pathname === link ? "page" : undefined}
-    >
-      <IconDashLinks name={icon} />
-    </Link>
+    <>
+      {link === "/logout" ? (
+        <Button
+          text=""
+          className={`dash-nav__section__item ${pathname === link ? "dash-nav__section__item--selected" : ""}`}
+          onClick={userLogout}
+        >
+          <IconDashLinks name={icon} />
+        </Button>
+      ) : (
+        <Link
+          to={link}
+          className={
+            pathname === link ? "dash-nav__section__item--selected" : ""
+          }
+          aria-current={pathname === link ? "page" : undefined}
+        >
+          <IconDashLinks name={icon} />
+        </Link>
+      )}
+    </>
   );
 };
 

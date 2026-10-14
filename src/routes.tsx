@@ -8,6 +8,7 @@ import Scan from "./Pages/Dashboard/Scan/Scan";
 import NotFound from "./Pages/Errors/NotFound";
 import Home from "./Pages/Home/Home";
 import Login from "./Pages/Login/Login";
+import Signup from "./Pages/Signup/Signup";
 import TermsAndPrivacy from "./Pages/TermsAndPrivacy/TermsAndPrivacy";
 
 const routes = [
@@ -27,6 +28,10 @@ const routes = [
       {
         path: "/login",
         element: <Login />,
+      },
+      {
+        path: "/signup",
+        element: <Signup />,
       },
       {
         path: "/dashboard",

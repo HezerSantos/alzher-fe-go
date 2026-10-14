@@ -8,12 +8,9 @@ import IconMenu from "../Icons/IconMenu/IconMenu";
 import Button from "../Button/Button";
 import useWidth from "../../../common/hooks/useWidth";
 import defaultContent from "../../../content/defaultNav";
-import { useAppDispatch, useAppSelector } from "../../../reducers/hooks";
-import { useLogoutMutation } from "../../../services/authService";
-import { setToast } from "../../../reducers/toastSlice";
-import { logout } from "../../../reducers/authSlice";
-
+import { useAppSelector } from "../../../reducers/hooks";
 import "./DefaultNav.scss";
+import useLogout from "../../../common/hooks/useLogout";
 
 const navLinks = [
   {
@@ -29,33 +26,6 @@ const navLinks = [
     link: "/terms-and-privacy",
   },
 ];
-
-export const useLogout = () => {
-  const dispatch = useAppDispatch();
-  const [logoutUser] = useLogoutMutation();
-
-  const userLogout = useCallback(async () => {
-    try {
-      await logoutUser().unwrap();
-      dispatch(logout());
-      dispatch(
-        setToast({
-          msg: defaultContent.toast.logoutSuccess,
-          error: false,
-        }),
-      );
-    } catch {
-      dispatch(
-        setToast({
-          msg: defaultContent.toast.logoutError,
-          error: true,
-        }),
-      );
-    }
-  }, [dispatch, logoutUser]);
-
-  return { userLogout };
-};
 
 interface NavLinksProps {
   onNavigate?: () => void;
