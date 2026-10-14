@@ -1,87 +1,271 @@
 @use "../../../common/styles/colors";
 
 .login-content {
+  box-sizing: border-box;
+  width: min(100%, 32rem);
+  min-height: 100vh;
   margin-inline: auto;
-  width: 28rem;
+  padding: 4rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 2rem;
-  padding-block: 5rem;
+  background-color: colors.$ivory;
+  color: colors.$forest;
+
+  & > .login-form__header {
+    width: 100%;
+    max-width: 26rem;
+    margin: 0;
+    font-size: clamp(2rem, 4vw, 2.65rem);
+    font-weight: 750;
+    line-height: 1.2;
+    letter-spacing: -0.055em;
+    text-align: center;
+    color: colors.$forest;
+  }
+
+  & > img,
+  & > svg {
+    flex-shrink: 0;
+  }
+
+  // Mobile logo rendered by the existing TSX.
+  &
+    > :not(.login-form__header):not(.login-form__form):not(
+      .login-form__footer
+    ):not(*) {
+    flex-shrink: 0;
+  }
 }
 
 .login-form {
+  width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
+
   &__header {
-    font-weight: 700;
-    width: 26rem;
+    font-weight: 750;
+    width: 100%;
     text-align: center;
   }
 
   &__form {
+    width: 100%;
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+    gap: 1.35rem;
+
     &__input {
-      width: 22rem;
-      height: 4rem;
-      border: 1px solid colors.$black;
-      border-radius: 1rem;
-      padding-inline: 0.5rem;
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 3.75rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid colors.$warm-gray;
+      border-radius: 0.85rem;
+      background-color: colors.$white;
+      color: colors.$forest;
+      font-size: 1rem;
+      transition:
+        border-color 180ms ease,
+        box-shadow 180ms ease,
+        background-color 180ms ease;
+
+      &::placeholder {
+        color: colors.$gray;
+        opacity: 1;
+      }
+
+      &:hover {
+        border-color: colors.$jade;
+      }
+
+      &:focus,
+      &:focus-within {
+        outline: none;
+        border-color: colors.$jade;
+        box-shadow: 0 0 0 3px rgba(52, 133, 93, 0.14);
+      }
     }
 
     &__opts {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      font-size: 0.95rem;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 0.75rem;
       color: colors.$gray;
+      font-size: 0.875rem;
 
       & > div {
         display: flex;
         align-items: center;
         gap: 0.5rem;
         cursor: pointer;
+
         & > input {
-          display: block;
+          width: 1.05rem;
+          height: 1.05rem;
+          margin: 0;
+          accent-color: colors.$jade;
           cursor: pointer;
-          width: 1.25rem;
-          height: 1.25rem;
         }
+
         & > label {
           cursor: pointer;
+          user-select: none;
         }
       }
 
       & > a {
+        color: colors.$forest;
+        font-weight: 600;
         text-decoration: none;
-        color: colors.$black;
+        transition: color 180ms ease;
+
+        &:hover {
+          color: colors.$jade;
+          text-decoration: underline;
+          text-underline-offset: 3px;
+        }
+
+        &:focus-visible {
+          outline: 2px solid colors.$jade;
+          outline-offset: 3px;
+          border-radius: 2px;
+        }
       }
     }
+
     &__button {
-      background-color: colors.$jade;
-      height: 3rem;
-      border-radius: 4rem;
-      color: colors.$white;
+      width: 100%;
+      min-height: 3.5rem;
+      padding: 0.85rem 1.25rem;
+      border: 1px solid colors.$forest;
+      border-radius: 0.85rem;
+      background-color: colors.$forest;
+      color: colors.$ivory;
+      font-size: 1rem;
+      font-weight: 650;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      transition:
+        background-color 180ms ease,
+        border-color 180ms ease,
+        box-shadow 180ms ease,
+        transform 180ms ease;
+
+      &:hover:not(:disabled) {
+        border-color: colors.$jade;
+        background-color: colors.$jade;
+        box-shadow: 0 5px 14px rgba(46, 71, 59, 0.16);
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(1px);
+        box-shadow: none;
+      }
+
+      &:focus-visible {
+        outline: 2px solid colors.$jade;
+        outline-offset: 3px;
+      }
+
+      &:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+      }
     }
   }
 
   &__footer {
-    width: 22rem;
+    width: 100%;
     display: flex;
-    justify-content: space-between;
-    & a,
-    p {
-      display: block;
-      color: colors.$black;
-      font-size: 0.95rem;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.5rem;
+    text-align: center;
+
+    & > p,
+    & > a {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    & > p {
+      color: colors.$gray;
+    }
+
+    & > a {
+      color: colors.$forest;
+      font-weight: 750;
       text-decoration: none;
+      transition: color 180ms ease;
+
+      &:hover {
+        color: colors.$jade;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+
+      &:focus-visible {
+        outline: 2px solid colors.$jade;
+        outline-offset: 3px;
+      }
     }
-    & > a:last-of-type {
-      font-weight: 800;
+  }
+}
+
+@media (max-width: 1500px) {
+  .login-content {
+    width: min(100%, 34rem);
+    padding: 3rem 2rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .login-content {
+    justify-content: center;
+    padding: 2rem 1.25rem;
+    gap: 1.75rem;
+
+    & > .login-form__header {
+      font-size: 2rem;
     }
+  }
+
+  .login-form {
+    &__form {
+      gap: 1.15rem;
+
+      &__input {
+        min-height: 3.5rem;
+      }
+
+      &__opts {
+        font-size: 0.82rem;
+      }
+
+      &__button {
+        min-height: 3.25rem;
+      }
+    }
+
+    &__footer {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .login-form__form__input,
+  .login-form__form__opts > a,
+  .login-form__form__button,
+  .login-form__footer > a {
+    transition: none;
   }
 }

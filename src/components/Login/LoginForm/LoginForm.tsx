@@ -104,8 +104,8 @@ const LoginForm = () => {
           placeHolder="Email"
           className="login-form__form__input"
           labelFormat={{
-            top: "0.5rem",
-            left: "0.5rem",
+            top: "0.25rem",
+            left: "1rem",
             fontSize: "0.75rem",
           }}
         />
@@ -114,8 +114,8 @@ const LoginForm = () => {
           placeHolder="Password"
           className="login-form__form__input"
           labelFormat={{
-            top: "0.5rem",
-            left: "0.5rem",
+            top: "0.25rem",
+            left: "1rem",
             fontSize: "0.75rem",
           }}
         />

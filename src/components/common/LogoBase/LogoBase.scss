@@ -1,12 +1,47 @@
-@use "../../../common//styles/colors";
+@use "../../../common/styles/colors";
 
 .logo-base {
-  background-color: colors.$emerald;
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  box-sizing: border-box;
+  min-height: 100vh;
+  padding: 4rem 3rem;
+  background: colors.$forest;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 15% 5%;
-  height: 100vh;
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: -1;
+    border: 1px solid rgba(255, 250, 243, 0.12);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+
+  &::before {
+    width: 34rem;
+    height: 34rem;
+    top: -13rem;
+    left: -14rem;
+  }
+
+  &::after {
+    width: 42rem;
+    height: 42rem;
+    right: -23rem;
+    bottom: -19rem;
+  }
+
+  // Keep the logo as the centerpiece of the branding panel.
+  & > * {
+    position: relative;
+    z-index: 1;
+    width: min(100%, 25rem);
+  }
 
   @media (max-width: 1500px) {
     display: none;

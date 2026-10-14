@@ -1,20 +1,38 @@
 @use "../../../common/styles/colors";
 
 .signup-content {
+  box-sizing: border-box;
+  width: min(100%, 34rem);
+  min-height: 100vh;
   margin-inline: auto;
-  width: 28rem;
+  padding: 3.5rem 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding-block: 5rem;
   gap: 2rem;
+  background-color: colors.$ivory;
+
+  & > * {
+    max-width: 100%;
+  }
 }
 
 .signup-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+
   &__header {
-    font-weight: 700;
-    width: 26rem;
+    width: 100%;
+    max-width: 26rem;
+    margin: 0;
+    color: colors.$forest;
+    font-size: clamp(1.8rem, 3vw, 2.25rem);
+    font-weight: 750;
+    line-height: 1.2;
+    letter-spacing: -0.045em;
     text-align: center;
   }
 
@@ -22,63 +40,199 @@
     display: flex;
     flex-direction: column;
     gap: 1.5rem;
+    width: 100%;
+    max-width: 22rem;
+
     &__input {
-      width: 22rem;
-      height: 4rem;
-      border: 1px solid colors.$gray;
-      border-radius: 1rem;
-      padding-inline: 0.5rem;
+      box-sizing: border-box;
+      width: 100%;
+      min-height: 3.5rem;
+      padding: 0.75rem 1rem;
+      border: 1px solid colors.$warm-gray;
+      border-radius: 0.8rem;
+      background-color: colors.$white;
+      color: colors.$navy;
+      font-size: 1rem;
+      outline: none;
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background-color 0.2s ease;
+
+      &:hover {
+        border-color: colors.$jade;
+      }
+
+      &:focus,
+      &:focus-within {
+        border-color: colors.$jade;
+        box-shadow: 0 0 0 3px rgba(52, 133, 93, 0.13);
+      }
+
+      &::placeholder {
+        color: colors.$gray;
+        opacity: 0.8;
+      }
     }
 
     &__opts {
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      font-size: 0.95rem;
+      justify-content: space-between;
+      gap: 0.75rem;
+      margin-top: -0.25rem;
       color: colors.$gray;
+      font-size: 0.85rem;
 
       & > div {
         display: flex;
         align-items: center;
         gap: 0.5rem;
         cursor: pointer;
+
         & > input {
-          display: block;
+          width: 1rem;
+          height: 1rem;
+          margin: 0;
+          accent-color: colors.$jade;
           cursor: pointer;
-          width: 1.25rem;
-          height: 1.25rem;
         }
+
         & > label {
           cursor: pointer;
+          user-select: none;
         }
       }
 
       & > a {
+        color: colors.$forest;
+        font-weight: 600;
         text-decoration: none;
-        color: colors.$gray;
+        transition: color 0.2s ease;
+
+        &:hover {
+          color: colors.$jade;
+          text-decoration: underline;
+          text-underline-offset: 3px;
+        }
       }
     }
+
     &__button {
-      background-color: colors.$jade;
-      height: 2.5rem;
-      border-radius: 4rem;
-      color: colors.$white;
+      width: 100%;
+      min-height: 3.25rem;
+      padding: 0.85rem 1.25rem;
+      border: 1px solid colors.$forest;
+      border-radius: 0.8rem;
+      background-color: colors.$forest;
+      color: colors.$ivory;
+      font-size: 1rem;
+      font-weight: 650;
+      letter-spacing: 0.01em;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(16, 24, 44, 0.08);
+      transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        transform 0.2s ease;
+
+      &:hover:not(:disabled) {
+        border-color: colors.$jade;
+        background-color: colors.$jade;
+        box-shadow: 0 6px 16px rgba(46, 71, 59, 0.16);
+        transform: translateY(-1px);
+      }
+
+      &:active:not(:disabled) {
+        transform: translateY(0);
+        box-shadow: none;
+      }
+
+      &:focus-visible {
+        outline: 3px solid rgba(52, 133, 93, 0.35);
+        outline-offset: 3px;
+      }
+
+      &:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+      }
     }
   }
 
   &__footer {
-    width: 22rem;
     display: flex;
-    justify-content: space-between;
-    & a,
-    p {
-      display: block;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+    width: 100%;
+    max-width: 22rem;
+    color: colors.$gray;
+    font-size: 0.9rem;
+    text-align: center;
+
+    & > p {
+      margin: 0;
       color: colors.$gray;
-      font-size: 0.95rem;
-      text-decoration: none;
+      font-size: inherit;
     }
-    & > a:last-of-type {
-      font-weight: 800;
+
+    & > a {
+      color: colors.$forest;
+      font-size: inherit;
+      font-weight: 700;
+      text-decoration: none;
+      transition: color 0.2s ease;
+
+      &:hover {
+        color: colors.$jade;
+        text-decoration: underline;
+        text-underline-offset: 3px;
+      }
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .signup-content {
+    width: 100%;
+    min-height: 100vh;
+    padding: 2.5rem 1.5rem;
+    gap: 1.75rem;
+  }
+
+  .signup-form {
+    &__header {
+      font-size: 1.85rem;
+    }
+
+    &__form {
+      gap: 1.25rem;
+
+      &__opts {
+        font-size: 0.8rem;
+      }
+    }
+
+    &__footer {
+      font-size: 0.85rem;
+    }
+  }
+}
+
+@media (max-width: 360px) {
+  .signup-content {
+    padding-inline: 1rem;
+  }
+
+  .signup-form {
+    &__form {
+      &__opts {
+        align-items: flex-start;
+        flex-direction: column;
+      }
     }
   }
 }

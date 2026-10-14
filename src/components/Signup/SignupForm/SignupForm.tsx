@@ -92,8 +92,8 @@ const Signup = () => {
           className="signup-form__form__input"
           required
           labelFormat={{
-            top: "0.5rem",
-            left: "0.5rem",
+            top: "0.25rem",
+            left: "1rem",
             fontSize: "0.75rem",
           }}
         />
@@ -103,8 +103,8 @@ const Signup = () => {
           className="signup-form__form__input"
           required
           labelFormat={{
-            top: "0.5rem",
-            left: "0.5rem",
+            top: "0.25rem",
+            left: "1rem",
             fontSize: "0.75rem",
           }}
         />
@@ -114,8 +114,8 @@ const Signup = () => {
           className="signup-form__form__input"
           required
           labelFormat={{
-            top: "0.5rem",
-            left: "0.5rem",
+            top: "0.25rem",
+            left: "1rem",
             fontSize: "0.75rem",
           }}
         />
