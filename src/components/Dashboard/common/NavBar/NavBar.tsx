@@ -34,6 +34,11 @@ const SECTION_ONE = [
     name: defaultContent.dashboard.scan,
     link: "/dashboard/scan",
   },
+  {
+    icon: "budget",
+    name: defaultContent.dashboard.budget,
+    link: "/dashboard/budget",
+  },
 ];
 
 const SECTION_TWO = [

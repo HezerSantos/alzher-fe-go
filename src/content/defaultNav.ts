@@ -23,6 +23,7 @@ const defaultNav = {
     tAP: "Terms and Privacy",
     settings: "Settings",
     logout: "Log Out",
+    budget: "Budget",
   },
 };
 

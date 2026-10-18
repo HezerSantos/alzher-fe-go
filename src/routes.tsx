@@ -1,6 +1,8 @@
 import AlzherClient from "./AlzherClient";
 import Activity from "./Pages/Dashboard/Activity/Activity";
 import Analytics from "./Pages/Dashboard/Analytics/Analytics";
+import BudgetOverview from "./Pages/Dashboard/Budget/BudgetOverview/BudgetOverview";
+import Budget from "./Pages/Dashboard/Budget/Budget";
 import Dashboard from "./Pages/Dashboard/Dashboard";
 import Overview from "./Pages/Dashboard/Overview/Overview";
 import Scan from "./Pages/Dashboard/Scan/Scan";
@@ -11,6 +13,7 @@ import Login from "./Pages/Login/Login";
 import Settings from "./Pages/Settings/Settings";
 import Signup from "./Pages/Signup/Signup";
 import TermsAndPrivacy from "./Pages/TermsAndPrivacy/TermsAndPrivacy";
+import CreateBudget from "./Pages/Dashboard/Budget/CreateBudget/CreateBudget";
 
 const routes = [
   {
@@ -57,6 +60,20 @@ const routes = [
           {
             path: "settings",
             element: <Settings />,
+          },
+          {
+            path: "budget",
+            element: <Budget />,
+            children: [
+              {
+                index: true,
+                element: <BudgetOverview />,
+              },
+              {
+                path: "create",
+                element: <CreateBudget />,
+              },
+            ],
           },
         ],
       },

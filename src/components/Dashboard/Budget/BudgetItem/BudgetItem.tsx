@@ -1,0 +1,102 @@
+import { useNavigate } from "react-router-dom";
+import Button from "../../../common/Button/Button";
+import IconBudget from "../../../common/Icons/IconBudget/IconBudget";
+import "./BudgetItem.scss";
+
+interface BudgetItemProps {
+  id: string;
+  name: string;
+  grossIncome: number;
+  isActive: boolean;
+}
+
+interface BudgetStatusProps {
+  isActive: boolean;
+}
+
+const BudgetStatus = ({ isActive }: BudgetStatusProps) => {
+  return (
+    <span
+      className={`budget-status ${
+        isActive ? "budget-status--active" : "budget-status--inactive"
+      }`}
+    >
+      <span className="budget-status__indicator" />
+      {isActive ? "Active" : "Inactive"}
+    </span>
+  );
+};
+
+const BudgetItem = ({ id, name, grossIncome, isActive }: BudgetItemProps) => {
+  return (
+    <Button
+      text=""
+      className={`budget-item ${
+        isActive ? "budget-item--active" : "budget-item--inactive"
+      }`}
+    >
+      <div className="budget-item__content">
+        <div className="budget-item__header">
+          <div className="budget-item__icon">
+            <IconBudget />
+          </div>
+
+          <BudgetStatus isActive={isActive} />
+        </div>
+
+        <div className="budget-item__details">
+          <div className="budget-item__text">
+            <h3 className="budget-item__name">{name}</h3>
+            <p className="budget-item__amount">
+              {grossIncome.toLocaleString("en-US", {
+                style: "currency",
+                currency: "USD",
+              })}
+            </p>
+          </div>
+
+          <svg
+            className="budget-item__arrow"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="1.8"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            aria-hidden="true"
+          >
+            <path d="m9 18 6-6-6-6" />
+          </svg>
+        </div>
+      </div>
+    </Button>
+  );
+};
+
+export const CreateBudgetItem = () => {
+  const navigate = useNavigate();
+  return (
+    <Button
+      text=""
+      className="create-budget-item"
+      onClick={() => navigate("/dashboard/budget/create")}
+    >
+      <span className="create-budget-item__icon">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          strokeWidth="1.8"
+          strokeLinecap="round"
+          aria-hidden="true"
+        >
+          <path d="M12 5v14M5 12h14" />
+        </svg>
+      </span>
+
+      <span className="create-budget-item__label">Create budget</span>
+    </Button>
+  );
+};
+
+export default BudgetItem;
