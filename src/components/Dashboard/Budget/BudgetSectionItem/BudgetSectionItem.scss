@@ -1,0 +1,141 @@
+@use "../../../../common/styles/colors";
+
+.budget-section-item {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(110px, 0.4fr) auto;
+  align-items: center;
+  gap: 0.85rem;
+  min-width: 0;
+  padding: 0.75rem;
+  background: colors.$ivory;
+  border: 1px solid rgba(colors.$forest, 0.1);
+  border-radius: 12px;
+  transition:
+    background 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+  box-sizing: border-box;
+
+  &:hover {
+    background: rgba(colors.$jade, 0.035);
+    border-color: rgba(colors.$jade, 0.25);
+    box-shadow: 0 3px 10px rgba(colors.$forest, 0.035);
+  }
+
+  &__category {
+    min-width: 0;
+  }
+
+  &__amount {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-width: 0;
+    padding: 0.6rem 0.7rem;
+    background: rgba(colors.$white, 0.85);
+    border: 1px solid rgba(colors.$forest, 0.1);
+    border-radius: 9px;
+  }
+
+  &__currency {
+    color: colors.$emerald;
+    font-size: 0.9rem;
+    font-weight: 700;
+  }
+
+  &__input {
+    width: 100%;
+    min-width: 0;
+    padding: 0.65rem 0.7rem;
+    color: colors.$forest;
+    background: rgba(colors.$white, 0.85);
+    border: 1px solid rgba(colors.$forest, 0.12);
+    border-radius: 9px;
+    outline: none;
+    font-family: inherit;
+    font-size: 0.9rem;
+    font-weight: 550;
+    box-sizing: border-box;
+    transition:
+      border-color 160ms ease,
+      box-shadow 160ms ease;
+
+    &:focus {
+      border-color: colors.$jade;
+      box-shadow: 0 0 0 3px rgba(colors.$jade, 0.1);
+    }
+
+    &--amount {
+      padding: 0;
+      background: transparent;
+      border: none;
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      font-weight: 700;
+      box-shadow: none;
+    }
+  }
+
+  &__actions {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    color: colors.$gray;
+    background: transparent;
+    border-radius: 8px;
+    font-size: 1.2rem;
+    line-height: 1;
+    transition:
+      color 160ms ease,
+      background 160ms ease;
+
+    &:hover {
+      color: colors.$red;
+      background: colors.$light-red-background;
+    }
+  }
+
+  &__remove-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 160ms ease;
+
+    &:hover {
+      background: colors.$light-red-background;
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  .budget-section-item {
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.6rem;
+
+    &__category {
+      grid-column: 1;
+    }
+
+    &__amount {
+      grid-column: 1;
+    }
+
+    &__actions {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+  }
+}

@@ -1,0 +1,163 @@
+@use "../../../../common/styles/colors";
+
+.budget-section {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-width: 0;
+  padding: 1.25rem;
+  background: rgba(colors.$white, 0.82);
+  border: 1px solid rgba(colors.$forest, 0.12);
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(colors.$forest, 0.045);
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease;
+
+  &:hover {
+    border-color: rgba(colors.$jade, 0.3);
+    box-shadow: 0 7px 22px rgba(colors.$forest, 0.07);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.9rem;
+    border-bottom: 1px solid rgba(colors.$forest, 0.1);
+  }
+
+  &__heading {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    min-width: 0;
+    flex: 1;
+  }
+
+  &__heading input {
+    width: 100%;
+    min-width: 0;
+    padding: 0.5rem 0.65rem;
+    color: colors.$forest;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: 9px;
+    outline: none;
+    font-family: inherit;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    transition:
+      background 160ms ease,
+      border-color 160ms ease,
+      box-shadow 160ms ease;
+
+    &:hover {
+      background: rgba(colors.$jade, 0.04);
+      border-color: rgba(colors.$forest, 0.12);
+    }
+
+    &:focus {
+      background: colors.$white;
+      border-color: colors.$jade;
+      box-shadow: 0 0 0 3px rgba(colors.$jade, 0.1);
+    }
+  }
+
+  &__indicator {
+    flex-shrink: 0;
+    width: 9px;
+    height: 9px;
+    background: colors.$jade;
+    border-radius: 50%;
+    box-shadow: 0 0 0 4px rgba(colors.$jade, 0.12);
+  }
+
+  &__name {
+    margin: 0;
+    color: colors.$forest;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: -0.02em;
+  }
+
+  &__remove-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  &__remove {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 30px;
+    height: 30px;
+    color: colors.$gray;
+    background: colors.$ivory;
+    border: 1px solid rgba(colors.$forest, 0.12);
+    border-radius: 9px;
+    font-size: 1.2rem;
+    line-height: 1;
+    transition:
+      color 160ms ease,
+      background 160ms ease;
+
+    &:hover {
+      color: colors.$red;
+      background: colors.$light-red-background;
+    }
+  }
+
+  &__remove-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    background: transparent;
+    border: none;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: background 160ms ease;
+
+    &:hover {
+      background: colors.$light-red-background;
+    }
+  }
+
+  &__add-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 42px;
+    padding: 0.65rem 1rem;
+    color: colors.$forest;
+    background: rgba(colors.$jade, 0.06);
+    border: 1px dashed rgba(colors.$jade, 0.4);
+    border-radius: 11px;
+    font-weight: 650;
+    cursor: pointer;
+    transition:
+      background 160ms ease,
+      border-color 160ms ease;
+
+    &:hover {
+      background: rgba(colors.$jade, 0.12);
+      border-color: colors.$jade;
+    }
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    min-width: 0;
+  }
+
+  &__footer {
+    padding-top: 0.25rem;
+  }
+}
