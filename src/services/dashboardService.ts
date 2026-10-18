@@ -199,6 +199,79 @@ interface PatchUserPasswordResponse {
   callResults?: Record<string, unknown>;
 }
 
+interface Budget {
+  id: string;
+  name: string;
+  userId: string;
+  grossIncome: number;
+  budgetSections: BudgetSection[];
+  isActive: boolean;
+}
+
+interface BudgetSection {
+  id: string;
+  name: string;
+  budgetId: string;
+  isDeductions: boolean;
+  budgetSectionItems: BudgetSectionItem[];
+}
+
+interface BudgetSectionItem {
+  id: string;
+  budgetSectionId: string;
+  categoryName: string;
+  amount: number;
+}
+
+interface GetAllBudgetsResponse {
+  budgets: Budget[];
+}
+
+interface BudgetByIdRequest {
+  id: string;
+}
+interface GetBudgetByIdResponse {
+  budget: Budget;
+}
+
+type CreateBudgetResponse = GetBudgetByIdResponse;
+
+interface CreateBudgetRequest {
+  name: string;
+  grossIncome: number;
+  budgetSections: BudgetSectionRequest[];
+}
+
+interface BudgetSectionRequest {
+  name: string;
+  isDeductions: boolean;
+  budgetSectionItems: BudgetSectionItemRequest[];
+}
+
+interface BudgetSectionItemRequest {
+  categoryName: string;
+  amount: number;
+}
+
+interface ActivateBudgetResponse {
+  activeBudget: Budget;
+  inactiveBudget: Budget;
+}
+
+interface DeleteBudgetByIdResponse {
+  deletedBudget: Budget;
+}
+
+interface UpdateBudgetResponse {
+  updatedBudget: Budget;
+  staleBudget: Budget;
+}
+
+interface UpdateBudgetRequest {
+  id: string;
+  budget: Budget;
+}
+
 const dashboard = api.injectEndpoints({
   endpoints: (builder) => ({
     getActivity: builder.query<GetActivityResponse, GetActivityRequestParams>({
@@ -316,6 +389,47 @@ const dashboard = api.injectEndpoints({
         url: "/dashboard/settings/password",
         method: "PATCH",
         body,
+      }),
+    }),
+    getAllBudgets: builder.query<GetAllBudgetsResponse, void>({
+      query: () => ({
+        url: "/dashboard/budget",
+      }),
+    }),
+    getBudgetById: builder.query<GetBudgetByIdResponse, BudgetByIdRequest>({
+      query: ({ id }) => ({
+        url: `/dashboard/budget/${id}`,
+      }),
+    }),
+    activateBudget: builder.mutation<ActivateBudgetResponse, BudgetByIdRequest>(
+      {
+        query: ({ id }) => ({
+          url: `/dashboard/budget/${id}/activate`,
+          method: "POST",
+        }),
+      },
+    ),
+    deleteBudgetById: builder.mutation<
+      DeleteBudgetByIdResponse,
+      BudgetByIdRequest
+    >({
+      query: ({ id }) => ({
+        url: `/dashboard/budget/${id}`,
+        method: "DELETE",
+      }),
+    }),
+    createBudget: builder.mutation<CreateBudgetResponse, CreateBudgetRequest>({
+      query: (body) => ({
+        url: "/dashboard/budget",
+        method: "POST",
+        body,
+      }),
+    }),
+    updateBudget: builder.mutation<UpdateBudgetResponse, UpdateBudgetRequest>({
+      query: ({ id, budget }) => ({
+        url: `/dashboard/budget/${id}`,
+        method: "PATCH",
+        body: { budget },
       }),
     }),
   }),
