@@ -21,6 +21,7 @@ import {
 } from "../../../../services/dashboardService";
 import { useNavigate } from "react-router-dom";
 import { setToast } from "../../../../reducers/toastSlice";
+import BudgetViewLoader from "../../../../components/Dashboard/Budget/BudgetViewLoader/BudgetViewLoader";
 
 const calculateAfterDeductions = (budget: Budget) => {
   // Strip out commas from grossIncome string before converting to a number
@@ -48,7 +49,8 @@ const BudgetView = ({ isCreate }: BudgetViewProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
-  const [fetchBudgetById, { data }] = useLazyGetBudgetByIdQuery();
+  const [fetchBudgetById, { data, isLoading: isBudgetLoading }] =
+    useLazyGetBudgetByIdQuery();
   const [createBudget, { isLoading }] = useCreateBudgetMutation();
 
   const handleCreateBudget = useCallback(async () => {
@@ -106,6 +108,11 @@ const BudgetView = ({ isCreate }: BudgetViewProps) => {
       dispatch(clearBudget());
     };
   }, []);
+
+  if (isBudgetLoading) {
+    return <BudgetViewLoader />;
+  }
+
   return (
     <div className="create-budget">
       <div className="create-budget__title">
@@ -168,14 +175,15 @@ const BudgetView = ({ isCreate }: BudgetViewProps) => {
         />
       </div>
 
-      {/* Main Create/Save Budget Button */}
       <div className="create-budget__actions">
-        <Button
-          text="Create Budget"
-          className="create-budget__submit"
-          onClick={handleCreateBudget}
-          isLoading={isLoading}
-        />
+        {isCreate && (
+          <Button
+            text="Create Budget"
+            className="create-budget__submit"
+            onClick={handleCreateBudget}
+            isLoading={isLoading}
+          />
+        )}
       </div>
     </div>
   );

@@ -26,6 +26,7 @@ const BudgetSectionItem = ({
           type="text"
           value={categoryName}
           aria-label="Category name"
+          placeholder="Category Name"
           onChange={(e) =>
             dispatch(
               changeBudgetSectionItem({

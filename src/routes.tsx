@@ -13,7 +13,7 @@ import Login from "./Pages/Login/Login";
 import Settings from "./Pages/Settings/Settings";
 import Signup from "./Pages/Signup/Signup";
 import TermsAndPrivacy from "./Pages/TermsAndPrivacy/TermsAndPrivacy";
-import BudgetView from "./Pages/Dashboard/Budget/CreateBudget/BudgetView";
+import BudgetView from "./Pages/Dashboard/Budget/BudgetView/BudgetView";
 
 const routes = [
   {

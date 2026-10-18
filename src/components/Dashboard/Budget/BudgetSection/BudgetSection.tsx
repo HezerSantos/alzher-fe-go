@@ -35,6 +35,7 @@ const BudgetSection = ({
               dispatch(changeBudgetSectionName({ id, name: e.target.value }))
             }
             readOnly={isDeductions}
+            placeholder="New Section"
           />
         </div>
 

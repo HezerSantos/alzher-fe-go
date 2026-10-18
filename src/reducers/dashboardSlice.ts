@@ -166,7 +166,7 @@ const dashboard = createSlice({
     addBudgetSection: (state) => {
       const newBudgetSecitonId = crypto.randomUUID();
       const blankBudgetSection = {
-        name: "New Section",
+        name: "",
         isDeductions: false,
         itemIds: [],
       };
@@ -188,7 +188,7 @@ const dashboard = createSlice({
       const { id } = action.payload;
       const newBudgetSectionItemId = crypto.randomUUID();
       const blankBudgetSectionItem = {
-        categoryName: "New Category Name",
+        categoryName: "",
         amount: "",
         sectionId: id,
       };

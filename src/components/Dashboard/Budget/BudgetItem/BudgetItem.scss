@@ -259,3 +259,38 @@
     font-size: 0.7rem;
   }
 }
+
+.budget-item-loader {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 1.5rem;
+  min-height: 9rem;
+  padding: 1.25rem;
+  border: 1px solid rgba(colors.$forest, 0.1);
+  border-radius: 16px;
+  background: colors.$ivory;
+  box-shadow: 0 4px 14px rgba(colors.$forest, 0.04);
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  &__details {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  &__text {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.65rem;
+    min-width: 0;
+  }
+}

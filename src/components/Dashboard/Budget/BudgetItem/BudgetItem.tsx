@@ -4,6 +4,7 @@ import IconBudget from "../../../common/Icons/IconBudget/IconBudget";
 import "./BudgetItem.scss";
 import { useAppDispatch } from "../../../../reducers/hooks";
 import { setSelectedBudgetId } from "../../../../reducers/dashboardSlice";
+import RectangleLoader from "../../../common/RectangleLoader/RectangleLoader";
 
 interface BudgetItemProps {
   id: string;
@@ -104,6 +105,27 @@ export const CreateBudgetItem = () => {
 
       <span className="create-budget-item__label">Create budget</span>
     </Button>
+  );
+};
+
+export const BudgetItemLoader = () => {
+  return (
+    <div className="budget-item-loader">
+      <div className="budget-item-loader__header">
+        <RectangleLoader width="2.75rem" height="2.75rem" borderRadius="12px" />
+
+        <RectangleLoader width="5rem" height="1.5rem" borderRadius="20px" />
+      </div>
+
+      <div className="budget-item-loader__details">
+        <div className="budget-item-loader__text">
+          <RectangleLoader width="65%" height="1.1rem" />
+          <RectangleLoader width="45%" height="1.5rem" />
+        </div>
+
+        <RectangleLoader width="1.25rem" height="1.25rem" borderRadius="50%" />
+      </div>
+    </div>
   );
 };
 
