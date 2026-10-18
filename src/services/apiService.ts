@@ -57,5 +57,5 @@ export const api = createApi({
   reducerPath: "api",
   baseQuery: baseQueryHandler,
   endpoints: () => ({}),
-  tagTypes: ["MutateTransaction"],
+  tagTypes: ["MutateTransaction", "MutateBudget"],
 });

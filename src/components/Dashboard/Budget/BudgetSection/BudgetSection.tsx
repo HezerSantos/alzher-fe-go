@@ -12,10 +12,16 @@ import {
 interface BudgetSectionProps {
   id: string;
   name: string;
+  isDeductions: boolean;
   children: ReactNode;
 }
 
-const BudgetSection = ({ id, name, children }: BudgetSectionProps) => {
+const BudgetSection = ({
+  id,
+  name,
+  isDeductions,
+  children,
+}: BudgetSectionProps) => {
   const dispatch = useAppDispatch();
   return (
     <section className="budget-section" data-section-id={id}>
@@ -28,6 +34,7 @@ const BudgetSection = ({ id, name, children }: BudgetSectionProps) => {
             onChange={(e) =>
               dispatch(changeBudgetSectionName({ id, name: e.target.value }))
             }
+            readOnly={isDeductions}
           />
         </div>
 
@@ -35,6 +42,7 @@ const BudgetSection = ({ id, name, children }: BudgetSectionProps) => {
           text=""
           className="budget-section__remove-button"
           onClick={() => dispatch(deleteBudgetSection({ id }))}
+          disabled={isDeductions}
         >
           <span className="budget-section__remove">
             <IconTrash width={"1.25rem"} height={"1.25rem"} />

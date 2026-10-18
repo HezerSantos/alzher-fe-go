@@ -199,7 +199,7 @@ interface PatchUserPasswordResponse {
   callResults?: Record<string, unknown>;
 }
 
-interface Budget {
+export interface Budget {
   id: string;
   name: string;
   userId: string;
@@ -236,19 +236,19 @@ interface GetBudgetByIdResponse {
 
 type CreateBudgetResponse = GetBudgetByIdResponse;
 
-interface CreateBudgetRequest {
-  name: string;
+export interface CreateBudgetRequest {
+  budgetName: string;
   grossIncome: number;
   budgetSections: BudgetSectionRequest[];
 }
 
-interface BudgetSectionRequest {
-  name: string;
+export interface BudgetSectionRequest {
+  sectionName: string;
   isDeductions: boolean;
-  budgetSectionItems: BudgetSectionItemRequest[];
+  budgetItems: BudgetSectionItemRequest[];
 }
 
-interface BudgetSectionItemRequest {
+export interface BudgetSectionItemRequest {
   categoryName: string;
   amount: number;
 }
@@ -395,11 +395,13 @@ const dashboard = api.injectEndpoints({
       query: () => ({
         url: "/dashboard/budget",
       }),
+      providesTags: ["MutateBudget"],
     }),
     getBudgetById: builder.query<GetBudgetByIdResponse, BudgetByIdRequest>({
       query: ({ id }) => ({
         url: `/dashboard/budget/${id}`,
       }),
+      providesTags: ["MutateBudget"],
     }),
     activateBudget: builder.mutation<ActivateBudgetResponse, BudgetByIdRequest>(
       {
@@ -407,6 +409,7 @@ const dashboard = api.injectEndpoints({
           url: `/dashboard/budget/${id}/activate`,
           method: "POST",
         }),
+        invalidatesTags: ["MutateBudget"],
       },
     ),
     deleteBudgetById: builder.mutation<
@@ -417,6 +420,7 @@ const dashboard = api.injectEndpoints({
         url: `/dashboard/budget/${id}`,
         method: "DELETE",
       }),
+      invalidatesTags: ["MutateBudget"],
     }),
     createBudget: builder.mutation<CreateBudgetResponse, CreateBudgetRequest>({
       query: (body) => ({
@@ -424,6 +428,7 @@ const dashboard = api.injectEndpoints({
         method: "POST",
         body,
       }),
+      invalidatesTags: ["MutateBudget"],
     }),
     updateBudget: builder.mutation<UpdateBudgetResponse, UpdateBudgetRequest>({
       query: ({ id, budget }) => ({
@@ -431,6 +436,7 @@ const dashboard = api.injectEndpoints({
         method: "PATCH",
         body: { budget },
       }),
+      invalidatesTags: ["MutateBudget"],
     }),
   }),
 });
@@ -445,4 +451,11 @@ export const {
   useGetSettingsQuery,
   usePatchUserEmailMutation,
   usePatchUserPasswordMutation,
+  useLazyGetBudgetByIdQuery,
+  useGetAllBudgetsQuery,
+  useGetBudgetByIdQuery,
+  useActivateBudgetMutation,
+  useDeleteBudgetByIdMutation,
+  useCreateBudgetMutation,
+  useUpdateBudgetMutation,
 } = dashboard;

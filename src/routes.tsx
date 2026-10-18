@@ -13,7 +13,7 @@ import Login from "./Pages/Login/Login";
 import Settings from "./Pages/Settings/Settings";
 import Signup from "./Pages/Signup/Signup";
 import TermsAndPrivacy from "./Pages/TermsAndPrivacy/TermsAndPrivacy";
-import CreateBudget from "./Pages/Dashboard/Budget/CreateBudget/CreateBudget";
+import BudgetView from "./Pages/Dashboard/Budget/CreateBudget/BudgetView";
 
 const routes = [
   {
@@ -71,7 +71,11 @@ const routes = [
               },
               {
                 path: "create",
-                element: <CreateBudget />,
+                element: <BudgetView isCreate={true} />,
+              },
+              {
+                path: ":id",
+                element: <BudgetView isCreate={false} />,
               },
             ],
           },

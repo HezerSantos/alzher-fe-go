@@ -2,6 +2,8 @@ import { useNavigate } from "react-router-dom";
 import Button from "../../../common/Button/Button";
 import IconBudget from "../../../common/Icons/IconBudget/IconBudget";
 import "./BudgetItem.scss";
+import { useAppDispatch } from "../../../../reducers/hooks";
+import { setSelectedBudgetId } from "../../../../reducers/dashboardSlice";
 
 interface BudgetItemProps {
   id: string;
@@ -28,12 +30,18 @@ const BudgetStatus = ({ isActive }: BudgetStatusProps) => {
 };
 
 const BudgetItem = ({ id, name, grossIncome, isActive }: BudgetItemProps) => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   return (
     <Button
       text=""
       className={`budget-item ${
         isActive ? "budget-item--active" : "budget-item--inactive"
       }`}
+      onClick={() => {
+        dispatch(setSelectedBudgetId(id));
+        navigate(`/dashboard/budget/${id}`);
+      }}
     >
       <div className="budget-item__content">
         <div className="budget-item__header">

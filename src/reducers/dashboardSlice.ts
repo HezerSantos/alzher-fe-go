@@ -1,12 +1,12 @@
 import { createSlice, type PayloadAction } from "@reduxjs/toolkit";
 import type { Categories } from "../services/dashboardService";
-
+import type { Budget as RawBudget } from "../services/dashboardService";
 const currentYear: number = new Date().getFullYear();
 
 type BudgetSectionId = string;
 type BudgetSectionItemId = string;
 
-interface Budget {
+export interface Budget {
   name: string;
   grossIncome: string;
   sections: Record<BudgetSectionId, BudgetSection>;
@@ -47,6 +47,7 @@ interface InitialStateType {
     amount: number;
   };
   budget: {
+    selectedBudgetId: string;
     createBudget: Budget;
   };
 }
@@ -72,15 +73,40 @@ const initialState: InitialStateType = {
     amount: NaN,
   },
   budget: {
+    selectedBudgetId: "",
     createBudget: {
       name: "My Budget",
       grossIncome: "",
-      sections: {},
+      sections: {
+        [crypto.randomUUID()]: {
+          isDeductions: true,
+          name: "Deductions",
+          itemIds: [],
+        },
+      },
       items: {},
     },
   },
 };
 
+const formatBudgetAmount = (rawValue: string) => {
+  // Validate the raw number string (allows digits and a single decimal point)
+  const validNumberRegex = /^\d*\.?\d*$/;
+  if (!validNumberRegex.test(rawValue)) {
+    return;
+  }
+
+  // Split integer and decimal parts to format with commas safely
+  const [integer, decimal] = rawValue.split(".");
+  const formattedInteger = integer
+    ? Number(integer).toLocaleString("en-US")
+    : "";
+
+  // Recombine with decimal if present (preserves trailing dots like "12.")
+  const finalValue =
+    decimal !== undefined ? `${formattedInteger}.${decimal}` : formattedInteger;
+  return finalValue;
+};
 const dashboard = createSlice({
   name: "dashboard",
   initialState,
@@ -121,23 +147,21 @@ const dashboard = createSlice({
       state.selectedTransaction = initialState.selectedTransaction;
     },
     changeBudgetGrossIncome: (state, action: PayloadAction<string>) => {
-      const value = action.payload;
+      const rawValue = action.payload.replace(/,/g, "");
 
-      // Allow empty input so users can backspace and clear the field
-      if (!value) {
+      // Allow empty input
+      if (!rawValue) {
         state.budget.createBudget.grossIncome = "";
         return;
       }
-
-      // Reject values that are completely invalid numbers
-      // This regex allows numbers, a single decimal point, and trailing decimals like "12."
-      const validNumberRegex = /^\d*\.?\d*$/;
-      if (!validNumberRegex.test(value)) {
+      const finalValue = formatBudgetAmount(rawValue);
+      if (finalValue === undefined) {
         return;
       }
-
-      // Save the raw string directly to the state
-      state.budget.createBudget.grossIncome = value;
+      state.budget.createBudget.grossIncome = finalValue;
+    },
+    changeBudgetName: (state, action: PayloadAction<string>) => {
+      state.budget.createBudget.name = action.payload;
     },
     addBudgetSection: (state) => {
       const newBudgetSecitonId = crypto.randomUUID();
@@ -187,16 +211,17 @@ const dashboard = createSlice({
       const budgetSectionItem = state.budget.createBudget.items[id];
       if (key === "amount") {
         // Allow empty input so users can backspace and clear the field
-        if (!value) {
+        const rawValue = value.replace(/,/g, "");
+        if (!rawValue) {
           budgetSectionItem[key] = "";
           return;
         }
 
-        const validNumberRegex = /^\d*\.?\d*$/;
-        if (!validNumberRegex.test(value)) {
+        const finalValue = formatBudgetAmount(rawValue);
+        if (finalValue === undefined) {
           return;
         }
-        budgetSectionItem[key] = value;
+        budgetSectionItem[key] = finalValue;
       } else {
         budgetSectionItem[key] = value;
       }
@@ -226,6 +251,43 @@ const dashboard = createSlice({
 
       budgetSection.itemIds = [...children];
     },
+    initiateBudget: (state, action: PayloadAction<RawBudget>) => {
+      const { name, grossIncome, budgetSections } = action.payload;
+      const budget: Budget = {
+        name,
+        grossIncome: String(grossIncome),
+        sections: {},
+        items: {},
+      };
+
+      for (const sectionMeta of budgetSections) {
+        const section: BudgetSection = {
+          name: sectionMeta.name,
+          isDeductions: sectionMeta.isDeductions,
+          itemIds: [],
+        };
+
+        for (const itemMeta of sectionMeta.budgetSectionItems) {
+          section.itemIds.push(itemMeta.id);
+          const item: BudgetSectionItem = {
+            categoryName: itemMeta.categoryName,
+            amount: String(itemMeta.amount),
+            sectionId: sectionMeta.id,
+          };
+          budget.items[itemMeta.id] = item;
+        }
+        budget.sections[sectionMeta.id] = section;
+      }
+
+      state.budget.createBudget = budget;
+    },
+    setSelectedBudgetId: (state, action: PayloadAction<string>) => {
+      state.budget.selectedBudgetId = action.payload;
+    },
+    clearBudget: (state) => {
+      state.budget.createBudget = initialState.budget.createBudget;
+      state.budget.selectedBudgetId = initialState.budget.selectedBudgetId;
+    },
   },
 });
 
@@ -242,12 +304,16 @@ export const {
   openTransactionModal,
   clearTransactionModal,
   changeBudgetGrossIncome,
+  changeBudgetName,
   addBudgetSection,
   changeBudgetSectionName,
   addBudgetSectionItem,
   changeBudgetSectionItem,
   deleteBudgetSection,
   deleteBudgetSectionItem,
+  initiateBudget,
+  setSelectedBudgetId,
+  clearBudget,
 } = dashboard.actions;
 
 export default dashboardReducer;
