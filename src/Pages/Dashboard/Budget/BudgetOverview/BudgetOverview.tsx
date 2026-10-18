@@ -2,15 +2,23 @@ import BudgetItem, {
   BudgetItemLoader,
   CreateBudgetItem,
 } from "../../../../components/Dashboard/Budget/BudgetItem/BudgetItem";
-import { useGetAllBudgetsQuery } from "../../../../services/dashboardService";
+import {
+  useActivateBudgetMutation,
+  useDeleteBudgetByIdMutation,
+  useGetAllBudgetsQuery,
+} from "../../../../services/dashboardService";
 import "./BudgetOverview.scss";
 
 const BudgetOverview = () => {
-  const { data, isLoading } = useGetAllBudgetsQuery();
+  const { data, isFetching } = useGetAllBudgetsQuery();
+  const [activateBudget, { isLoading: isActiveLoading }] =
+    useActivateBudgetMutation();
+  const [deleteBudget, { isLoading: isDeletedLoding }] =
+    useDeleteBudgetByIdMutation();
   return (
     <>
       <div className="budget-overview">
-        {isLoading ? (
+        {isFetching || isActiveLoading || isDeletedLoding ? (
           <>
             {[...Array(2)].map((_, i) => (
               <BudgetItemLoader key={i} />
@@ -26,6 +34,12 @@ const BudgetOverview = () => {
                   name={budget.name}
                   grossIncome={budget.grossIncome}
                   isActive={budget.isActive}
+                  onToggleActive={() => {
+                    activateBudget({ id: budget.id });
+                  }}
+                  onDelete={() => {
+                    deleteBudget({ id: budget.id });
+                  }}
                 />
               );
             })}
