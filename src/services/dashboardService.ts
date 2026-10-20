@@ -208,7 +208,7 @@ export interface Budget {
   isActive: boolean;
 }
 
-interface BudgetSection {
+export interface BudgetSection {
   id: string;
   name: string;
   budgetId: string;
@@ -216,7 +216,7 @@ interface BudgetSection {
   budgetSectionItems: BudgetSectionItem[];
 }
 
-interface BudgetSectionItem {
+export interface BudgetSectionItem {
   id: string;
   budgetSectionId: string;
   categoryName: string;
@@ -267,9 +267,9 @@ interface UpdateBudgetResponse {
   staleBudget: Budget;
 }
 
-interface UpdateBudgetRequest {
+export interface UpdateBudgetRequest {
   id: string;
-  budget: Budget;
+  budget: Omit<Omit<Budget, "isActive">, "userId">;
 }
 
 const dashboard = api.injectEndpoints({

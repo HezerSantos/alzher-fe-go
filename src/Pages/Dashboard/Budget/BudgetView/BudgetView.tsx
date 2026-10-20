@@ -15,13 +15,18 @@ import {
 import {
   useCreateBudgetMutation,
   useLazyGetBudgetByIdQuery,
+  useUpdateBudgetMutation,
+  type BudgetSection as BudgetSectionType,
   type BudgetSectionItemRequest,
   type BudgetSectionRequest,
   type CreateBudgetRequest,
+  type UpdateBudgetRequest,
+  type BudgetSectionItem as BudgetSectionItemType,
 } from "../../../../services/dashboardService";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { setToast } from "../../../../reducers/toastSlice";
 import BudgetViewLoader from "../../../../components/Dashboard/Budget/BudgetViewLoader/BudgetViewLoader";
+import ErrorElement from "../../../../components/common/ErrorElement/ErrorElement";
 
 const calculateAfterDeductions = (budget: Budget) => {
   // Strip out commas from grossIncome string before converting to a number
@@ -43,16 +48,17 @@ interface BudgetViewProps {
 
 const BudgetView = ({ isCreate }: BudgetViewProps) => {
   const newBudget = useAppSelector((s) => s.dashboard.budget.createBudget);
-  const selectedBudgetId = useAppSelector(
-    (s) => s.dashboard.budget.selectedBudgetId,
-  );
+
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  const params = useParams();
+  const selectedBudgetId = params.id ?? "";
   const [fetchBudgetById, { data, isLoading: isBudgetLoading }] =
     useLazyGetBudgetByIdQuery();
-  const [createBudget, { isLoading }] = useCreateBudgetMutation();
-
+  const [createBudget, { isLoading, isError }] = useCreateBudgetMutation();
+  const [updateBudget, { isLoading: isUpdateBudgetLoading }] =
+    useUpdateBudgetMutation();
   const handleCreateBudget = useCallback(async () => {
     const createBudgetRequestBody: CreateBudgetRequest = {
       budgetName: newBudget.name,
@@ -88,11 +94,53 @@ const BudgetView = ({ isCreate }: BudgetViewProps) => {
     }
   }, [newBudget]);
 
+  const handleUpdateBudget = useCallback(async () => {
+    const budget: UpdateBudgetRequest = {
+      id: selectedBudgetId,
+      budget: {
+        id: selectedBudgetId,
+        name: newBudget.name,
+        grossIncome: Number(newBudget.grossIncome.replace(/,/g, "")),
+        budgetSections: [],
+      },
+    };
+
+    for (const [sectionId, section] of Object.entries(newBudget.sections)) {
+      const budgetSection: BudgetSectionType = {
+        id: sectionId,
+        name: section.name,
+        isDeductions: section.isDeductions,
+        budgetId: selectedBudgetId,
+        budgetSectionItems: [],
+      };
+
+      for (const itemId of section.itemIds) {
+        const itemMeta = newBudget.items[itemId];
+
+        const budgetSectionItem: BudgetSectionItemType = {
+          id: itemId,
+          budgetSectionId: sectionId,
+          categoryName: itemMeta.categoryName,
+          amount: Number(itemMeta.amount.replace(/,/g, "")),
+        };
+        budgetSection.budgetSectionItems.push(budgetSectionItem);
+      }
+      budget.budget.budgetSections.push(budgetSection);
+    }
+
+    try {
+      await updateBudget({ ...budget }).unwrap();
+      dispatch(setToast({ msg: "Success Updating Budget", error: false }));
+    } catch {
+      dispatch(setToast({ msg: "Error Updating Budget", error: true }));
+    }
+  }, [newBudget, selectedBudgetId]);
+
   useEffect(() => {
     if (!isCreate && selectedBudgetId != "") {
       fetchBudgetById({ id: selectedBudgetId });
     }
-  }, [isCreate]);
+  }, [isCreate, selectedBudgetId]);
 
   useEffect(() => {
     if (!data || isCreate) {
@@ -103,7 +151,11 @@ const BudgetView = ({ isCreate }: BudgetViewProps) => {
     dispatch(initiateBudget(budget));
   }, [data]);
 
-  if (isBudgetLoading) {
+  if (isError) {
+    return <ErrorElement refetch={() => {}} />;
+  }
+
+  if (isBudgetLoading || isUpdateBudgetLoading || isLoading) {
     return <BudgetViewLoader />;
   }
 
@@ -182,8 +234,8 @@ const BudgetView = ({ isCreate }: BudgetViewProps) => {
           <Button
             text="Update Budget"
             className="create-budget__submit"
-            onClick={() => {}}
-            isLoading={isLoading}
+            onClick={handleUpdateBudget}
+            isLoading={isUpdateBudgetLoading}
           />
         )}
       </div>
