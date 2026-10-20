@@ -1,0 +1,146 @@
+@use "../../../common/styles/colors";
+
+.popup-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  background: rgba(colors.$navy, 0.65);
+
+  &__content {
+    position: relative;
+    width: 100%;
+    max-width: 420px;
+    padding: 1.75rem;
+    overflow: hidden;
+    background: colors.$forest;
+    border: 1px solid rgba(colors.$ivory, 0.12);
+    border-radius: 16px;
+    box-shadow: 0 20px 55px rgba(colors.$navy, 0.3);
+
+    &::before {
+      position: absolute;
+      top: 0;
+      right: 0;
+      left: 0;
+      height: 3px;
+      content: "";
+      background: linear-gradient(90deg, colors.$emerald, colors.$jade);
+    }
+  }
+
+  &__icon {
+    display: flex;
+    width: 44px;
+    height: 44px;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    color: colors.$jade;
+    background: rgba(colors.$jade, 0.14);
+    border: 1px solid rgba(colors.$jade, 0.24);
+    border-radius: 12px;
+
+    svg {
+      width: 23px;
+      height: 23px;
+    }
+  }
+
+  &__text {
+    margin: 0;
+    color: colors.$ivory;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.65;
+    overflow-wrap: anywhere;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.75rem;
+
+    > * {
+      min-width: 0;
+    }
+  }
+
+  &__cancel {
+    color: colors.$ivory;
+    background: transparent;
+    border: 1px solid rgba(colors.$ivory, 0.3);
+    border-radius: 9px;
+    padding: 0.7rem 1.1rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition:
+      background 0.18s ease,
+      border-color 0.18s ease,
+      transform 0.18s ease;
+
+    &:hover {
+      background: rgba(colors.$ivory, 0.09);
+      border-color: rgba(colors.$ivory, 0.55);
+    }
+
+    &:active {
+      transform: translateY(1px);
+    }
+  }
+
+  &__accept {
+    color: colors.$ivory;
+    background: colors.$emerald;
+    border: 1px solid colors.$emerald;
+    border-radius: 9px;
+    padding: 0.7rem 1.25rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    box-shadow: 0 3px 8px rgba(colors.$black, 0.16);
+    transition:
+      background 0.18s ease,
+      border-color 0.18s ease,
+      box-shadow 0.18s ease,
+      transform 0.18s ease;
+
+    &:hover {
+      background: colors.$jade;
+      border-color: colors.$jade;
+      box-shadow: 0 4px 12px rgba(colors.$black, 0.2);
+      transform: translateY(-1px);
+    }
+
+    &:active {
+      transform: translateY(0);
+      box-shadow: 0 1px 4px rgba(colors.$black, 0.15);
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .popup-modal {
+    padding: 1rem;
+
+    &__content {
+      padding: 1.5rem;
+      border-radius: 14px;
+    }
+
+    &__actions {
+      gap: 0.5rem;
+      margin-top: 1.5rem;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .popup-modal * {
+    animation: none !important;
+    transition: none !important;
+  }
+}

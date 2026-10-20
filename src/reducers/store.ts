@@ -6,6 +6,7 @@ import toastReducer from "./toastSlice";
 import errorReducer from "./errorSlice";
 import accessReducer from "./accessSlice";
 import dashboardReducer from "./dashboardSlice";
+import popupReducer from "./popupSlice";
 
 const store = configureStore({
   reducer: {
@@ -15,6 +16,7 @@ const store = configureStore({
     error: errorReducer,
     access: accessReducer,
     dashboard: dashboardReducer,
+    popup: popupReducer,
     [api.reducerPath]: api.reducer,
   },
   middleware: (getDefaultMiddleware) =>

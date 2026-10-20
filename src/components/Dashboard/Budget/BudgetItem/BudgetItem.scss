@@ -465,3 +465,22 @@
     min-width: 0;
   }
 }
+
+.delete-modal {
+  position: fixed;
+
+  width: 100vw;
+  height: 100vh;
+  background-color: red;
+  z-index: 10;
+
+  // &::after {
+  //   position: absolute;
+  //   content: "";
+  //   inset: 0;
+  //   width: 100vw;
+  //   height: 100vh;
+  //   background-color: colors.$black;
+  //   opacity: 35%;
+  // }
+}

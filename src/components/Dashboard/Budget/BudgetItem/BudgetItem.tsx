@@ -7,6 +7,7 @@ import "./BudgetItem.scss";
 import { useAppDispatch } from "../../../../reducers/hooks";
 import { setSelectedBudgetId } from "../../../../reducers/dashboardSlice";
 import RectangleLoader from "../../../common/RectangleLoader/RectangleLoader";
+import { clearPopup, togglePopup } from "../../../../reducers/popupSlice";
 
 interface BudgetItemProps {
   id: string;
@@ -148,18 +149,32 @@ const BudgetItem = ({
 
                   <div className="budget-item__menu-divider" />
 
-                  <button
+                  <Button
+                    text=""
                     type="button"
                     className="budget-item__menu-option budget-item__menu-option--delete"
-                    onClick={(event) => {
-                      event.stopPropagation();
-                      onDelete?.(id);
+                    onClick={(e) => {
+                      e?.stopPropagation();
+                      dispatch(
+                        togglePopup({
+                          isPopup: true,
+                          text: "Are you sure you want to delete this budget?",
+                          onCancel: () => {
+                            dispatch(clearPopup());
+                          },
+                          onAccept: () => {
+                            onDelete?.(id);
+                          },
+                          onAcceptText: "Delete",
+                          onCancelText: "Cancel",
+                        }),
+                      );
                       setMenuOpen(false);
                     }}
                   >
                     <IconTrash />
                     <span>Delete</span>
-                  </button>
+                  </Button>
                 </div>
               )}
             </div>

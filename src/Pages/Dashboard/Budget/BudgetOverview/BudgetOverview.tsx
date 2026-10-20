@@ -20,7 +20,7 @@ const BudgetOverview = () => {
       <div className="budget-overview">
         {isFetching || isActiveLoading || isDeletedLoding ? (
           <>
-            {[...Array(2)].map((_, i) => (
+            {[...Array(5)].map((_, i) => (
               <BudgetItemLoader key={i} />
             ))}
           </>
