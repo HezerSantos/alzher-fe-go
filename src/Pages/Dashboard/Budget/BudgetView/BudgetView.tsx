@@ -103,12 +103,6 @@ const BudgetView = ({ isCreate }: BudgetViewProps) => {
     dispatch(initiateBudget(budget));
   }, [data]);
 
-  useEffect(() => {
-    return () => {
-      dispatch(clearBudget());
-    };
-  }, []);
-
   if (isBudgetLoading) {
     return <BudgetViewLoader />;
   }
@@ -181,6 +175,14 @@ const BudgetView = ({ isCreate }: BudgetViewProps) => {
             text="Create Budget"
             className="create-budget__submit"
             onClick={handleCreateBudget}
+            isLoading={isLoading}
+          />
+        )}
+        {!isCreate && (
+          <Button
+            text="Update Budget"
+            className="create-budget__submit"
+            onClick={() => {}}
             isLoading={isLoading}
           />
         )}
