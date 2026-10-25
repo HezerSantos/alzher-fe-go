@@ -1,0 +1,194 @@
+@use "../../../../common/styles/colors";
+
+.create-budget {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  padding: 1.75rem;
+  color: colors.$forest;
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(colors.$forest, 0.15) 0%,
+      rgba(colors.$forest, 0.05) 40%,
+      transparent 70%
+    ),
+    linear-gradient(135deg, colors.$ivory 0%, #f1eddf 100%);
+  border: 1.5px solid rgba(colors.$forest, 0.25);
+  border-radius: 1.25rem;
+  box-shadow: 0 6px 20px rgba(colors.$forest, 0.08);
+  box-sizing: border-box;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(
+      90deg,
+      colors.$forest,
+      colors.$jade,
+      colors.$emerald
+    );
+  }
+
+  &__title {
+    margin: 0;
+    color: colors.$forest;
+    font-size: 1.85rem;
+    font-weight: 800;
+    letter-spacing: -0.04em;
+  }
+
+  &__income {
+    width: 100%;
+    max-width: 340px;
+    padding: 0.85rem 1.1rem;
+    color: colors.$forest;
+    background: rgba(colors.$forest, 0.06);
+    border: 1.5px solid rgba(colors.$forest, 0.28);
+    border-radius: 0.85rem;
+    outline: none;
+    font: inherit;
+    font-size: 1.1rem;
+    font-weight: 700;
+    box-sizing: border-box;
+    transition: all 180ms ease;
+
+    &::placeholder {
+      color: rgba(colors.$forest, 0.5);
+    }
+
+    &:hover {
+      border-color: rgba(colors.$forest, 0.45);
+      background: rgba(colors.$forest, 0.08);
+    }
+
+    &:focus {
+      border-color: colors.$jade;
+      background: rgba(colors.$white, 0.6);
+      box-shadow: 0 0 0 3px rgba(colors.$jade, 0.18);
+    }
+  }
+
+  &__income-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    width: 100%;
+    padding: 1.15rem 1.35rem;
+    background: rgba(colors.$forest, 0.04);
+    border: 1.5px solid rgba(colors.$forest, 0.18);
+    border-radius: 1rem;
+    box-sizing: border-box;
+
+    @media (max-width: 600px) {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+  }
+
+  &__income-info {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+
+  &__income-label {
+    margin: 0;
+    color: rgba(colors.$forest, 0.75);
+    font-size: 0.85rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+    text-transform: uppercase;
+  }
+
+  &__sections {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+    min-width: 0;
+  }
+
+  &__add-section {
+    width: 100%;
+    min-height: 50px;
+    color: colors.$forest;
+    background: rgba(colors.$forest, 0.07);
+    border: 2px dashed rgba(colors.$forest, 0.35);
+    border-radius: 0.95rem;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 180ms ease;
+
+    &:hover {
+      background: rgba(colors.$forest, 0.14);
+      border-color: colors.$forest;
+      box-shadow: 0 4px 14px rgba(colors.$forest, 0.08);
+    }
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5qsrem;
+    width: 100%;
+  }
+
+  &__submit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    min-height: 52px;
+    padding: 0.75rem 1.5rem;
+    color: colors.$ivory;
+    background: colors.$forest;
+    border: 1.5px solid rgba(colors.$forest, 0.4);
+    border-radius: 0.95rem;
+    font-weight: 750;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 180ms ease;
+
+    &:hover {
+      background: colors.$jade;
+      border-color: colors.$jade;
+      box-shadow: 0 4px 14px rgba(colors.$forest, 0.2);
+    }
+  }
+}
+
+@media (max-width: 600px) {
+  .create-budget {
+    gap: 1.25rem;
+    padding: 1.25rem;
+    border-radius: 1rem;
+
+    &__title {
+      font-size: 1.5rem;
+    }
+
+    &__income {
+      max-width: none;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .create-budget {
+    &__income,
+    &__add-section {
+      transition: none;
+    }
+  }
+}

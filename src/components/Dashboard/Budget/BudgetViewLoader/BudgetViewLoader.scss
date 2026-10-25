@@ -1,0 +1,204 @@
+@use "../../../../common/styles/colors";
+
+.budget-view-loader {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+  padding: 1.75rem;
+  color: colors.$forest;
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      rgba(colors.$forest, 0.15) 0%,
+      rgba(colors.$forest, 0.05) 40%,
+      transparent 70%
+    ),
+    linear-gradient(135deg, colors.$ivory 0%, #f1eddf 100%);
+  border: 1.5px solid rgba(colors.$forest, 0.25);
+  border-radius: 1.25rem;
+  box-shadow: 0 6px 20px rgba(colors.$forest, 0.08);
+  box-sizing: border-box;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 5px;
+    background: linear-gradient(
+      90deg,
+      colors.$forest,
+      colors.$jade,
+      colors.$emerald
+    );
+  }
+
+  &__title {
+    display: flex;
+    align-items: center;
+    min-height: 2.5rem;
+  }
+
+  &__income-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.25rem;
+    width: 100%;
+    padding: 1.15rem 1.35rem;
+    background: rgba(colors.$forest, 0.04);
+    border: 1.5px solid rgba(colors.$forest, 0.18);
+    border-radius: 1rem;
+    box-sizing: border-box;
+  }
+
+  &__income-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.65rem;
+    min-width: 0;
+  }
+
+  &__sections {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    width: 100%;
+    min-width: 0;
+  }
+
+  &__section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+    min-width: 0;
+    padding: 1.35rem;
+    background: rgba(colors.$forest, 0.04);
+    border: 1.5px solid rgba(colors.$forest, 0.2);
+    border-radius: 1.15rem;
+    box-shadow: 0 4px 16px rgba(colors.$forest, 0.05);
+    box-sizing: border-box;
+  }
+
+  &__section-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-bottom: 0.85rem;
+    border-bottom: 1.5px solid rgba(colors.$forest, 0.18);
+  }
+
+  &__section-heading {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    flex: 1;
+    min-width: 0;
+
+    > :first-child {
+      flex-shrink: 0;
+      box-shadow: 0 0 0 4px rgba(colors.$forest, 0.15);
+    }
+  }
+
+  &__items {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    min-width: 0;
+  }
+
+  &__item {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(120px, 0.42fr) auto;
+    align-items: center;
+    gap: 0.85rem;
+    min-width: 0;
+    padding: 0.75rem 0.9rem;
+    background: rgba(colors.$forest, 0.06);
+    border: 1px solid rgba(colors.$forest, 0.18);
+    border-radius: 0.85rem;
+    box-sizing: border-box;
+  }
+
+  &__amount {
+    min-width: 0;
+    padding: 0.55rem 0.75rem;
+    background: rgba(colors.$forest, 0.08);
+    border: 1px solid rgba(colors.$forest, 0.22);
+    border-radius: 0.65rem;
+    box-sizing: border-box;
+  }
+
+  &__section-footer {
+    padding-top: 0.2rem;
+  }
+
+  &__actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+    width: 100%;
+  }
+
+  // RectangleLoader's own background is overridden to match the
+  // forest-green surfaces of the real editor.
+  .rectangle-loader {
+    background: linear-gradient(
+      90deg,
+      rgba(colors.$forest, 0.09) 25%,
+      rgba(colors.$forest, 0.16) 50%,
+      rgba(colors.$forest, 0.09) 75%
+    );
+    background-size: 200% 100%;
+  }
+}
+
+@media (max-width: 600px) {
+  .budget-view-loader {
+    gap: 1.25rem;
+    padding: 1.25rem;
+    border-radius: 1rem;
+
+    &__income-container {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+
+    &__income-container > .rectangle-loader {
+      width: 100% !important;
+    }
+
+    &__section {
+      padding: 1rem;
+    }
+  }
+}
+
+@media (max-width: 520px) {
+  .budget-view-loader {
+    &__item {
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 0.65rem;
+    }
+
+    &__item > :first-child {
+      grid-column: 1;
+    }
+
+    &__amount {
+      grid-column: 1;
+    }
+
+    &__item > :last-child {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+  }
+}

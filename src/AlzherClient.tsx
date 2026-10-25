@@ -5,10 +5,12 @@ import { ToastWrapper } from "./components/common/ToastMessage/ToastMessage";
 
 function AlzherClient() {
   const toast = useAppSelector((s) => s.toast);
+
   return (
     <>
       <ErrorLayer>
         {toast.isToast && <ToastWrapper />}
+        <div id="popup-wrapper"></div>
         <Outlet />
       </ErrorLayer>
     </>

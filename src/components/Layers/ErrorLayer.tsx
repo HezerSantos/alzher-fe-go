@@ -8,7 +8,7 @@ interface ErrorLayerProps {
 const ErrorLayer = ({ children }: ErrorLayerProps) => {
   const errors = useAppSelector((s) => s.error);
 
-  if (errors.notFound) {
+  if (errors.notFound && false) {
     return <NotFound />;
   }
   return children;

@@ -5,7 +5,7 @@ import { Spinner } from "./Spinner";
 interface ButtonProps {
   text: string;
   className?: string;
-  onClick?: () => any;
+  onClick?: (e?: React.MouseEvent<HTMLButtonElement, MouseEvent>) => any;
   isLoading?: boolean;
   type?: "button" | "submit" | "reset";
   disabled?: boolean;
@@ -25,8 +25,8 @@ const Button = ({
       type={type}
       onClick={
         onClick
-          ? () => {
-              onClick();
+          ? (e) => {
+              onClick(e);
             }
           : () => {}
       }

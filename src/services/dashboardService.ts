@@ -199,6 +199,79 @@ interface PatchUserPasswordResponse {
   callResults?: Record<string, unknown>;
 }
 
+export interface Budget {
+  id: string;
+  name: string;
+  userId: string;
+  grossIncome: number;
+  budgetSections: BudgetSection[];
+  isActive: boolean;
+}
+
+export interface BudgetSection {
+  id: string;
+  name: string;
+  budgetId: string;
+  isDeductions: boolean;
+  budgetSectionItems: BudgetSectionItem[];
+}
+
+export interface BudgetSectionItem {
+  id: string;
+  budgetSectionId: string;
+  categoryName: string;
+  amount: number;
+}
+
+interface GetAllBudgetsResponse {
+  budgets: Budget[];
+}
+
+interface BudgetByIdRequest {
+  id: string;
+}
+interface GetBudgetByIdResponse {
+  budget: Budget;
+}
+
+type CreateBudgetResponse = GetBudgetByIdResponse;
+
+export interface CreateBudgetRequest {
+  budgetName: string;
+  grossIncome: number;
+  budgetSections: BudgetSectionRequest[];
+}
+
+export interface BudgetSectionRequest {
+  sectionName: string;
+  isDeductions: boolean;
+  budgetItems: BudgetSectionItemRequest[];
+}
+
+export interface BudgetSectionItemRequest {
+  categoryName: string;
+  amount: number;
+}
+
+interface ActivateBudgetResponse {
+  activeBudget: Budget;
+  inactiveBudget: Budget;
+}
+
+interface DeleteBudgetByIdResponse {
+  deletedBudget: Budget;
+}
+
+interface UpdateBudgetResponse {
+  updatedBudget: Budget;
+  staleBudget: Budget;
+}
+
+export interface UpdateBudgetRequest {
+  id: string;
+  budget: Omit<Omit<Budget, "isActive">, "userId">;
+}
+
 const dashboard = api.injectEndpoints({
   endpoints: (builder) => ({
     getActivity: builder.query<GetActivityResponse, GetActivityRequestParams>({
@@ -318,6 +391,53 @@ const dashboard = api.injectEndpoints({
         body,
       }),
     }),
+    getAllBudgets: builder.query<GetAllBudgetsResponse, void>({
+      query: () => ({
+        url: "/dashboard/budget",
+      }),
+      providesTags: ["MutateBudget"],
+    }),
+    getBudgetById: builder.query<GetBudgetByIdResponse, BudgetByIdRequest>({
+      query: ({ id }) => ({
+        url: `/dashboard/budget/${id}`,
+      }),
+      providesTags: ["MutateBudget"],
+    }),
+    activateBudget: builder.mutation<ActivateBudgetResponse, BudgetByIdRequest>(
+      {
+        query: ({ id }) => ({
+          url: `/dashboard/budget/${id}/activate`,
+          method: "POST",
+        }),
+        invalidatesTags: ["MutateBudget"],
+      },
+    ),
+    deleteBudgetById: builder.mutation<
+      DeleteBudgetByIdResponse,
+      BudgetByIdRequest
+    >({
+      query: ({ id }) => ({
+        url: `/dashboard/budget/${id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["MutateBudget"],
+    }),
+    createBudget: builder.mutation<CreateBudgetResponse, CreateBudgetRequest>({
+      query: (body) => ({
+        url: "/dashboard/budget",
+        method: "POST",
+        body,
+      }),
+      invalidatesTags: ["MutateBudget"],
+    }),
+    updateBudget: builder.mutation<UpdateBudgetResponse, UpdateBudgetRequest>({
+      query: ({ id, budget }) => ({
+        url: `/dashboard/budget/${id}`,
+        method: "PATCH",
+        body: { budget },
+      }),
+      invalidatesTags: ["MutateBudget"],
+    }),
   }),
 });
 
@@ -331,4 +451,11 @@ export const {
   useGetSettingsQuery,
   usePatchUserEmailMutation,
   usePatchUserPasswordMutation,
+  useLazyGetBudgetByIdQuery,
+  useGetAllBudgetsQuery,
+  useGetBudgetByIdQuery,
+  useActivateBudgetMutation,
+  useDeleteBudgetByIdMutation,
+  useCreateBudgetMutation,
+  useUpdateBudgetMutation,
 } = dashboard;
