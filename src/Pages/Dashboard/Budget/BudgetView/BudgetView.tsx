@@ -8,7 +8,6 @@ import {
   addBudgetSection,
   changeBudgetGrossIncome,
   changeBudgetName,
-  clearBudget,
   initiateBudget,
   type Budget,
 } from "../../../../reducers/dashboardSlice";
